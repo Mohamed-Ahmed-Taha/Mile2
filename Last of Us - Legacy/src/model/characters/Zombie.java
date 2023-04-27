@@ -9,6 +9,13 @@ public class Zombie extends Character {
 		super("Zombie " + ZOMBIES_COUNT, 40, 10);
 		ZOMBIES_COUNT++;
 	}
+	
+	public void onCharacterDeath() {
+		
+		super.onCharacterDeath();
+		
+		
+	}
 
 }
 

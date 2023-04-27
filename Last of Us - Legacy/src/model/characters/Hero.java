@@ -1,6 +1,9 @@
 package model.characters;
 
 import java.util.ArrayList;
+
+import engine.Game;
+import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
 
@@ -15,20 +18,23 @@ public abstract class Hero extends Character {
 		private boolean specialAction;
 	
 		
+		public Hero() {
+			
+		}
+		
+		
+		
 		public Hero(String name,int maxHp, int attackDmg, int maxActions) {
-			super(name,maxHp, attackDmg);
+			super(name, maxHp, attackDmg);
 			this.maxActions = maxActions;
 			this.actionsAvailable = maxActions;
 			this.vaccineInventory = new ArrayList<Vaccine>();
-			this.supplyInventory=new ArrayList<Supply>();
-			this.specialAction=false;
+			this.supplyInventory = new ArrayList<Supply>();
+			this.specialAction = false;
 		
 		}
 
 		
-	
-
-
 		public boolean isSpecialAction() {
 			return specialAction;
 		}
@@ -69,8 +75,21 @@ public abstract class Hero extends Character {
 		}
 
 
-
+		public void attack() throws NotEnoughActionsException{
+			
+			if(actionsAvailable <= 0)
+				throw new NotEnoughActionsException();
 		
-
+			super.attack();
+			actionsAvailable--;
+		}
+		
+		public void onCharacterDeath() {
+			
+			Game.heroes.remove(this);
+			super.onCharacterDeath();
+			
+			
+		}
 	
 }
