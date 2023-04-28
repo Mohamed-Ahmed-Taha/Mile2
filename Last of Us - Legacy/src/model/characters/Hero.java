@@ -85,7 +85,8 @@ public abstract class Hero extends Character {
 			Game.map[loc.x + 2][loc.y - 1].setVisible(true);
 			Game.map[loc.x + 2][loc.y + 1].setVisible(true);}
 
-		// if(turn ends)  set visible false?
+		actionsAvailable--;
+		//if(actionsAvailable == 0)  Game.endturn();
 	}
 
 
@@ -138,6 +139,7 @@ public abstract class Hero extends Character {
 		
 			super.attack();
 			actionsAvailable--;
+			//if(actionsAvailable == 0)  Game.endturn();
 		}
 		
 		public void onCharacterDeath() {
