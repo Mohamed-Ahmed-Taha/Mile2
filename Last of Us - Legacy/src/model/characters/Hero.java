@@ -1,11 +1,14 @@
 package model.characters;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import engine.Game;
+import exceptions.MovementException;
 import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
+import model.world.*;
 
 
 public abstract class Hero extends Character {
@@ -34,7 +37,60 @@ public abstract class Hero extends Character {
 		
 		}
 
-		
+
+	public boolean clear(Cell c){
+		if(c instanceof CharacterCell)
+			return false;
+
+		if(c instanceof TrapCell)
+			super.setCurrentHp(super.getCurrentHp()-((TrapCell) c).getTrapDamage());
+
+		if(c instanceof CollectibleCell){
+			if(((CollectibleCell) c).getCollectible() instanceof Supply)
+				supplyInventory.add(new Supply());
+
+			if(((CollectibleCell) c).getCollectible() instanceof Vaccine)
+				vaccineInventory.add(new Vaccine());
+		}
+
+
+		return true;
+	}
+
+	public void move(Direction d) throws MovementException {
+		Point loc = super.getLocation();
+		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
+			super.setLocation(new Point(loc.x, loc.y + 1));
+			Game.map[loc.x + 1][loc.y + 2].setVisible(true);
+			Game.map[loc.x][loc.y + 2].setVisible(true);
+			Game.map[loc.x - 1][loc.y + 2].setVisible(true);
+		}
+
+		if(d == Direction.LEFT && clear(Game.map[loc.x -1][loc.y])) {
+			super.setLocation(new Point(loc.x - 1, loc.y));
+			Game.map[loc.x - 2][loc.y].setVisible(true);
+			Game.map[loc.x - 2][loc.y - 1].setVisible(true);
+			Game.map[loc.x - 2][loc.y + 1].setVisible(true);
+		}
+		if(d == Direction.DOWN && clear(Game.map[loc.x][loc.y -1])) {
+			super.setLocation(new Point(loc.x, loc.y - 1));
+			Game.map[loc.x + 1][loc.y - 2].setVisible(true);
+			Game.map[loc.x][loc.y - 2].setVisible(true);
+			Game.map[loc.x - 1][loc.y - 2].setVisible(true);
+		}
+
+		if(d == Direction.RIGHT && clear(Game.map[loc.x + 1][loc.y])){
+			super.setLocation(new Point(loc.x +1,loc.y));
+			Game.map[loc.x + 2][loc.y].setVisible(true);
+			Game.map[loc.x + 2][loc.y - 1].setVisible(true);
+			Game.map[loc.x + 2][loc.y + 1].setVisible(true);}
+
+		// if(turn ends)  set visible false?
+	}
+
+
+
+
 		public boolean isSpecialAction() {
 			return specialAction;
 		}
