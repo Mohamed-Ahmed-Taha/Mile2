@@ -39,6 +39,7 @@ public abstract class Hero extends Character {
 		}
 
 
+
 	public boolean clear(Cell c){
 		if(c instanceof CharacterCell)
 			return false;
@@ -58,30 +59,45 @@ public abstract class Hero extends Character {
 		return true;
 	}
 
+	public Point newCoord(int x, int y, Direction d){
+			Point n = switch (d) {
+				case UP -> new Point(x, y + 1);
+				case DOWN -> new Point(x, y - 1);
+				case LEFT -> new Point(x - 1, y);
+				case RIGHT -> new Point(x + 1, y);
+			};
+
+		return n;
+	}
+
 	public void move(Direction d) throws MovementException, InvalidTargetException, NotEnoughActionsException {
 		Point loc = super.getLocation();
+		Point n = newCoord(loc.x,loc.y,d);
+
+		if(Game.isEdge(n.x, n.y)) throw new MovementException(); 
+
 		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
-			super.setLocation(new Point(loc.x, loc.y + 1));
+			super.setLocation(n);
 			Game.map[loc.x + 1][loc.y + 2].setVisible(true);
 			Game.map[loc.x][loc.y + 2].setVisible(true);
 			Game.map[loc.x - 1][loc.y + 2].setVisible(true);
 		}
 
 		if(d == Direction.LEFT && clear(Game.map[loc.x -1][loc.y])) {
-			super.setLocation(new Point(loc.x - 1, loc.y));
+			super.setLocation(n);
 			Game.map[loc.x - 2][loc.y].setVisible(true);
 			Game.map[loc.x - 2][loc.y - 1].setVisible(true);
 			Game.map[loc.x - 2][loc.y + 1].setVisible(true);
 		}
 		if(d == Direction.DOWN && clear(Game.map[loc.x][loc.y -1])) {
-			super.setLocation(new Point(loc.x, loc.y - 1));
+			super.setLocation(n);
 			Game.map[loc.x + 1][loc.y - 2].setVisible(true);
 			Game.map[loc.x][loc.y - 2].setVisible(true);
 			Game.map[loc.x - 1][loc.y - 2].setVisible(true);
 		}
 
 		if(d == Direction.RIGHT && clear(Game.map[loc.x + 1][loc.y])){
-			super.setLocation(new Point(loc.x +1,loc.y));
+			super.setLocation(n);
 			Game.map[loc.x + 2][loc.y].setVisible(true);
 			Game.map[loc.x + 2][loc.y - 1].setVisible(true);
 			Game.map[loc.x + 2][loc.y + 1].setVisible(true);}
