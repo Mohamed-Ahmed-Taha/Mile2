@@ -1,6 +1,5 @@
 package model.collectibles;
 
-import engine.Game;
 import exceptions.NoAvailableResourcesException;
 import model.characters.Hero;
 

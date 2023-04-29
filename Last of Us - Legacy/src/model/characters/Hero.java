@@ -133,14 +133,14 @@ public abstract class Hero extends Character {
 		}
 
 
-		public void attack() throws NotEnoughActionsException{
+		public void attack() throws NotEnoughActionsException, InvalidTargetException {
 			
 			if(actionsAvailable <= 0)
 				throw new NotEnoughActionsException();
 		
 			super.attack();
 			actionsAvailable--;
-			//if(actionsAvailable == 0)  Game.endturn();
+			if(actionsAvailable == 0)  Game.endTurn();
 		}
 		
 		public void onCharacterDeath() {

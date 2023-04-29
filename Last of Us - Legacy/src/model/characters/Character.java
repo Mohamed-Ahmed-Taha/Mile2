@@ -103,7 +103,7 @@ public abstract class Character {
 	}
 	
 	
-	public void attack() throws NotEnoughActionsException{
+	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		
 		
 		if(isAdjacent(target, this))
