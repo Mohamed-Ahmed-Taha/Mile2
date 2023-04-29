@@ -29,27 +29,6 @@ public abstract class Character {
 		this.attackDmg = attackDmg;
 	}
 	
-	
-	public boolean isAdjacent(Character A, Character B) {
-		Point a = A.getLocation(); 
-		Point b = B.getLocation();
-		return (a.distance(b) >= 1 && a.distance(b) <= Math.sqrt(2));
-	}
-	
-	public void attack() throws NotEnoughActionsException{
-		
-		
-		if(isAdjacent(target, this))
-			target.setCurrentHp(target.getCurrentHp() - attackDmg);
-		
-		target.defend(this);
-	}
-	
-	
-		
-	public void defend(Character c) {
-		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
-	}
 
 
 	public Character getTarget() {
@@ -96,6 +75,27 @@ public abstract class Character {
 			return false;
 		Character p = (Character) o;
 		return p.getName().equals(this.getName());
+	}
+	
+	public boolean isAdjacent(Character A, Character B) {
+		Point a = A.getLocation(); 
+		Point b = B.getLocation();
+		return (a.distance(b) >= 1 && a.distance(b) <= Math.sqrt(2));
+	}
+	
+	public void attack() throws NotEnoughActionsException{
+		
+		
+		if(isAdjacent(target, this))
+			target.setCurrentHp(target.getCurrentHp() - attackDmg);
+		
+		target.defend(this);
+	}
+	
+	
+	
+	public void defend(Character c) {
+		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
 	}
 	
 	public void onCharacterDeath() {
