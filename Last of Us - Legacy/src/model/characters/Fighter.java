@@ -1,6 +1,11 @@
 package model.characters;
 
 
+import engine.Game;
+import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
+import exceptions.NotEnoughActionsException;
+
 public class Fighter extends Hero{
 
 	
@@ -9,11 +14,5 @@ public class Fighter extends Hero{
 		
 	}
 
-	
-
-	
-	
-	
-	
 
 }

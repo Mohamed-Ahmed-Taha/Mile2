@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.MovementException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
@@ -74,7 +75,7 @@ public abstract class Hero extends Character {
 		Point loc = super.getLocation();
 		Point n = newCoord(loc.x,loc.y,d);
 
-		if(Game.isEdge(n.x, n.y)) throw new MovementException(); 
+		if(Game.isEdge(n.x, n.y)) throw new MovementException();
 
 		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
 			super.setLocation(n);
@@ -106,6 +107,10 @@ public abstract class Hero extends Character {
 		if(actionsAvailable == 0)  Game.endTurn();
 	}
 
+
+	 public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
+
+	 }
 
 
 
