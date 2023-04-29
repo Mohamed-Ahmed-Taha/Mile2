@@ -1,6 +1,7 @@
 package model.characters;
 
 import java.awt.Point;
+import java.util.Objects;
 
 import engine.Game;
 import exceptions.InvalidTargetException;
@@ -20,7 +21,6 @@ public abstract class Character {
 	public Character() {
 	}
 	
-	
 
 	public Character(String name, int maxHp, int attackDmg) {
 		this.name=name;
@@ -30,35 +30,41 @@ public abstract class Character {
 	}
 	
 
-
 	public Character getTarget() {
 		return target;
 	}
 
+	
 	public void setTarget(Character target) throws InvalidTargetException {
 		this.target = target;
 	}
 	
+	
 	public String getName() {
 		return name;
 	}
-
+	
+	
 	public Point getLocation() {
 		return location;
 	}
+	
 
 	public void setLocation(Point location) {
 		this.location = location;
 	}
 
+	
 	public int getMaxHp() {
 		return maxHp;
 	}
 
+	
 	public int getCurrentHp() {
 		return currentHp;
 	}
 
+	
 	public void setCurrentHp(int currentHp) {
 		if(currentHp <= 0) { 
 			this.currentHp = 0;
@@ -70,18 +76,32 @@ public abstract class Character {
 			this.currentHp = currentHp;
 	}
 
-	public boolean equals(Object o) {
-		if (!(o instanceof Character))
-			return false;
-		Character p = (Character) o;
-		return p.getName().equals(this.getName());
-	}
 	
+	public int getAttackDmg() {
+		return attackDmg;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Character other = (Character) obj;
+		return attackDmg == other.attackDmg && currentHp == other.currentHp && Objects.equals(location, other.location)
+				&& maxHp == other.maxHp && Objects.equals(name, other.name) && Objects.equals(target, other.target);
+	}
+
+
 	public boolean isAdjacent(Character A, Character B) {
 		Point a = A.getLocation(); 
 		Point b = B.getLocation();
 		return (a.distance(b) >= 1 && a.distance(b) <= Math.sqrt(2));
 	}
+	
 	
 	public void attack() throws NotEnoughActionsException{
 		
@@ -93,10 +113,10 @@ public abstract class Character {
 	}
 	
 	
-	
 	public void defend(Character c) {
 		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
 	}
+	
 	
 	public void onCharacterDeath() {
 		
@@ -111,11 +131,6 @@ public abstract class Character {
 	
 
 
-
-	public int getAttackDmg() {
-		return attackDmg;
-	}
-	
 //	public static void main(String[] args) {
 //		Point a = new Point(0,0);
 //		Point b = new Point(1,1);
