@@ -135,11 +135,12 @@ public abstract class Hero extends Character {
 
 		public void attack() throws NotEnoughActionsException, InvalidTargetException {
 			
-			if(actionsAvailable <= 0)
+			if(super.getTarget() instanceof Hero)
+				throw new InvalidTargetException();
+			if(actionsAvailable-- <= 0)
 				throw new NotEnoughActionsException();
 		
 			super.attack();
-			actionsAvailable--;
 			if(actionsAvailable == 0)  Game.endTurn();
 		}
 		

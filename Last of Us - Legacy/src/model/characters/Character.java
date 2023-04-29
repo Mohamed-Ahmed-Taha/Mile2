@@ -66,10 +66,8 @@ public abstract class Character {
 
 	
 	public void setCurrentHp(int currentHp) {
-		if(currentHp <= 0) { 
-			this.currentHp = 0;
+		if(currentHp <= 0) 
 			onCharacterDeath();
-		}
 		else if(currentHp > maxHp) 
 			this.currentHp = maxHp;
 		else 
@@ -104,12 +102,13 @@ public abstract class Character {
 	
 	
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+				
+		if(!isAdjacent(target, this))
+			throw new InvalidTargetException();
 		
-		
-		if(isAdjacent(target, this))
-			target.setCurrentHp(target.getCurrentHp() - attackDmg);
-		
+		target.setCurrentHp(target.getCurrentHp() - attackDmg);
 		target.defend(this);
+		
 	}
 	
 	
@@ -122,18 +121,8 @@ public abstract class Character {
 		
 		for(int i = 0; i < 15; i++)
 			for(int j = 0; j < 15; j++) 
-				if(Game.map[i][j] instanceof CharacterCell &&
-				    ((CharacterCell)Game.map[i][j]).getCharacter().equals(this)) {
-					
+				if(Game.map[i][j] instanceof CharacterCell && ((CharacterCell)Game.map[i][j]).getCharacter().equals(this))				
 					Game.map[i][j] = null;
-				}
 	}
 	
-
-
-//	public static void main(String[] args) {
-//		Point a = new Point(0,0);
-//		Point b = new Point(1,1);
-//		System.out.println(a.distance(b) == Math.sqrt(2));
-//	}
 }
