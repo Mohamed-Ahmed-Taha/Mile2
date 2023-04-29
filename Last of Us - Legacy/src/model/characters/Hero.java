@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import engine.Game;
+import exceptions.InvalidTargetException;
 import exceptions.MovementException;
 import exceptions.NotEnoughActionsException;
 import model.collectibles.Supply;
@@ -57,7 +58,7 @@ public abstract class Hero extends Character {
 		return true;
 	}
 
-	public void move(Direction d) throws MovementException {
+	public void move(Direction d) throws MovementException, InvalidTargetException, NotEnoughActionsException {
 		Point loc = super.getLocation();
 		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
 			super.setLocation(new Point(loc.x, loc.y + 1));
@@ -86,7 +87,7 @@ public abstract class Hero extends Character {
 			Game.map[loc.x + 2][loc.y + 1].setVisible(true);}
 
 		actionsAvailable--;
-		//if(actionsAvailable == 0)  Game.endturn();
+		if(actionsAvailable == 0)  Game.endTurn();
 	}
 
 
