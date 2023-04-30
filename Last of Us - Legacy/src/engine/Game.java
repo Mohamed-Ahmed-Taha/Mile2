@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.Random;
 
 
 public class Game {
@@ -23,13 +23,21 @@ public class Game {
 	public static Cell[][] map;
 
 	public static Point randomLocation() {
-		Point p= new Point((int)(Math.random()*14),(int)(Math.random()*14));
+		Random r = new Random();
+		int x = r.nextInt(15);
+		int y = r.nextInt(15);
+		Point p= new Point(x,y);
 
 		while(map[p.x][p.y] != null) {
-			p.x= (int)(Math.random()*14);
-			p.y= (int)(Math.random()*14);
+			p.x= r.nextInt(15);
+			p.y= r.nextInt(15);
 		}
 		return p;
+	}
+	public static Hero randomHeroAvailable(ArrayList<Hero> availableHeroes){
+		Random r = new Random();
+		int x = r.nextInt(availableHeroes.size() + 1);
+		return availableHeroes.remove(x);
 	}
 
 	public static void startGame(Hero h) {

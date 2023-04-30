@@ -166,6 +166,14 @@ public abstract class Hero extends Character {
 			super.attack();
 			if(actionsAvailable == 0)  Game.endTurn();
 		}
+
+		public void cure(){
+			Character z = getTarget();
+			if(z instanceof Zombie && isAdjacent(this, z)){
+				Point p = z.getLocation();
+				Game.map[p.x][p.y] = new CharacterCell(Game.randomHeroAvailable(Game.availableHeroes));
+			}
+		}
 		
 		public void onCharacterDeath() {
 			

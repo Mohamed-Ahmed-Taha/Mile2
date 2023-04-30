@@ -94,12 +94,12 @@ public abstract class Character {
 	}
 
 
-	public boolean isAdjacent(Character A, Character B) {
+	public static boolean isAdjacent(Character A, Character B) {
 		Point a = A.getLocation(); 
 		Point b = B.getLocation();
 		return (a.distance(b) >= 1 && a.distance(b) <= Math.sqrt(2));
 	}
-	
+
 	
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 				
