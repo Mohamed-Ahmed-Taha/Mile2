@@ -172,6 +172,7 @@ public abstract class Hero extends Character {
 			if(z instanceof Zombie && isAdjacent(this, z)){
 				Point p = z.getLocation();
 				Game.map[p.x][p.y] = new CharacterCell(Game.randomHeroAvailable(Game.availableHeroes));
+				Game.setVisibility(p);
 			}
 		}
 		
