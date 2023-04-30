@@ -154,8 +154,10 @@ public abstract class Hero extends Character {
 
 
 		public void attack() throws NotEnoughActionsException, InvalidTargetException {
-			if(!(this instanceof Fighter) && specialAction)
+			if ((!(this instanceof Fighter)) || !specialAction) {
 				actionsAvailable--;
+			}
+
 			if(super.getTarget() instanceof Hero)
 				throw new InvalidTargetException();
 			if(actionsAvailable <= 0 )
