@@ -1,6 +1,12 @@
 package model.characters;
 
 
+import engine.Game;
+import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
+import exceptions.NotEnoughActionsException;
+import model.collectibles.Supply;
+
 public class Explorer extends Hero {
 	
 
@@ -9,8 +15,19 @@ public class Explorer extends Hero {
 		
 	}
 
-	
-	
+	@Override
+	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
+		if(!getSupplyInventory().isEmpty()){
+			Supply s = new Supply();
+			s.use(this);
+			super.setSpecialAction(true);}
 
-	
+		for(int i = 0; i <14; i++){
+			for(int j = 0; j <14; j++){
+				Game.map[i][j].setVisible(true);
+			}
+		}
+	}
+
+
 }

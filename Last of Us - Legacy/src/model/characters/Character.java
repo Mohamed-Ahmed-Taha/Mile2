@@ -105,7 +105,6 @@ public abstract class Character {
 				
 		if(!isAdjacent(target, this))
 			throw new InvalidTargetException();
-		
 		target.setCurrentHp(target.getCurrentHp() - attackDmg);
 		target.defend(this);
 		

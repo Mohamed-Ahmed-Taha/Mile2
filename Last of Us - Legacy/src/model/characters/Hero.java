@@ -108,9 +108,7 @@ public abstract class Hero extends Character {
 	}
 
 
-	 public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
-
-	 }
+	 abstract public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException;
 
 
 
@@ -154,11 +152,13 @@ public abstract class Hero extends Character {
 		}
 
 
+
 		public void attack() throws NotEnoughActionsException, InvalidTargetException {
-			
+			if(!(this instanceof Fighter) && specialAction)
+				actionsAvailable--;
 			if(super.getTarget() instanceof Hero)
 				throw new InvalidTargetException();
-			if(actionsAvailable-- <= 0)
+			if(actionsAvailable <= 0 )
 				throw new NotEnoughActionsException();
 		
 			super.attack();
