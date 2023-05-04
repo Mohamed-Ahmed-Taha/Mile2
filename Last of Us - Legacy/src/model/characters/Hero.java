@@ -79,6 +79,7 @@ public abstract class Hero extends Character {
 
 		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
 			super.setLocation(n);
+			//((CharacterCell)(Game.map[n.x][n.y])).setCharacter(getTarget());
 			Game.map[loc.x + 1][loc.y + 2].setVisible(true);
 			Game.map[loc.x][loc.y + 2].setVisible(true);
 			Game.map[loc.x - 1][loc.y + 2].setVisible(true);
@@ -154,16 +155,16 @@ public abstract class Hero extends Character {
 
 
 		public void attack() throws NotEnoughActionsException, InvalidTargetException {
-			if ((!(this instanceof Fighter)) || !specialAction) {
-				actionsAvailable--;
-			}
+			
 
 			if(super.getTarget() instanceof Hero)
 				throw new InvalidTargetException();
 			if(actionsAvailable <= 0 )
 				throw new NotEnoughActionsException();
-		
 			super.attack();
+			if ((!(this instanceof Fighter)) || !specialAction)
+				actionsAvailable--;
+		
 			if(actionsAvailable == 0)  Game.endTurn();
 		}
 
@@ -172,7 +173,7 @@ public abstract class Hero extends Character {
 			if(z instanceof Zombie && isAdjacent(this, z)){
 				Point p = z.getLocation();
 				Game.map[p.x][p.y] = new CharacterCell(Game.randomHeroAvailable(Game.availableHeroes));
-				Game.setVisibility(p);
+				Game.setVisibility(p, true);
 			}
 		}
 		
@@ -181,6 +182,9 @@ public abstract class Hero extends Character {
 			Game.heroes.remove(this);
 			super.onCharacterDeath();
 			
+			Game.setVisibility(getLocation(), false);
+			
+			Game.setVisiblityToAllHeroes();
 			
 		}
 	

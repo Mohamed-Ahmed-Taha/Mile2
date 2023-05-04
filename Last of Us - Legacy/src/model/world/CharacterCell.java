@@ -8,7 +8,7 @@ public class CharacterCell extends Cell {
 	
 	private boolean isSafe;
 	
-	public CharacterCell(Character character,boolean isSafe) {
+	public CharacterCell(Character character, boolean isSafe) {
 		
 		this.character = character;
 		
@@ -24,6 +24,11 @@ public class CharacterCell extends Cell {
 	
 	}
 	
+	
+	public CharacterCell() {
+		
+		
+	}
 	
 	public Character getCharacter() {
 	

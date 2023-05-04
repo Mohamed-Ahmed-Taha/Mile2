@@ -117,11 +117,17 @@ public abstract class Character {
 	
 	
 	public void onCharacterDeath() {
+		Point p = location;
 		
-		for(int i = 0; i < 15; i++)
-			for(int j = 0; j < 15; j++) 
-				if(Game.map[i][j] instanceof CharacterCell && ((CharacterCell)Game.map[i][j]).getCharacter().equals(this))				
-					Game.map[i][j] = null;
+		((CharacterCell) Game.map[p.x][p.y]).setCharacter(null);
 	}
 	
+		
+	
 }
+
+
+
+
+
+

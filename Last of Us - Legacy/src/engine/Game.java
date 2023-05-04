@@ -81,63 +81,72 @@ public class Game {
 		return x < 0 || x > 14 || y < 0 || y > 14;
 	}
 
-	public static void setVisibility(Point p) {
-		map[p.x][p.y].setVisible(true);
+	public static void setVisibility(Point p, boolean visisble) {
+		map[p.x][p.y].setVisible(visisble);
 
 		if(!isEdge(p.x-1,p.y))
-			map[p.x-1][p.y].setVisible(true);
+			map[p.x-1][p.y].setVisible(visisble);
 
 		if(!isEdge(p.x+1,p.y))
-			map[p.x+1][p.y].setVisible(true);
+			map[p.x+1][p.y].setVisible(visisble);
 
 		if(!isEdge(p.x-1,p.y-1))
-			map[p.x-1][p.y-1].setVisible(true);
+			map[p.x-1][p.y-1].setVisible(visisble);
 
 		if(!isEdge(p.x-1,p.y+1))
-			map[p.x-1][p.y+1].setVisible(true);
+			map[p.x-1][p.y+1].setVisible(visisble);
 
 		if(!isEdge(p.x+1,p.y-1))
-			map[p.x+1][p.y-1].setVisible(true);
+			map[p.x+1][p.y-1].setVisible(visisble);
 
 		if(!isEdge(p.x+1,p.y+1))
-			map[p.x+1][p.y+1].setVisible(true);
+			map[p.x+1][p.y+1].setVisible(visisble);
 
 		if(!isEdge(p.x,p.y-1))
-			map[p.x][p.y-1].setVisible(true);
+			map[p.x][p.y-1].setVisible(visisble);
 
 		if(!isEdge(p.x,p.y+1))
-			map[p.x-1][p.y+1].setVisible(true);
+			map[p.x-1][p.y+1].setVisible(visisble);
 
+	}
+	
+	public static void setVisiblityToAllHeroes() {
+		for (Hero value : heroes) {
+			setVisibility(value.getLocation(), true);
+		}
 	}
 
 	public static boolean checkHero(int x, int y) {
 		return map[x][y] instanceof CharacterCell && ((CharacterCell) map[x][y]).getCharacter() instanceof Hero;
 	}
 
-	public static boolean doAttack(Point p) {
+	public static Character doAttack(Point p) {
 
 		if(!isEdge(p.x-1, p.y) && checkHero(p.x-1, p.y)) {
-			return true;
+			return ((CharacterCell)map[p.x-1][p.y]).getCharacter();
 		}
 		if(!isEdge(p.x+1, p.y) && checkHero(p.x+1, p.y)) {
-			return true;
+			return ((CharacterCell)map[p.x+1][p.y]).getCharacter();
 		}
 		if(!isEdge(p.x-1, p.y-1) && checkHero(p.x-1, p.y-1)) {
-			return true;
+			return ((CharacterCell)map[p.x-1][p.y-1]).getCharacter();
 		}
 		if(!isEdge(p.x-1, p.y+1) && checkHero(p.x-1, p.y+1)) {
-			return true;
+			return ((CharacterCell)map[p.x-1][p.y+1]).getCharacter();
 		}
 		if(!isEdge(p.x+1, p.y-1) && checkHero(p.x+1, p.y-1)) {
-			return true;
+			return ((CharacterCell)map[p.x+1][p.y-1]).getCharacter();
 		}
 		if(!isEdge(p.x+1, p.y+1) && checkHero(p.x+1, p.y+1)) {
-			return true;
+			return ((CharacterCell)map[p.x+1][p.y+1]).getCharacter();
 		}
 		if(!isEdge(p.x, p.y-1) && checkHero(p.x, p.y-1)) {
-			return true;
+			return ((CharacterCell)map[p.x][p.y-1]).getCharacter();
 		}
-		return !isEdge(p.x, p.y + 1) && checkHero(p.x, p.y + 1);
+		if(!isEdge(p.x, p.y+1) && checkHero(p.x, p.y+1)) {
+			return ((CharacterCell)map[p.x][p.y+1]).getCharacter();
+		}
+		return null;
 	}
 
 	public static void endTurn() throws InvalidTargetException, NotEnoughActionsException {
@@ -147,18 +156,21 @@ public class Game {
 			}
 		}
 
-		for (Hero value : heroes) {
-			setVisibility(value.getLocation());
-		}
+
 
 		for (Zombie zombie : zombies) {
-			if (doAttack(zombie.getLocation()))
+			Character c = doAttack(zombie.getLocation());
+			if (c != null) {
+				zombie.setTarget(c);
 				zombie.attack();
+				
+			}
 		}
+	
 
 		for (Hero hero : heroes) {
 			hero.setActionsAvailable(hero.getMaxActions());
-			hero.setSpecialAction(true);
+			hero.setSpecialAction(false);
 			hero.setTarget(null);
 		}
 
@@ -166,6 +178,8 @@ public class Game {
 		Zombie z = new Zombie();
 		map[p.x][p.y] = new CharacterCell(z);
 		zombies.add(z);
+		
+		setVisiblityToAllHeroes();
 	}
 
 	public static void loadHeroes(String filePath) throws IOException {
@@ -192,11 +206,12 @@ public class Game {
 
 		}
 	}
+	
 	public static void addToMap(Character c) {
 		Point p = randomLocation();
 		map[p.x][p.y] = new CharacterCell(c);
 		if(c instanceof Hero)
-			setVisibility(p);
+			setVisibility(p, true);
 		else
 			map[p.x][p.y].setVisible(false);
 	}
@@ -208,4 +223,5 @@ public class Game {
 		map[p.x][p.y].setVisible(false);
 	}
 
+	
 }
