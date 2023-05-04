@@ -45,10 +45,13 @@ public abstract class Hero extends Character {
 		if(c instanceof CharacterCell)
 			return false;
 
-		if(c instanceof TrapCell)
+		if(c instanceof TrapCell){
+
 			super.setCurrentHp(super.getCurrentHp()-((TrapCell) c).getTrapDamage());
+			c = new CharacterCell(this); }
 
 		if(c instanceof CollectibleCell){
+			c = new CharacterCell(this);
 			if(((CollectibleCell) c).getCollectible() instanceof Supply)
 				supplyInventory.add(new Supply());
 
@@ -78,6 +81,7 @@ public abstract class Hero extends Character {
 		if(Game.isEdge(n.x, n.y)) throw new MovementException();
 
 		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
+			
 			super.setLocation(n);
 			//((CharacterCell)(Game.map[n.x][n.y])).setCharacter(getTarget());
 			Game.map[loc.x + 1][loc.y + 2].setVisible(true);
