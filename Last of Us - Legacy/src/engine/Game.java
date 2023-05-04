@@ -222,6 +222,6 @@ public class Game {
 		map[p.x][p.y] = new CollectibleCell(c);
 		map[p.x][p.y].setVisible(false);
 	}
-
+	
 	
 }
