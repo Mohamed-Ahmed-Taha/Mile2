@@ -42,6 +42,13 @@ public class Game {
 
 	public static void startGame(Hero h) {
 		map = new CharacterCell[15][15];
+		
+		for(int i= 0; i < 15; i++) {
+			for(int j= 0; j < 15; j++) {
+				map[i][j] = new CharacterCell(null);
+			}
+		}		
+		
 		h = availableHeroes.remove((int)(Math.random()*8));
 		map[0][0]= new CharacterCell(h);
 		heroes.add(h);
