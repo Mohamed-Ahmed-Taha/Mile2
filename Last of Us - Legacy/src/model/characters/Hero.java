@@ -84,29 +84,41 @@ public abstract class Hero extends Character {
 			
 			super.setLocation(n);
 			//((CharacterCell)(Game.map[n.x][n.y])).setCharacter(getTarget());
+			Game.map[n.x][n.y] = new CharacterCell(this); 
 			Game.map[loc.x + 1][loc.y + 2].setVisible(true);
 			Game.map[loc.x][loc.y + 2].setVisible(true);
 			Game.map[loc.x - 1][loc.y + 2].setVisible(true);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
+
 		}
 
 		if(d == Direction.LEFT && clear(Game.map[loc.x -1][loc.y])) {
 			super.setLocation(n);
+			Game.map[n.x][n.y] = new CharacterCell(this); 
 			Game.map[loc.x - 2][loc.y].setVisible(true);
 			Game.map[loc.x - 2][loc.y - 1].setVisible(true);
 			Game.map[loc.x - 2][loc.y + 1].setVisible(true);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
+
 		}
 		if(d == Direction.DOWN && clear(Game.map[loc.x][loc.y -1])) {
 			super.setLocation(n);
+			Game.map[n.x][n.y] = new CharacterCell(this); 
 			Game.map[loc.x + 1][loc.y - 2].setVisible(true);
 			Game.map[loc.x][loc.y - 2].setVisible(true);
 			Game.map[loc.x - 1][loc.y - 2].setVisible(true);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
+
 		}
 
 		if(d == Direction.RIGHT && clear(Game.map[loc.x + 1][loc.y])){
 			super.setLocation(n);
+			Game.map[n.x][n.y] = new CharacterCell(this); 
 			Game.map[loc.x + 2][loc.y].setVisible(true);
 			Game.map[loc.x + 2][loc.y - 1].setVisible(true);
-			Game.map[loc.x + 2][loc.y + 1].setVisible(true);}
+			Game.map[loc.x + 2][loc.y + 1].setVisible(true);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
+		}
 
 		actionsAvailable--;
 		if(actionsAvailable == 0)  Game.endTurn();
