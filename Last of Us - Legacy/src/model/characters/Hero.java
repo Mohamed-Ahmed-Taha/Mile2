@@ -42,11 +42,14 @@ public abstract class Hero extends Character {
 
 
 	public boolean clear(Cell c){
-		if(c instanceof CharacterCell)
-			return false;
+		if(c instanceof CharacterCell){
+			if(((CharacterCell) c).getCharacter() == null)
+				return false;}
 
-		if(c instanceof TrapCell)
+		if(c instanceof TrapCell){
+
 			super.setCurrentHp(super.getCurrentHp()-((TrapCell) c).getTrapDamage());
+			 }
 
 		if(c instanceof CollectibleCell){
 			if(((CollectibleCell) c).getCollectible() instanceof Supply)
@@ -62,7 +65,7 @@ public abstract class Hero extends Character {
 
 	public Point newCoord(int x, int y, Direction d){
 			Point n = switch (d) {
-				case UP -> new Point(x, y + 1);
+				case UP -> new Point(x , y + 1);
 				case DOWN -> new Point(x, y - 1);
 				case LEFT -> new Point(x - 1, y);
 				case RIGHT -> new Point(x + 1, y);
@@ -77,36 +80,36 @@ public abstract class Hero extends Character {
 
 		if(Game.isEdge(n.x, n.y)) throw new MovementException();
 
-		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
+		if(d == Direction.UP && clear(Game.map[n.y][n.x])) {
 			
 			super.setLocation(n);
-			Game.map[n.x][n.y] = new CharacterCell(this);
-			Game.map[loc.x][loc.y] = new CharacterCell(null);  
+			Game.map[n.y][n.x] = new CharacterCell(this);
+			Game.map[loc.y][loc.x] = new CharacterCell(null);
 			
 			Game.setVisibility(n, true);
 		}
 
-		if(d == Direction.LEFT && clear(Game.map[loc.x -1][loc.y])) {
+		if(d == Direction.LEFT && clear(Game.map[n.y][n.x])) {
 			super.setLocation(n);
-			Game.map[n.x][n.y] = new CharacterCell(this);
-			Game.map[loc.x][loc.y] = new CharacterCell(null);  
+			Game.map[n.y][n.x] = new CharacterCell(this);
+			Game.map[loc.y][loc.x] = new CharacterCell(null);
 			
 			Game.setVisibility(n, true);
 
 		}
-		if(d == Direction.DOWN && clear(Game.map[loc.x][loc.y -1])) {
+		if(d == Direction.DOWN && clear(Game.map[n.y][n.x])) {
 			super.setLocation(n);
-			Game.map[n.x][n.y] = new CharacterCell(this);
-			Game.map[loc.x][loc.y] = new CharacterCell(null); 
+			Game.map[n.y][n.x] = new CharacterCell(this);
+			Game.map[loc.y][loc.x] = new CharacterCell(null);
 			
 			Game.setVisibility(n, true);
 
 		}
 
-		if(d == Direction.RIGHT && clear(Game.map[loc.x + 1][loc.y])){
+		if(d == Direction.RIGHT && clear(Game.map[n.y][n.x])){
 			super.setLocation(n);
-			Game.map[n.x][n.y] = new CharacterCell(this);
-			Game.map[loc.x][loc.y] = new CharacterCell(null);  
+			Game.map[n.y][n.x] = new CharacterCell(this);
+			Game.map[loc.y][loc.x] = new CharacterCell(null);
 			
 			Game.setVisibility(n, true);
 		}
@@ -169,17 +172,18 @@ public abstract class Hero extends Character {
 			if(actionsAvailable <= 0 )
 				throw new NotEnoughActionsException();
 			super.attack();
-			if ((!(this instanceof Fighter)) || !specialAction)
+			if (!((this instanceof Fighter) && specialAction))
 				actionsAvailable--;
 		
-			if(actionsAvailable == 0)  Game.endTurn();
+			if(actionsAvailable == 0 && (!((this instanceof Fighter) && specialAction)) && this.getTarget()!= null)  Game.endTurn();
 		}
 
 		public void cure(){
 			Character z = getTarget();
-			if(z != null && z instanceof Zombie && isAdjacent(this, z)){
+			if(z instanceof Zombie && isAdjacent(this, z)){
 				Point p = z.getLocation();
-				Game.map[p.x][p.y] = new CharacterCell(Game.randomHeroAvailable(Game.availableHeroes));
+
+				Game.map[p.y][p.x] = new CharacterCell(Game.randomHeroAvailable(Game.availableHeroes));
 				Game.setVisibility(p, true);
 			}
 		}

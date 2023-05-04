@@ -28,7 +28,7 @@ public class Game {
 		int y = r.nextInt(15);
 		Point p= new Point(x,y);
 
-		while(map[p.x][p.y] != null) {
+		while(((CharacterCell) map[p.x][p.y]).getCharacter() != null) {
 			p.x= r.nextInt(15);
 			p.y= r.nextInt(15);
 		}
@@ -41,14 +41,14 @@ public class Game {
 	}
 
 	public static void startGame(Hero h) {
-		map = new CharacterCell[15][15];
-		
-		for(int i= 0; i < 15; i++) {
-			for(int j= 0; j < 15; j++) {
+		map = new Cell[15][15];
+
+		for(int i= 0; i < map.length; i++) {
+			for(int j= 0; j < map[i].length; j++) {
 				map[i][j] = new CharacterCell(null);
 			}
-		}		
-		
+		}
+		//{[CharacterCell(null),CharacterCell(null),CharacterCell(null)]}
 		h = availableHeroes.remove((int)(Math.random()*8));
 		map[0][0]= new CharacterCell(h);
 		heroes.add(h);
