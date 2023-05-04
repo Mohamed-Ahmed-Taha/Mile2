@@ -110,7 +110,13 @@ public class Game {
 
 	}
 	
-	public static void setVisiblityToAllHeroes() {
+	public static void updateVisibility() {
+		for(int i= 0; i < 15; i++) {
+			for(int j= 0; j < 15; j++) {
+				map[i][j].setVisible(false);
+			}
+		}
+		
 		for (Hero value : heroes) {
 			setVisibility(value.getLocation(), true);
 		}
@@ -150,13 +156,7 @@ public class Game {
 	}
 
 	public static void endTurn() throws InvalidTargetException, NotEnoughActionsException {
-		for(int i= 0; i<14; i++) {
-			for(int j= 0; j<14; j++) {
-				map[i][j].setVisible(false);
-			}
-		}
-
-
+		
 
 		for (Zombie zombie : zombies) {
 			Character c = doAttack(zombie.getLocation());
@@ -179,7 +179,7 @@ public class Game {
 		map[p.x][p.y] = new CharacterCell(z);
 		zombies.add(z);
 		
-		setVisiblityToAllHeroes();
+		updateVisibility();
 	}
 
 	public static void loadHeroes(String filePath) throws IOException {
@@ -212,8 +212,10 @@ public class Game {
 		map[p.x][p.y] = new CharacterCell(c);
 		if(c instanceof Hero)
 			setVisibility(p, true);
-		else
+		else {
+			zombies.add((Zombie)c);
 			map[p.x][p.y].setVisible(false);
+		}
 	}
 
 
