@@ -22,9 +22,10 @@ public class Medic extends Hero {
 			super.setSpecialAction(true);}
 		Supply s = new Supply();
 		s.use(this);
-		if(super.getTarget() instanceof Hero){
+		if(super.getTarget() instanceof Hero && Character.isAdjacent(super.getTarget(),this)){
 		Character healed = super.getTarget();
 		healed.setCurrentHp(1000);}
+		else throw new InvalidTargetException("You should select a close Hero to heal");
 
 	}
 

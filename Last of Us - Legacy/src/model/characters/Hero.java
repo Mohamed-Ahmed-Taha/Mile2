@@ -178,21 +178,27 @@ public abstract class Hero extends Character {
 			if(actionsAvailable == 0 && (!((this instanceof Fighter) && specialAction)) && this.getTarget()!= null)  Game.endTurn();
 		}
 
-		public void cure(){
+		public void cure() throws  InvalidTargetException{
 			Character z = getTarget();
+			if(z == null) throw new InvalidTargetException("You must select a zombie to cure");
 			if(z instanceof Zombie && isAdjacent(this, z)){
 				Point p = z.getLocation();
 
 				Game.map[p.y][p.x] = new CharacterCell(Game.randomHeroAvailable(Game.availableHeroes));
 				Game.setVisibility(p, true);
 			}
-		}
+			if(!isAdjacent(this, z)) throw new InvalidTargetException("You must select a close zombie to cure");
+			(new Supply()).use(this);
+				}
 		
 		public void onCharacterDeath() {
 			
 			Game.heroes.remove(this);
-			super.onCharacterDeath();
-			
+			Point p = this.getLocation();
+
+			((CharacterCell) Game.map[p.y][p.x]).setCharacter(null);
+			Game.heroes.remove(this);
+			Game.checkGameOver();
 			//Game.setVisibility(getLocation(), false);
 			Game.updateVisibility();
 			//Game.setVisiblityToAllHeroes();

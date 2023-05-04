@@ -28,7 +28,10 @@ public class Game {
 		int y = r.nextInt(15);
 		Point p= new Point(x,y);
 
-		while(((CharacterCell) map[p.x][p.y]).getCharacter() != null) {
+		while((map[p.x][p.y] instanceof CharacterCell &&((CharacterCell) map[p.x][p.y]).getCharacter() != null)
+			|| map[p.x][p.y] instanceof TrapCell
+			|| map[p.x][p.y] instanceof CollectibleCell)
+		{
 			p.x= r.nextInt(15);
 			p.y= r.nextInt(15);
 		}
@@ -49,7 +52,7 @@ public class Game {
 			}
 		}
 		//{[CharacterCell(null),CharacterCell(null),CharacterCell(null)]}
-		h = availableHeroes.remove((int)(Math.random()*8));
+		h = availableHeroes.remove((int)(Math.random()*(availableHeroes.size())));
 		map[0][0]= new CharacterCell(h);
 		heroes.add(h);
 		map[0][0].setVisible(true);
@@ -81,7 +84,7 @@ public class Game {
 	}
 
 	public static boolean checkGameOver() {
-		return heroes.size() == 0 || heroes.size() < 5 || Vaccine.getVaxUsed() != 5;
+		return (heroes.size() == 0 || checkWin());
 	}
 
 	public static boolean isEdge(int x, int y) {
@@ -216,7 +219,8 @@ public class Game {
 	
 	public static void addToMap(Character c) {
 		Point p = randomLocation();
-		map[p.x][p.y] = new CharacterCell(c);
+		c.setLocation(new Point(p.x,p.y));
+		map[p.y][p.x] = new CharacterCell(c);
 		if(c instanceof Hero)
 			setVisibility(p, true);
 		else {
@@ -228,8 +232,8 @@ public class Game {
 
 	public static void addToMap(Collectible c) {
 		Point p = randomLocation();
-		map[p.x][p.y] = new CollectibleCell(c);
-		map[p.x][p.y].setVisible(false);
+		map[p.y][p.x] = new CollectibleCell(c);
+		map[p.y][p.x].setVisible(false);
 	}
 	
 	

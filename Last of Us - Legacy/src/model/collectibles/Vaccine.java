@@ -1,5 +1,6 @@
 package model.collectibles;
 
+import engine.Game;
 import exceptions.NoAvailableResourcesException;
 import model.characters.Hero;
 
@@ -21,6 +22,7 @@ public class Vaccine implements Collectible {
 		if(h.getVaccineInventory().isEmpty()) throw new NoAvailableResourcesException();
 		vaxUsed++;
 		h.getVaccineInventory().remove(this);
+		if(vaxUsed >= 5) Game.checkWin();
 
 	}
 

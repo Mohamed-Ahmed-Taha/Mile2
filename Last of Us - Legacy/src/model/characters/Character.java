@@ -97,30 +97,28 @@ public abstract class Character {
 	public static boolean isAdjacent(Character A, Character B) {
 		Point a = A.getLocation(); 
 		Point b = B.getLocation();
+		if(a == null || b == null) return false;
 		return (a.distance(b) >= 1 && a.distance(b) <= Math.sqrt(2));
 	}
 
 	
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
-		if(target != null){
-		if( !isAdjacent(target, this))
+		if(target == null || !isAdjacent(target, this))
 			throw new InvalidTargetException();
 		target.setCurrentHp(target.getCurrentHp() - attackDmg);
-		target.defend(this);}
+		if(target.getCurrentHp() <= 0) onCharacterDeath();
+		target.defend(this);
 		
 	}
 	
 	
 	public void defend(Character c) {
 		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
+		if(c.getCurrentHp() <= 0) c.onCharacterDeath();
 	}
 	
 	
-	public void onCharacterDeath() {
-		Point p = location;
-		
-		((CharacterCell) Game.map[p.x][p.y]).setCharacter(null);
-	}
+	abstract public void onCharacterDeath();
 	
 		
 	
