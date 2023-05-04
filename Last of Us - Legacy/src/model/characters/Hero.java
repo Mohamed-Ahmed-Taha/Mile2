@@ -188,7 +188,7 @@ public abstract class Hero extends Character {
 			
 			Game.setVisibility(getLocation(), false);
 			
-			Game.setVisiblityToAllHeroes();
+			//Game.setVisiblityToAllHeroes();
 			
 		}
 	
