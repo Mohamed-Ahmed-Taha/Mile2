@@ -103,8 +103,11 @@ public abstract class Character {
 
 	
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
-		if(target == null || !isAdjacent(target, this))
-			throw new InvalidTargetException();
+		if(target == null)
+			throw new InvalidTargetException("Must select a Character to attack");
+		if(!isAdjacent(target, this))
+			throw new InvalidTargetException("Must select an adjacent close target to attack");
+
 		target.setCurrentHp(target.getCurrentHp() - attackDmg);
 		if(target.getCurrentHp() <= 0) onCharacterDeath();
 		target.defend(this);
@@ -113,7 +116,7 @@ public abstract class Character {
 	
 	
 	public void defend(Character c) {
-		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
+		c.setCurrentHp(c.getCurrentHp() - c.getTarget().attackDmg/2);
 		if(c.getCurrentHp() <= 0) c.onCharacterDeath();
 	}
 	

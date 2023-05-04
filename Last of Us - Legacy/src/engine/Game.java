@@ -92,31 +92,31 @@ public class Game {
 	}
 
 	public static void setVisibility(Point p, boolean visisble) {
-		map[p.x][p.y].setVisible(visisble);
+		map[p.y][p.x].setVisible(visisble);
 
-		if(!isEdge(p.x-1,p.y))
-			map[p.x-1][p.y].setVisible(visisble);
+		if(!isEdge(p.y-1,p.x))
+			map[p.y-1][p.x].setVisible(visisble);
 
-		if(!isEdge(p.x+1,p.y))
-			map[p.x+1][p.y].setVisible(visisble);
+		if(!isEdge(p.y+1,p.x))
+			map[p.y+1][p.x].setVisible(visisble);
 
-		if(!isEdge(p.x-1,p.y-1))
-			map[p.x-1][p.y-1].setVisible(visisble);
+		if(!isEdge(p.y-1,p.x-1))
+			map[p.y-1][p.x-1].setVisible(visisble);
 
-		if(!isEdge(p.x-1,p.y+1))
-			map[p.x-1][p.y+1].setVisible(visisble);
+		if(!isEdge(p.y-1,p.x+1))
+			map[p.y-1][p.x+1].setVisible(visisble);
 
-		if(!isEdge(p.x+1,p.y-1))
-			map[p.x+1][p.y-1].setVisible(visisble);
+		if(!isEdge(p.y+1,p.x-1))
+			map[p.y+1][p.x-1].setVisible(visisble);
 
-		if(!isEdge(p.x+1,p.y+1))
-			map[p.x+1][p.y+1].setVisible(visisble);
+		if(!isEdge(p.y+1,p.x+1))
+			map[p.y+1][p.x+1].setVisible(visisble);
 
-		if(!isEdge(p.x,p.y-1))
-			map[p.x][p.y-1].setVisible(visisble);
+		if(!isEdge(p.y,p.x-1))
+			map[p.y][p.x-1].setVisible(visisble);
 
-		if(!isEdge(p.x,p.y+1))
-			map[p.x-1][p.y+1].setVisible(visisble);
+		if(!isEdge(p.y,p.x+1))
+			map[p.y-1][p.x+1].setVisible(visisble);
 
 	}
 	
