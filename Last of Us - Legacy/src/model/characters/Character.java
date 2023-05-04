@@ -103,11 +103,10 @@ public abstract class Character {
 	
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 
-		if(target != null){
-		if(!isAdjacent(target, this))
+		if(target != null && !isAdjacent(target, this))
 			throw new InvalidTargetException();
 		target.setCurrentHp(target.getCurrentHp() - attackDmg);
-		target.defend(this);}
+		target.defend(this);
 		
 	}
 	

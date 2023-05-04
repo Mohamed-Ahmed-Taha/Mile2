@@ -45,13 +45,10 @@ public abstract class Hero extends Character {
 		if(c instanceof CharacterCell)
 			return false;
 
-		if(c instanceof TrapCell){
-
+		if(c instanceof TrapCell)
 			super.setCurrentHp(super.getCurrentHp()-((TrapCell) c).getTrapDamage());
-			c = new CharacterCell(this); }
 
 		if(c instanceof CollectibleCell){
-			c = new CharacterCell(this);
 			if(((CollectibleCell) c).getCollectible() instanceof Supply)
 				supplyInventory.add(new Supply());
 
@@ -83,30 +80,36 @@ public abstract class Hero extends Character {
 		if(d == Direction.UP && clear(Game.map[loc.x][loc.y +1])) {
 			
 			super.setLocation(n);
-			//((CharacterCell)(Game.map[n.x][n.y])).setCharacter(getTarget());
-			Game.map[loc.x + 1][loc.y + 2].setVisible(true);
-			Game.map[loc.x][loc.y + 2].setVisible(true);
-			Game.map[loc.x - 1][loc.y + 2].setVisible(true);
+			Game.map[n.x][n.y] = new CharacterCell(this);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);  
+			
+			Game.setVisibility(n, true);
 		}
 
 		if(d == Direction.LEFT && clear(Game.map[loc.x -1][loc.y])) {
 			super.setLocation(n);
-			Game.map[loc.x - 2][loc.y].setVisible(true);
-			Game.map[loc.x - 2][loc.y - 1].setVisible(true);
-			Game.map[loc.x - 2][loc.y + 1].setVisible(true);
+			Game.map[n.x][n.y] = new CharacterCell(this);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);  
+			
+			Game.setVisibility(n, true);
+
 		}
 		if(d == Direction.DOWN && clear(Game.map[loc.x][loc.y -1])) {
 			super.setLocation(n);
-			Game.map[loc.x + 1][loc.y - 2].setVisible(true);
-			Game.map[loc.x][loc.y - 2].setVisible(true);
-			Game.map[loc.x - 1][loc.y - 2].setVisible(true);
+			Game.map[n.x][n.y] = new CharacterCell(this);
+			Game.map[loc.x][loc.y] = new CharacterCell(null); 
+			
+			Game.setVisibility(n, true);
+
 		}
 
 		if(d == Direction.RIGHT && clear(Game.map[loc.x + 1][loc.y])){
 			super.setLocation(n);
-			Game.map[loc.x + 2][loc.y].setVisible(true);
-			Game.map[loc.x + 2][loc.y - 1].setVisible(true);
-			Game.map[loc.x + 2][loc.y + 1].setVisible(true);}
+			Game.map[n.x][n.y] = new CharacterCell(this);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);  
+			
+			Game.setVisibility(n, true);
+		}
 
 		actionsAvailable--;
 		if(actionsAvailable == 0)  Game.endTurn();
@@ -174,7 +177,7 @@ public abstract class Hero extends Character {
 
 		public void cure(){
 			Character z = getTarget();
-			if(z instanceof Zombie && isAdjacent(this, z)){
+			if(z != null && z instanceof Zombie && isAdjacent(this, z)){
 				Point p = z.getLocation();
 				Game.map[p.x][p.y] = new CharacterCell(Game.randomHeroAvailable(Game.availableHeroes));
 				Game.setVisibility(p, true);
@@ -186,8 +189,8 @@ public abstract class Hero extends Character {
 			Game.heroes.remove(this);
 			super.onCharacterDeath();
 			
-			Game.setVisibility(getLocation(), false);
-			
+			//Game.setVisibility(getLocation(), false);
+			Game.updateVisibility();
 			//Game.setVisiblityToAllHeroes();
 			
 		}
