@@ -35,7 +35,7 @@ public abstract class Character {
 	}
 
 	
-	public void setTarget(Character target) throws InvalidTargetException {
+	public void setTarget(Character target) {
 		this.target = target;
 	}
 	
