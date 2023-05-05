@@ -26,6 +26,7 @@ public class Medic extends Hero {
 		Character healed = super.getTarget();
 		healed.setCurrentHp(1000);}
 		else throw new InvalidTargetException("You should select a close Hero to heal");
+		setActionsAvailable(getActionsAvailable() - 1);
 
 	}
 

@@ -95,7 +95,7 @@ public abstract class Hero extends Character {
 		//update visibility according to movement if up update the three new cells to be visible
 		// but check if edge first
 		actionsAvailable--;
-		if(actionsAvailable == 0)  Game.endTurn();
+//		if(actionsAvailable == 0)  Game.endTurn();
 	}
 
 
@@ -155,7 +155,7 @@ public abstract class Hero extends Character {
 			if (!((this instanceof Fighter) && specialAction))
 				actionsAvailable--;
 		
-			if(actionsAvailable == 0 && (!((this instanceof Fighter) && specialAction)) && this.getTarget()!= null)  Game.endTurn();
+//			if(actionsAvailable == 0 && (!((this instanceof Fighter) && specialAction)) && this.getTarget()!= null)  Game.endTurn();
 		}
 
 		public void cure() throws  InvalidTargetException, NoAvailableResourcesException{
@@ -168,6 +168,7 @@ public abstract class Hero extends Character {
 			Game.addHero(p);
 			
 			(new Vaccine()).use(this);
+			actionsAvailable--;
 		}
 		
 		public void onCharacterDeath() {

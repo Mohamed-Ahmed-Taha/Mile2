@@ -27,6 +27,8 @@ public class Explorer extends Hero {
 				Game.map[i][j].setVisible(true);
 			}
 		}
+		setActionsAvailable(getActionsAvailable() - 1);
+
 	}
 	
 	

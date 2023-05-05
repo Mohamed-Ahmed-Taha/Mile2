@@ -216,18 +216,6 @@ public class Game {
 		}
 	}
 	
-//	public static void addToMap(Character c) {
-//		Point p = randomLocation();
-//		c.setLocation(new Point(p.x,p.y));
-//		map[p.y][p.x] = new CharacterCell(c);
-//		if(c instanceof Hero)
-//			setVisibility(p, true);
-//		else {
-//			zombies.add((Zombie)c);
-//			map[p.x][p.y].setVisible(false);
-//		}
-//	}
-
 
 	public static void addToMap(Collectible c) {
 		Point p = randomLocation();

@@ -20,7 +20,9 @@ public class Fighter extends Hero{
 		if(!getSupplyInventory().isEmpty()){
 		Supply s = new Supply();
 		s.use(this);
-		super.setSpecialAction(true);}
+		super.setSpecialAction(true);
+		setActionsAvailable(getActionsAvailable() - 1);
+		}
 	}
 
 
