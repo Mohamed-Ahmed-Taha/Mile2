@@ -109,15 +109,14 @@ public abstract class Character {
 			throw new InvalidTargetException("Must select an adjacent close target to attack");
 
 		target.setCurrentHp(target.getCurrentHp() - attackDmg);
-		if(target.getCurrentHp() <= 0) onCharacterDeath();
 		target.defend(this);
 		
 	}
 	
 	
-	public void defend(Character c) {
+	public void defend(Character c) throws InvalidTargetException {
+		if(c == null ) throw new InvalidTargetException();
 		c.setCurrentHp(c.getCurrentHp() - c.getTarget().attackDmg/2);
-		if(c.getCurrentHp() <= 0) c.onCharacterDeath();
 	}
 	
 	

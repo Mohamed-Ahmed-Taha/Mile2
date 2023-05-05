@@ -1,6 +1,9 @@
 package model.collectibles;
 
 import engine.Game;
+import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
+import exceptions.NotEnoughActionsException;
 import model.characters.Hero;
 
 public class Supply implements Collectible  {
@@ -19,8 +22,9 @@ public class Supply implements Collectible  {
 	}
 
 	
-	public void use(Hero h) {
+	public void use(Hero h) throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 		h.getSupplyInventory().remove(this);
+		h.useSpecial();
 		
 	}
 			

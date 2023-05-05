@@ -1,7 +1,9 @@
 package model.collectibles;
 
 import engine.Game;
+import exceptions.InvalidTargetException;
 import exceptions.NoAvailableResourcesException;
+import exceptions.NotEnoughActionsException;
 import model.characters.Hero;
 
 public class Vaccine implements Collectible {
@@ -18,11 +20,11 @@ public class Vaccine implements Collectible {
 		h.getVaccineInventory().add(this);
 	}
 
-	public void use(Hero h) throws NoAvailableResourcesException{
-		if(h.getVaccineInventory().isEmpty()) throw new NoAvailableResourcesException();
+	public void use(Hero h) throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
 		vaxUsed++;
+		h.cure();
 		h.getVaccineInventory().remove(this);
-		if(vaxUsed >= 5) Game.checkWin();
+//		if(vaxUsed >= 5) Game.checkWin();
 	}
 
 	public static void setVaxUsed(int vaxUsed) {

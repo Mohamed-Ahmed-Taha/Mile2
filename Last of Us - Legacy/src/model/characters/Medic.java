@@ -25,8 +25,6 @@ public class Medic extends Hero {
 		if(!(this.getTarget() instanceof Hero)) throw new InvalidTargetException("You must select a Hero to heal");
 
 		this.setSpecialAction(true);
-		Supply s = this.getSupplyInventory().get(0);
-		s.use(this);
 
 		Character healed = getTarget();
 		healed.setCurrentHp(1000);

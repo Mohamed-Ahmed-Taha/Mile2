@@ -22,9 +22,6 @@ public class Fighter extends Hero{
 		if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
 		if(!(this.getTarget() instanceof Zombie)) throw new InvalidTargetException("You must select a Zombie to attack");
 
-
-		Supply s = this.getSupplyInventory().get(0);
-		s.use(this);
 		super.setSpecialAction(true);
 
 		setActionsAvailable(getActionsAvailable() - 1);

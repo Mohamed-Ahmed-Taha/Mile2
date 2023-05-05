@@ -125,7 +125,7 @@ public class Game {
 	}
 
 	public static boolean checkHero(int x, int y) {
-		return map[x][y] instanceof CharacterCell && ((CharacterCell) map[x][y]).getCharacter() instanceof Hero;
+		return ((map[x][y] instanceof CharacterCell) && (((CharacterCell) map[x][y]).getCharacter() instanceof Hero));
 	}
 
 	public static Character doAttack(Point p) {
@@ -177,10 +177,7 @@ public class Game {
 			hero.setTarget(null);
 		}
 
-		Point p = randomLocation();
-		Zombie z = new Zombie();
-		map[p.x][p.y] = new CharacterCell(z);
-		zombies.add(z);
+		addZombie();
 		
 		updateVisibility();
 	}

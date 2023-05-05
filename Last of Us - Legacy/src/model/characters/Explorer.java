@@ -16,12 +16,11 @@ public class Explorer extends Hero {
 	}
 
 	@Override
-	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException {
+	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException, InvalidTargetException {
 		if(getSupplyInventory().isEmpty()) throw new NoAvailableResourcesException();
 		if(getActionsAvailable() == 0) throw new NotEnoughActionsException();
 
-		Supply s = this.getSupplyInventory().get(0);
-		s.use(this);
+
 		this.setSpecialAction(true);
 
 		for(int i = 0; i <15; i++){

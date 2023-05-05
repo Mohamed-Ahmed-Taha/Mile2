@@ -53,10 +53,10 @@ public abstract class Hero extends Character {
 
 		if(c instanceof CollectibleCell){
 			if(((CollectibleCell) c).getCollectible() instanceof Supply)
-				supplyInventory.add(new Supply());
+				((CollectibleCell) c).getCollectible().pickUp(this);
 
 			if(((CollectibleCell) c).getCollectible() instanceof Vaccine)
-				vaccineInventory.add(new Vaccine());
+				((CollectibleCell) c).getCollectible().pickUp(this);
 		}
 
 
@@ -85,11 +85,10 @@ public abstract class Hero extends Character {
 
 		if(clear(Game.map[n.x][n.y])) {
 			this.setLocation(n);
-			Game.map[n.x][n.y] = new CharacterCell(null);
-			((CharacterCell)Game.map[n.x][n.y]).setCharacter(this);
-			Game.map[loc.x][loc.y] = new CharacterCell();
-			((CharacterCell)Game.map[loc.x][loc.y]).setCharacter(null);
+			Game.map[n.x][n.y] = new CharacterCell(this);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
 		}
+
 		else throw new MovementException("Cell is occupied by a character");
 
 		//update visibility according to movement if up update the three new cells to be visible
@@ -99,48 +98,6 @@ public abstract class Hero extends Character {
 	}
 
 
-	 abstract public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException;
-
-
-
-		public boolean isSpecialAction() {
-			return specialAction;
-		}
-
-
-
-		public void setSpecialAction(boolean specialAction) {
-			this.specialAction = specialAction;
-		}
-
-
-
-		public int getActionsAvailable() {
-			return actionsAvailable;
-		}
-
-
-
-		public void setActionsAvailable(int actionsAvailable) {
-			this.actionsAvailable = actionsAvailable;
-		}
-
-
-
-		public int getMaxActions() {
-			return maxActions;
-		}
-
-
-
-		public ArrayList<Vaccine> getVaccineInventory() {
-			return vaccineInventory;
-		}
-
-
-		public ArrayList<Supply> getSupplyInventory() {
-			return supplyInventory;
-		}
 
 
 
@@ -163,23 +120,20 @@ public abstract class Hero extends Character {
 			Character z = getTarget();
 			if(!(z instanceof Zombie)) throw new InvalidTargetException("You must select a zombie to cure");
 			if(!isAdjacent(this, z)) throw new InvalidTargetException("You must select a close zombie to cure");
-			
+			if(getVaccineInventory().isEmpty()) throw new NoAvailableResourcesException("You don't have a Vaccine to preform this action");
+			if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
+
 			Point p = z.getLocation();
 			Game.zombies.remove(z);
 			Game.addHero(p);
-			Vaccine v = getVaccineInventory().get(0);
-			v.use(this);
 			actionsAvailable--;
 			//if(Game.checkEndTurn()) Game.endTurn();
 
 		}
 		
 		public void onCharacterDeath() {
-			
-			Game.heroes.remove(this);
 			Point p = this.getLocation();
-
-			((CharacterCell) Game.map[p.y][p.x]).setCharacter(null);
+			Game.map[p.x][p.y] = new CharacterCell(null);
 			Game.heroes.remove(this);
 			Game.checkGameOver();
 			//Game.setVisibility(getLocation(), false);
@@ -187,5 +141,49 @@ public abstract class Hero extends Character {
 			//Game.setVisiblityToAllHeroes();
 			
 		}
-	
+
+
+	abstract public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException;
+
+
+
+	public boolean isSpecialAction() {
+		return specialAction;
+	}
+
+
+
+	public void setSpecialAction(boolean specialAction) {
+		this.specialAction = specialAction;
+	}
+
+
+
+	public int getActionsAvailable() {
+		return actionsAvailable;
+	}
+
+
+
+	public void setActionsAvailable(int actionsAvailable) {
+		this.actionsAvailable = actionsAvailable;
+	}
+
+
+
+	public int getMaxActions() {
+		return maxActions;
+	}
+
+
+
+	public ArrayList<Vaccine> getVaccineInventory() {
+		return vaccineInventory;
+	}
+
+
+	public ArrayList<Supply> getSupplyInventory() {
+		return supplyInventory;
+	}
+
 }

@@ -17,7 +17,7 @@ public class Zombie extends Character {
 	
 	public void attack() throws InvalidTargetException, NotEnoughActionsException{
 
-		if(super.getTarget() instanceof Zombie)
+		if(this.getTarget() instanceof Zombie)
 			throw new InvalidTargetException();
 		
 		super.attack();
