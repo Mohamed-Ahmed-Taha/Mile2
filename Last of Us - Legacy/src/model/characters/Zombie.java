@@ -28,13 +28,10 @@ public class Zombie extends Character {
 	
 	public void onCharacterDeath() {
 
-		// delete zombie
 		Game.zombies.remove(this);
-		Point p = this.getLocation();
-		((CharacterCell) Game.map[p.y][p.x]).setCharacter(null);
-
-		Zombie z = new Zombie();
-		Game.addToMap(z);
+		Point p = getLocation();
+		Game.map[p.x][p.y] = new CharacterCell(null);
+		Game.addZombie();
 	}
 	
 	

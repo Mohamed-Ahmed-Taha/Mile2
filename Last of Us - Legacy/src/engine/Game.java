@@ -91,31 +91,31 @@ public class Game {
 	}
 
 	public static void setVisibility(Point p, boolean visible) {
-		map[p.y][p.x].setVisible(visible);
+		map[p.x][p.y].setVisible(visible);
 
-		if(!isEdge(p.y-1,p.x))
-			map[p.y-1][p.x].setVisible(visible);
+		if(!isEdge(p.x-1,p.y))
+			map[p.x-1][p.y].setVisible(visible);
 
-		if(!isEdge(p.y+1,p.x))
-			map[p.y+1][p.x].setVisible(visible);
+		if(!isEdge(p.x+1,p.y))
+			map[p.x+1][p.y].setVisible(visible);
 
-		if(!isEdge(p.y-1,p.x-1))
-			map[p.y-1][p.x-1].setVisible(visible);
+		if(!isEdge(p.x-1,p.y-1))
+			map[p.x-1][p.y-1].setVisible(visible);
 
-		if(!isEdge(p.y-1,p.x+1))
-			map[p.y-1][p.x+1].setVisible(visible);
+		if(!isEdge(p.x-1,p.y+1))
+			map[p.x-1][p.y+1].setVisible(visible);
 
-		if(!isEdge(p.y+1,p.x-1))
-			map[p.y+1][p.x-1].setVisible(visible);
+		if(!isEdge(p.x+1,p.y-1))
+			map[p.x+1][p.y-1].setVisible(visible);
 
-		if(!isEdge(p.y+1,p.x+1))
-			map[p.y+1][p.x+1].setVisible(visible);
+		if(!isEdge(p.x+1,p.y+1))
+			map[p.x+1][p.y+1].setVisible(visible);
 
-		if(!isEdge(p.y,p.x-1))
-			map[p.y][p.x-1].setVisible(visible);
+		if(!isEdge(p.x,p.y-1))
+			map[p.x][p.y-1].setVisible(visible);
 
-		if(!isEdge(p.y,p.x+1))
-			map[p.y-1][p.x+1].setVisible(visible);
+		if(!isEdge(p.x,p.y+1))
+			map[p.x-1][p.y+1].setVisible(visible);
 
 	}
 	
@@ -216,23 +216,43 @@ public class Game {
 		}
 	}
 	
-	public static void addToMap(Character c) {
-		Point p = randomLocation();
-		c.setLocation(new Point(p.x,p.y));
-		map[p.y][p.x] = new CharacterCell(c);
-		if(c instanceof Hero)
-			setVisibility(p, true);
-		else {
-			zombies.add((Zombie)c);
-			map[p.x][p.y].setVisible(false);
-		}
-	}
+//	public static void addToMap(Character c) {
+//		Point p = randomLocation();
+//		c.setLocation(new Point(p.x,p.y));
+//		map[p.y][p.x] = new CharacterCell(c);
+//		if(c instanceof Hero)
+//			setVisibility(p, true);
+//		else {
+//			zombies.add((Zombie)c);
+//			map[p.x][p.y].setVisible(false);
+//		}
+//	}
 
 
 	public static void addToMap(Collectible c) {
 		Point p = randomLocation();
 		map[p.y][p.x] = new CollectibleCell(c);
 		map[p.y][p.x].setVisible(false);
+	}
+	
+	
+	public static Zombie addZombie() {
+		Zombie z = new Zombie();
+		Point p = randomLocation();
+		z.setLocation(p);
+		zombies.add(z);
+		map[p.x][p.y] = new CharacterCell(z);
+		return z;
+	}
+	
+	
+	public static Hero addHero(Point p) {
+		Hero h = availableHeroes.remove((int)(Math.random() * availableHeroes.size()));
+		h.setLocation(p);
+		heroes.add(h);
+		map[p.x][p.y] = new CharacterCell(h);
+		setVisibility(p, true);
+		return h;
 	}
 	
 	
