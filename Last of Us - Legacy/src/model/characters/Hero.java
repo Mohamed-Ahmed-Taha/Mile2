@@ -41,14 +41,14 @@ public abstract class Hero extends Character {
 
 
 
-	public boolean clear(Cell c){
-		if(c instanceof CharacterCell){
-			if(((CharacterCell) c).getCharacter() == null)
-				return false;}
+	public boolean clear(Cell c) throws MovementException{
+		if (c instanceof CharacterCell && ((CharacterCell) c).getCharacter() != null){
+			return false; }
 
 		if(c instanceof TrapCell){
+			this.setCurrentHp(this.getCurrentHp()-((TrapCell) c).getTrapDamage());
+			c = new CharacterCell(null);
 
-			super.setCurrentHp(super.getCurrentHp()-((TrapCell) c).getTrapDamage());
 			 }
 
 		if(c instanceof CollectibleCell){
@@ -64,56 +64,36 @@ public abstract class Hero extends Character {
 	}
 
 	public Point newCoord(int x, int y, Direction d){
-			Point n = switch (d) {
-				case UP -> new Point(x , y + 1);
-				case DOWN -> new Point(x, y - 1);
-				case LEFT -> new Point(x - 1, y);
-				case RIGHT -> new Point(x + 1, y);
-			};
+			Point n;
+
+		n = switch (d) {
+			case UP -> new Point(x + 1 , y );
+			case DOWN -> new Point(x -1 , y);
+			case LEFT -> new Point(x , y - 1);
+			case RIGHT -> new Point(x, y + 1);
+		};
 
 		return n;
 	}
 
 	public void move(Direction d) throws MovementException, InvalidTargetException, NotEnoughActionsException {
-		Point loc = super.getLocation();
+		Point loc = this.getLocation();
 		Point n = newCoord(loc.x,loc.y,d);
+		if(actionsAvailable == 0) throw new NotEnoughActionsException("Can't move: 0 Actions left");
 
-		if(Game.isEdge(n.x, n.y)) throw new MovementException();
+		if(Game.isEdge(n.x, n.y)) throw new MovementException("Stay within the bounds");
 
-		if(d == Direction.UP && clear(Game.map[n.y][n.x])) {
-			
-			super.setLocation(n);
-			Game.map[n.y][n.x] = new CharacterCell(this);
-			Game.map[loc.y][loc.x] = new CharacterCell(null);
-			
-			Game.setVisibility(n, true);
+		if(clear(Game.map[n.x][n.y])) {
+			this.setLocation(n);
+			Game.map[n.x][n.y] = new CharacterCell(null);
+			((CharacterCell)Game.map[n.x][n.y]).setCharacter(this);
+			Game.map[loc.x][loc.y] = new CharacterCell();
+			((CharacterCell)Game.map[loc.x][loc.y]).setCharacter(null);
 		}
+		else throw new MovementException("Cell is occupied by a character");
 
-		if(d == Direction.LEFT && clear(Game.map[n.y][n.x])) {
-			super.setLocation(n);
-			Game.map[n.y][n.x] = new CharacterCell(this);
-			Game.map[loc.y][loc.x] = new CharacterCell(null);
-			
-			Game.setVisibility(n, true);
-
-		}
-		if(d == Direction.DOWN && clear(Game.map[n.y][n.x])) {
-			super.setLocation(n);
-			Game.map[n.y][n.x] = new CharacterCell(this);
-			Game.map[loc.y][loc.x] = new CharacterCell(null);
-			
-			Game.setVisibility(n, true);
-
-		}
-
-		if(d == Direction.RIGHT && clear(Game.map[n.y][n.x])){
-			super.setLocation(n);
-			Game.map[n.y][n.x] = new CharacterCell(this);
-			Game.map[loc.y][loc.x] = new CharacterCell(null);
-			
-			Game.setVisibility(n, true);
-		}
-
+		//update visibility according to movement if up update the three new cells to be visible
+		// but check if edge first
 		actionsAvailable--;
 		if(actionsAvailable == 0)  Game.endTurn();
 	}
