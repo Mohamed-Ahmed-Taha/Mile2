@@ -67,10 +67,10 @@ public abstract class Hero extends Character {
 			Point n;
 
 		n = switch (d) {
-			case UP -> new Point(x + 1 , y );
-			case DOWN -> new Point(x -1 , y);
-			case LEFT -> new Point(x , y - 1);
-			case RIGHT -> new Point(x, y + 1);
+			case UP -> new Point(x +1  , y  );
+			case DOWN -> new Point(x -1 , y );
+			case LEFT -> new Point(x , y - 1 );
+			case RIGHT -> new Point(x , y + 1);
 		};
 
 		return n;

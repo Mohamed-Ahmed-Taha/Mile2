@@ -28,9 +28,7 @@ public class Game {
 		int y = r.nextInt(15);
 		Point p= new Point(x,y);
 
-		while((map[p.x][p.y] instanceof CharacterCell &&((CharacterCell) map[p.x][p.y]).getCharacter() != null)
-			|| map[p.x][p.y] instanceof TrapCell
-			|| map[p.x][p.y] instanceof CollectibleCell)
+		while((!((map[p.x][p.y]) instanceof CharacterCell) || ((CharacterCell) (map[p.x][p.y])).getCharacter() != null))
 		{
 			p.x= r.nextInt(15);
 			p.y= r.nextInt(15);
@@ -54,6 +52,7 @@ public class Game {
 		//{[CharacterCell(null),CharacterCell(null),CharacterCell(null)]}
 		h = availableHeroes.remove((int)(Math.random()*(availableHeroes.size())));
 		map[0][0]= new CharacterCell(h);
+		h.setLocation(new Point(0,0));
 		heroes.add(h);
 		map[0][0].setVisible(true);
 		map[1][0].setVisible(true);
