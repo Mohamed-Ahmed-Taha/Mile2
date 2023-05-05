@@ -23,7 +23,6 @@ public class Vaccine implements Collectible {
 		vaxUsed++;
 		h.getVaccineInventory().remove(this);
 		if(vaxUsed >= 5) Game.checkWin();
-
 	}
 
 	public static void setVaxUsed(int vaxUsed) {

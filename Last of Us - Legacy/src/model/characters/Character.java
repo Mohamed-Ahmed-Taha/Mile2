@@ -98,10 +98,10 @@ public abstract class Character {
 		Point a = A.getLocation(); 
 		Point b = B.getLocation();
 		if(a == null || b == null) return false;
-		return (a.distance(b) >= 1 && a.distance(b) <= Math.sqrt(2));
+		return (a.distance(b) <= Math.sqrt(2));
 	}
 
-	
+
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		if(target == null)
 			throw new InvalidTargetException("Must select a Character to attack");

@@ -95,7 +95,7 @@ public abstract class Hero extends Character {
 		//update visibility according to movement if up update the three new cells to be visible
 		// but check if edge first
 		actionsAvailable--;
-//		if(actionsAvailable == 0)  Game.endTurn();
+		//if(Game.checkEndTurn()) Game.endTurn();
 	}
 
 
@@ -154,11 +154,12 @@ public abstract class Hero extends Character {
 			super.attack();
 			if (!((this instanceof Fighter) && specialAction))
 				actionsAvailable--;
-		
-//			if(actionsAvailable == 0 && (!((this instanceof Fighter) && specialAction)) && this.getTarget()!= null)  Game.endTurn();
+
+			//if(Game.checkEndTurn()) Game.endTurn();
+
 		}
 
-		public void cure() throws  InvalidTargetException, NoAvailableResourcesException{
+		public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
 			Character z = getTarget();
 			if(!(z instanceof Zombie)) throw new InvalidTargetException("You must select a zombie to cure");
 			if(!isAdjacent(this, z)) throw new InvalidTargetException("You must select a close zombie to cure");
@@ -166,9 +167,11 @@ public abstract class Hero extends Character {
 			Point p = z.getLocation();
 			Game.zombies.remove(z);
 			Game.addHero(p);
-			
-			(new Vaccine()).use(this);
+			Vaccine v = getVaccineInventory().get(0);
+			v.use(this);
 			actionsAvailable--;
+			//if(Game.checkEndTurn()) Game.endTurn();
+
 		}
 		
 		public void onCharacterDeath() {

@@ -28,52 +28,44 @@ public class Game {
 		int y = r.nextInt(15);
 		Point p= new Point(x,y);
 
-		while((!((map[p.x][p.y]) instanceof CharacterCell) || ((CharacterCell) (map[p.x][p.y])).getCharacter() != null))
+		while((map[p.x][p.y] instanceof CharacterCell &&((CharacterCell) map[p.x][p.y]).getCharacter() != null)
+				|| map[p.x][p.y] instanceof TrapCell
+				|| map[p.x][p.y] instanceof CollectibleCell)
 		{
 			p.x= r.nextInt(15);
 			p.y= r.nextInt(15);
 		}
 		return p;
 	}
-	public static Hero randomHeroAvailable(ArrayList<Hero> availableHeroes){
-		Random r = new Random();
-		int x = r.nextInt(availableHeroes.size() + 1);
-		return availableHeroes.remove(x);
-	}
 
 	public static void startGame(Hero h) {
 		map = new Cell[15][15];
+
+
 
 		for(int i= 0; i < map.length; i++) {
 			for(int j= 0; j < map[i].length; j++) {
 				map[i][j] = new CharacterCell(null);
 			}
 		}
-		//{[CharacterCell(null),CharacterCell(null),CharacterCell(null)]}
-		h = availableHeroes.remove((int)(Math.random()*(availableHeroes.size())));
-		map[0][0]= new CharacterCell(h);
-		h.setLocation(new Point(0,0));
+
+		Point start = new Point(0,0);
+		availableHeroes.remove(h);
+		h.setLocation(start);
 		heroes.add(h);
-		map[0][0].setVisible(true);
-		map[1][0].setVisible(true);
-		map[1][1].setVisible(true);
-		map[0][1].setVisible(true);
+		map[start.x][start.y] = new CharacterCell(h);
+		setVisibility(start, true);
 
 		for(int n=0;n<5;n++) {
+			addCollToMap(new Supply());
+			addCollToMap(new Vaccine());
 			Point p = randomLocation();
-			map[p.x][p.y] = new CollectibleCell(new Vaccine());
-			p = randomLocation();
-			map[p.x][p.y] = new CollectibleCell(new Supply());
-			p = randomLocation();
 			map[p.x][p.y] = new TrapCell();
 
 		}
 
 		for(int n=0;n<10;n++) {
-			Point p = randomLocation();
-			Zombie z = new Zombie();
-			map[p.x][p.y] = new CharacterCell(z);
-			zombies.add(z);
+			addZombie();
 		}
 
 	}
@@ -91,9 +83,10 @@ public class Game {
 	}
 
 	public static void setVisibility(Point p, boolean visible) {
+
 		map[p.x][p.y].setVisible(visible);
 
-		if(!isEdge(p.x-1,p.y))
+		if(!isEdge(p.x - 1,p.y))
 			map[p.x-1][p.y].setVisible(visible);
 
 		if(!isEdge(p.x+1,p.y))
@@ -115,7 +108,7 @@ public class Game {
 			map[p.x][p.y-1].setVisible(visible);
 
 		if(!isEdge(p.x,p.y+1))
-			map[p.x-1][p.y+1].setVisible(visible);
+			map[p.x][p.y+1].setVisible(visible);
 
 	}
 	
@@ -172,8 +165,9 @@ public class Game {
 			if (c != null) {
 				zombie.setTarget(c);
 				zombie.attack();
-				
+
 			}
+			zombie.setTarget(null);
 		}
 	
 
@@ -191,6 +185,16 @@ public class Game {
 		updateVisibility();
 	}
 
+
+	public static boolean checkEndTurn(){
+		for(Hero hero : heroes){
+			if(hero.getActionsAvailable() != 0)
+				return false;
+		}
+
+		return true;
+
+	}
 	public static void loadHeroes(String filePath) throws IOException {
 		FileReader fr = new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fr);
@@ -217,30 +221,27 @@ public class Game {
 	}
 	
 
-	public static void addToMap(Collectible c) {
+	public static void addCollToMap(Collectible c) {
 		Point p = randomLocation();
-		map[p.y][p.x] = new CollectibleCell(c);
-		map[p.y][p.x].setVisible(false);
+		map[p.x][p.y] = new CollectibleCell(c);
 	}
 	
 	
-	public static Zombie addZombie() {
+	public static void addZombie() {
 		Zombie z = new Zombie();
 		Point p = randomLocation();
 		z.setLocation(p);
 		zombies.add(z);
 		map[p.x][p.y] = new CharacterCell(z);
-		return z;
 	}
 	
 	
-	public static Hero addHero(Point p) {
-		Hero h = availableHeroes.remove((int)(Math.random() * availableHeroes.size()));
+	public static void addHero(Point p) {
+		Hero h = Game.availableHeroes.remove((int)(Math.random() * availableHeroes.size()));
 		h.setLocation(p);
 		heroes.add(h);
 		map[p.x][p.y] = new CharacterCell(h);
 		setVisibility(p, true);
-		return h;
 	}
 	
 	

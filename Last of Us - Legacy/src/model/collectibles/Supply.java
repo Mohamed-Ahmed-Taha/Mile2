@@ -1,5 +1,6 @@
 package model.collectibles;
 
+import engine.Game;
 import model.characters.Hero;
 
 public class Supply implements Collectible  {
@@ -13,6 +14,7 @@ public class Supply implements Collectible  {
 	public void pickUp(Hero h) {
 
 		h.getSupplyInventory().add(this);
+
 		
 	}
 
