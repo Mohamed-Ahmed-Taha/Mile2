@@ -19,19 +19,14 @@ public class Medic extends Hero {
 
 	@Override
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
-		if(getSupplyInventory().isEmpty()) throw new NoAvailableResourcesException("You don't have enough supply to preform this action");
+		if(!(this.getTarget() instanceof Hero)) throw new InvalidTargetException("You must select a Hero to heal");
 		if(!(isAdjacent(getTarget(), this))) throw new InvalidTargetException("You should select a close Hero to heal");
 		if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
-		if(!(this.getTarget() instanceof Hero)) throw new InvalidTargetException("You must select a Hero to heal");
+		super.useSpecial();
 
 		this.setSpecialAction(true);
-
 		Character healed = getTarget();
 		healed.setCurrentHp(1000);
-
-		setActionsAvailable(getActionsAvailable() - 1);
-		//if(Game.checkEndTurn()) Game.endTurn();
-
 	}
 
 

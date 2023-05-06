@@ -22,9 +22,8 @@ public class Supply implements Collectible  {
 	}
 
 	
-	public void use(Hero h) throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
+	public void use(Hero h)  {
 		h.getSupplyInventory().remove(this);
-		h.useSpecial();
 		
 	}
 			

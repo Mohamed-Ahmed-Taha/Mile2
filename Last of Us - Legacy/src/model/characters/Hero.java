@@ -102,15 +102,17 @@ public abstract class Hero extends Character {
 
 
 		public void attack() throws NotEnoughActionsException, InvalidTargetException {
-			
 
 			if(super.getTarget() instanceof Hero)
 				throw new InvalidTargetException();
+
 			if(actionsAvailable <= 0 )
 				throw new NotEnoughActionsException();
-			super.attack();
+
 			if (!((this instanceof Fighter) && specialAction))
 				actionsAvailable--;
+			super.attack();
+
 
 			//if(Game.checkEndTurn()) Game.endTurn();
 
@@ -143,7 +145,12 @@ public abstract class Hero extends Character {
 		}
 
 
-	abstract public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException;
+	 public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException{
+		if(getSupplyInventory().isEmpty()) throw new NoAvailableResourcesException("You don't have a supply to use special action");
+		(this.getSupplyInventory().get(0)).use(this);
+		 setSpecialAction(true);
+		 actionsAvailable--;
+	 }
 
 
 

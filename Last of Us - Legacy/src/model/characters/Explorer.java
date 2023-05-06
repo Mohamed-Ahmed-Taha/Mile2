@@ -17,9 +17,7 @@ public class Explorer extends Hero {
 
 	@Override
 	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException, InvalidTargetException {
-		if(getSupplyInventory().isEmpty()) throw new NoAvailableResourcesException();
-		if(getActionsAvailable() == 0) throw new NotEnoughActionsException();
-
+		super.useSpecial();
 
 		this.setSpecialAction(true);
 
@@ -28,9 +26,6 @@ public class Explorer extends Hero {
 				Game.map[i][j].setVisible(true);
 			}
 		}
-		setActionsAvailable(getActionsAvailable() - 1);
-		//if(Game.checkEndTurn()) Game.endTurn();
-
 
 	}
 	

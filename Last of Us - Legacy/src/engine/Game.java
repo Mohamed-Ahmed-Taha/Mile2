@@ -83,7 +83,6 @@ public class Game {
 	}
 
 	public static void setVisibility(Point p, boolean visible) {
-
 		map[p.x][p.y].setVisible(visible);
 
 		if(!isEdge(p.x - 1,p.y))
