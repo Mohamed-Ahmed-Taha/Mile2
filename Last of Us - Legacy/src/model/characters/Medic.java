@@ -18,6 +18,12 @@ public class Medic extends Hero {
 	}
 
 	@Override
+	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+		super.attack();
+		setActionsAvailable(getActionsAvailable() - 1);
+	}
+
+	@Override
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
 		if(!(this.getTarget() instanceof Hero)) throw new InvalidTargetException("You must select a Hero to heal");
 		if(!(isAdjacent(getTarget(), this))) throw new InvalidTargetException("You should select a close Hero to heal");

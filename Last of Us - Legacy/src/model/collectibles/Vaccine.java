@@ -20,11 +20,9 @@ public class Vaccine implements Collectible {
 		h.getVaccineInventory().add(this);
 	}
 
-	public void use(Hero h) throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
+	public void use(Hero h) {
 		vaxUsed++;
-		h.cure();
 		h.getVaccineInventory().remove(this);
-//		if(vaxUsed >= 5) Game.checkWin();
 	}
 
 	public static void setVaxUsed(int vaxUsed) {

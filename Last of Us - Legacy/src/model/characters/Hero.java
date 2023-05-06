@@ -106,11 +106,9 @@ public abstract class Hero extends Character {
 			if(super.getTarget() instanceof Hero)
 				throw new InvalidTargetException();
 
-			if(actionsAvailable <= 0 )
+			if(actionsAvailable <= 0 && !((this instanceof Fighter) && specialAction))
 				throw new NotEnoughActionsException();
 
-			if (!((this instanceof Fighter) && specialAction))
-				actionsAvailable--;
 			super.attack();
 
 
@@ -124,6 +122,8 @@ public abstract class Hero extends Character {
 			if(!isAdjacent(this, z)) throw new InvalidTargetException("You must select a close zombie to cure");
 			if(getVaccineInventory().isEmpty()) throw new NoAvailableResourcesException("You don't have a Vaccine to preform this action");
 			if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
+
+			(getVaccineInventory().get(0)).use(this);
 
 			Point p = z.getLocation();
 			Game.zombies.remove(z);

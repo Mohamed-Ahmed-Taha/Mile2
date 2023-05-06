@@ -16,6 +16,12 @@ public class Explorer extends Hero {
 	}
 
 	@Override
+	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+		super.attack();
+		setActionsAvailable(getActionsAvailable() - 1);
+	}
+
+	@Override
 	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException, InvalidTargetException {
 		super.useSpecial();
 

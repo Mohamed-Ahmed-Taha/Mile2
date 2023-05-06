@@ -110,13 +110,12 @@ public abstract class Character {
 
 		target.setCurrentHp(target.getCurrentHp() - attackDmg);
 		target.defend(this);
-		
 	}
 	
 	
 	public void defend(Character c) throws InvalidTargetException {
 		if(c == null ) throw new InvalidTargetException();
-		c.setCurrentHp(c.getCurrentHp() - c.getTarget().attackDmg/2);
+		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
 	}
 	
 	
