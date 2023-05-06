@@ -54,7 +54,6 @@ public class Game {
 		h.setLocation(start);
 		heroes.add(h);
 		map[start.x][start.y] = new CharacterCell(h);
-		setVisibility(start, true);
 
 		for(int n=0;n<5;n++) {
 			addCollToMap(new Supply());
@@ -67,7 +66,8 @@ public class Game {
 		for(int n=0;n<10;n++) {
 			addZombie();
 		}
-
+		
+		updateVisibility();
 	}
 
 	public static boolean checkWin() {
