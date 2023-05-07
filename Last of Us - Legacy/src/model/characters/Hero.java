@@ -47,7 +47,7 @@ public abstract class Hero extends Character {
 			return false; }
 
 		if(c instanceof TrapCell){
-			this.setCurrentHp(this.getCurrentHp()-((TrapCell) c).getTrapDamage());
+			setCurrentHp(getCurrentHp()-((TrapCell) c).getTrapDamage());
 			c = new CharacterCell(null);
 
 			 }
@@ -76,6 +76,8 @@ public abstract class Hero extends Character {
 
 		return n;
 	}
+	
+
 
 	public void move(Direction d) throws MovementException, InvalidTargetException, NotEnoughActionsException {
 		Point loc = this.getLocation();
@@ -85,15 +87,17 @@ public abstract class Hero extends Character {
 		if(Game.isEdge(n.x, n.y)) throw new MovementException("Stay within the bounds");
 
 		if(clear(Game.map[n.x][n.y])) {
+			if(getCurrentHp() <= 0 ) return;
 			this.setLocation(n);
 			Game.map[n.x][n.y] = new CharacterCell(this);
 			Game.map[loc.x][loc.y] = new CharacterCell(null);
 		}
 
 		else throw new MovementException("Cell is occupied by a character");
+		Game.setVisibility(this.getLocation(), true);
 
-		//update visibility according to movement if up update the three new cells to be visible
-		// but check if edge first
+
+
 		actionsAvailable--;
 	}
 
@@ -131,7 +135,7 @@ public abstract class Hero extends Character {
 			Point p = this.getLocation();
 			Game.map[p.x][p.y] = new CharacterCell(null);
 			Game.heroes.remove(this);
-			Game.checkGameOver();
+
 //			Game.updateVisibility();
 			
 		}
