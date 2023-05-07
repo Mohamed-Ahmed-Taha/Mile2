@@ -125,12 +125,7 @@ public abstract class Hero extends Character {
 
 			(getVaccineInventory().get(0)).use(this);
 
-			Point p = z.getLocation();
-			Game.zombies.remove(z);
-			Game.addHero(p);
 			actionsAvailable--;
-			//if(Game.checkEndTurn()) Game.endTurn();
-
 		}
 		
 		public void onCharacterDeath() {
