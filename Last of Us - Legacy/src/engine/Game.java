@@ -69,13 +69,37 @@ public class Game {
 		
 		updateVisibility();
 	}
+	
+	public static int vaccineOnMap() {
+		int c = 0;
+		for(int i = 0 ; i<15 ; i++) {
+			for(int j = 0 ; j<15 ; j++) {
+				if(map[i][j] instanceof CollectibleCell) {
+					if((((CollectibleCell) map[i][j]).getCollectible()) instanceof Vaccine ) {
+						c++;
+					}
+				}
+			}
+		}
+		return c;
+	}
+	
+	public static int vaccineInInventory() {
+		int c = 0;
+		for(int i = 0 ; i<heroes.size() ; i++) {
+			c += (heroes.get(i).getVaccineInventory().size());
+			}
+		return c;
+	}
 
 	public static boolean checkWin() {
-		return Vaccine.getVaxUsed() == 5 && heroes.size() >= 5;
+		return (vaccineOnMap() == 0 && (vaccineInInventory() == 0 && heroes.size() >= 5));
+		
 	}
 
 	public static boolean checkGameOver() {
-		return (heroes.size() == 0 || checkWin());
+		return (heroes.size() == 0 || (vaccineOnMap() == 0 && vaccineInInventory() == 0));
+			
 	}
 
 	public static boolean isEdge(int x, int y) {
