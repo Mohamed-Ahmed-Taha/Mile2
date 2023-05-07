@@ -148,7 +148,10 @@ public class Game {
 		}
 
 		public static boolean checkHero ( int x, int y){
-			return ((map[x][y] instanceof CharacterCell) && (((CharacterCell) map[x][y]).getCharacter() instanceof Hero));
+			return (
+					(map[x][y] instanceof CharacterCell)
+							&&
+							(((CharacterCell) map[x][y]).getCharacter() instanceof Hero));
 		}
 
 		public static Character getAdjChar (Point p){
