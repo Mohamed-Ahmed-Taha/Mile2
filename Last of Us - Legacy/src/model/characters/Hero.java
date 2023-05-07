@@ -8,6 +8,7 @@ import exceptions.InvalidTargetException;
 import exceptions.MovementException;
 import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
+import model.characters.Character;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
 import model.world.*;
@@ -94,7 +95,6 @@ public abstract class Hero extends Character {
 		//update visibility according to movement if up update the three new cells to be visible
 		// but check if edge first
 		actionsAvailable--;
-		//if(Game.checkEndTurn()) Game.endTurn();
 	}
 
 
@@ -111,9 +111,6 @@ public abstract class Hero extends Character {
 
 			super.attack();
 
-
-			//if(Game.checkEndTurn()) Game.endTurn();
-
 		}
 
 		public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
@@ -123,7 +120,9 @@ public abstract class Hero extends Character {
 			if(getVaccineInventory().isEmpty()) throw new NoAvailableResourcesException("You don't have a Vaccine to preform this action");
 			if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
 
-			(getVaccineInventory().get(0)).use(this);
+			(getVaccineInventory().get(vaccineInventory.size() - 1)).use(this);
+
+
 
 			actionsAvailable--;
 		}
@@ -133,9 +132,7 @@ public abstract class Hero extends Character {
 			Game.map[p.x][p.y] = new CharacterCell(null);
 			Game.heroes.remove(this);
 			Game.checkGameOver();
-			//Game.setVisibility(getLocation(), false);
-			Game.updateVisibility();
-			//Game.setVisiblityToAllHeroes();
+//			Game.updateVisibility();
 			
 		}
 

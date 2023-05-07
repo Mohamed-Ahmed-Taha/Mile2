@@ -19,9 +19,10 @@ public class Zombie extends Character {
 
 		Character t = Game.getAdjChar(this.getLocation());
 
+		if(this.getTarget() instanceof Zombie) throw new InvalidTargetException();
+		
 		if(t != null){this.setTarget(t); super.attack();}
 
-		if(this.getTarget() instanceof Zombie) throw new InvalidTargetException();
 
 		setTarget(null);
 		
