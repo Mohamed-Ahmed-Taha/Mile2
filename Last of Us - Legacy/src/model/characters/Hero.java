@@ -76,7 +76,7 @@ public abstract class Hero extends Character {
 
 		return n;
 	}
-	
+
 
 
 	public void move(Direction d) throws MovementException, InvalidTargetException, NotEnoughActionsException {
@@ -87,10 +87,10 @@ public abstract class Hero extends Character {
 		if(Game.isEdge(n.x, n.y)) throw new MovementException("Stay within the bounds");
 
 		if(clear(Game.map[n.x][n.y])) {
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
 			if(getCurrentHp() <= 0 ) return;
 			this.setLocation(n);
 			Game.map[n.x][n.y] = new CharacterCell(this);
-			Game.map[loc.x][loc.y] = new CharacterCell(null);
 		}
 
 		else throw new MovementException("Cell is occupied by a character");
