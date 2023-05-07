@@ -148,38 +148,36 @@ public class Game {
 		}
 
 		public static boolean checkHero ( int x, int y){
-			return (
-					(map[x][y] instanceof CharacterCell)
-							&&
-							(((CharacterCell) map[x][y]).getCharacter() instanceof Hero));
+			return ((map[x][y] instanceof CharacterCell) &&
+					(((CharacterCell) map[x][y]).getCharacter() instanceof Hero));
 		}
 
-		public static Character getAdjChar (Point p){
+		public static Character getAdjHero (Point p){
 
-			if (!isEdge(p.x - 1, p.y) && checkHero(p.x - 1, p.y)) {
+			if (!isEdge(p.x - 1, p.y) && checkHero(p.x - 1, p.y)) // north
 				return ((CharacterCell) map[p.x - 1][p.y]).getCharacter();
-			}
-			if (!isEdge(p.x + 1, p.y) && checkHero(p.x + 1, p.y)) {
+			
+			if (!isEdge(p.x + 1, p.y) && checkHero(p.x + 1, p.y)) // south
 				return ((CharacterCell) map[p.x + 1][p.y]).getCharacter();
-			}
-			if (!isEdge(p.x - 1, p.y - 1) && checkHero(p.x - 1, p.y - 1)) {
-				return ((CharacterCell) map[p.x - 1][p.y - 1]).getCharacter();
-			}
-			if (!isEdge(p.x - 1, p.y + 1) && checkHero(p.x - 1, p.y + 1)) {
-				return ((CharacterCell) map[p.x - 1][p.y + 1]).getCharacter();
-			}
-			if (!isEdge(p.x + 1, p.y - 1) && checkHero(p.x + 1, p.y - 1)) {
-				return ((CharacterCell) map[p.x + 1][p.y - 1]).getCharacter();
-			}
-			if (!isEdge(p.x + 1, p.y + 1) && checkHero(p.x + 1, p.y + 1)) {
-				return ((CharacterCell) map[p.x + 1][p.y + 1]).getCharacter();
-			}
-			if (!isEdge(p.x, p.y - 1) && checkHero(p.x, p.y - 1)) {
-				return ((CharacterCell) map[p.x][p.y - 1]).getCharacter();
-			}
-			if (!isEdge(p.x, p.y + 1) && checkHero(p.x, p.y + 1)) {
+						
+			if (!isEdge(p.x, p.y + 1) && checkHero(p.x, p.y + 1)) // east
 				return ((CharacterCell) map[p.x][p.y + 1]).getCharacter();
-			}
+			
+			if (!isEdge(p.x, p.y - 1) && checkHero(p.x, p.y - 1)) // west
+				return ((CharacterCell) map[p.x][p.y - 1]).getCharacter();
+			
+			if (!isEdge(p.x + 1, p.y + 1) && checkHero(p.x + 1, p.y + 1)) // north east
+				return ((CharacterCell) map[p.x + 1][p.y + 1]).getCharacter();
+			
+			if (!isEdge(p.x + 1, p.y - 1) && checkHero(p.x + 1, p.y - 1)) // north west
+				return ((CharacterCell) map[p.x + 1][p.y - 1]).getCharacter();
+			
+			if (!isEdge(p.x - 1, p.y + 1) && checkHero(p.x - 1, p.y + 1)) // south east
+				return ((CharacterCell) map[p.x - 1][p.y + 1]).getCharacter();
+			
+			if (!isEdge(p.x - 1, p.y - 1) && checkHero(p.x - 1, p.y - 1)) // south west 
+				return ((CharacterCell) map[p.x - 1][p.y - 1]).getCharacter();
+			
 			return null;
 		}
 

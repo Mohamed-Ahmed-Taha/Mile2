@@ -66,8 +66,10 @@ public abstract class Character {
 
 	
 	public void setCurrentHp(int currentHp) {
-		if(currentHp <= 0) 
+		if(currentHp <= 0) {
+			this.currentHp = 0;
 			onCharacterDeath();
+		}
 		else if(currentHp > maxHp) 
 			this.currentHp = maxHp;
 		else 

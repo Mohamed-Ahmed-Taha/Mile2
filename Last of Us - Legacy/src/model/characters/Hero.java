@@ -134,10 +134,7 @@ public abstract class Hero extends Character {
 		public void onCharacterDeath() {
 			Point p = this.getLocation();
 			Game.map[p.x][p.y] = new CharacterCell(null);
-			Game.heroes.remove(this);
-
-//			Game.updateVisibility();
-			
+			Game.heroes.remove(this);			
 		}
 
 
