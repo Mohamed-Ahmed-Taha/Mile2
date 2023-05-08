@@ -110,7 +110,7 @@ public abstract class Hero extends Character {
 			if(getTarget() instanceof Hero)
 				throw new InvalidTargetException();
 
-			if(actionsAvailable <= 0 /* && !((this instanceof Fighter) && specialAction)*/)
+			if(actionsAvailable <= 0  && !((this instanceof Fighter) && specialAction))
 				throw new NotEnoughActionsException();
 			if(getTarget() == null)
 				throw new InvalidTargetException("Must select a Character to attack");
@@ -140,7 +140,7 @@ public abstract class Hero extends Character {
 			Point p = this.getLocation();
 			Game.map[p.x][p.y] = new CharacterCell(null);
 			Game.heroes.remove(this);
-			System.out.println("A hero died");
+//			System.out.println("A hero died");
 		}
 
 

@@ -46,6 +46,7 @@ public class Zombie extends Character {
 		Point p = this.getLocation();
 //		((CharacterCell) Game.map[p.x][p.y]).setCharacter(null);
 		Game.map[p.x][p.y] = new CharacterCell(null);
+		ZOMBIES_COUNT--;
 		Game.addZombie();
 		System.out.println("A zombie died");
 //		Game.map[p.x][p.y].setVisible(true);

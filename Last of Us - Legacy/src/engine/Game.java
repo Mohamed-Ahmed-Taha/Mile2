@@ -317,6 +317,8 @@ public class Game {
 			System.out.println(map[1][1]);
 			System.out.println(((CharacterCell) map[1][1]).getCharacter());
 			System.out.println(((CharacterCell) map[1][1]).getCharacter() == null);
+			boolean isDead = ((CharacterCell) map[1][1]).getCharacter() == null;
+			isDead = isDead && !(zombies).contains(z);
 
 		}
 		
