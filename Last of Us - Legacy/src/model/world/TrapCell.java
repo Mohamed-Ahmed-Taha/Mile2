@@ -2,10 +2,6 @@ package model.world;
 
 import java.util.Random;
 
-import model.characters.Explorer;
-import model.characters.Fighter;
-import model.characters.Medic;
-
 public class TrapCell extends Cell {
 
 	private int trapDamage;
@@ -23,13 +19,6 @@ public class TrapCell extends Cell {
 		return trapDamage;
 	}
 	
-	public String toString() {
-		
-//		if(isVisible() == false)
-//			return "[ ]";
-
-		return "[t] ";
-	}
 
 
 }

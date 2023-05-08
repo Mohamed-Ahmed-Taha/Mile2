@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 
@@ -29,7 +28,7 @@ public class Game {
 		int y = r.nextInt(15);
 		Point p= new Point(x,y);
 
-		while(((map[p.x][p.y] instanceof CharacterCell &&((CharacterCell) map[p.x][p.y]).getCharacter() != null))
+		while((map[p.x][p.y] instanceof CharacterCell &&((CharacterCell) map[p.x][p.y]).getCharacter() != null)
 				|| map[p.x][p.y] instanceof TrapCell
 				|| map[p.x][p.y] instanceof CollectibleCell)
 		{
@@ -259,76 +258,5 @@ public class Game {
 //			if(visible) setVisibility(p, true);
 		}
 
-		public static void main(String[] args) {
-			availableHeroes = new ArrayList<Hero>();
-			heroes = new ArrayList<Hero>();
-			zombies = new ArrayList<Zombie>();
-			try {
-				loadHeroes("Heros.csv");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (Iterator iterator = availableHeroes.iterator(); iterator.hasNext();) {
-				Hero hero = (Hero) iterator.next();
-				System.out.println(hero);
-				
-			}
-			Hero h = availableHeroes.remove(0);
-			System.out.println(h);
-			startGame(h);
-			
-			printMap();
-			
-			Zombie z = new Zombie();
-			z.setLocation(new Point(1, 1));
-			zombies.add(z);
-			map[1][1] = new CharacterCell(z);
-			
-			printMap();
-			
-			for (Iterator iterator = zombies.iterator(); iterator.hasNext();) {
-				Zombie zombie = (Zombie) iterator.next();
-				System.out.println(zombie);
-				
-			}
-			
-			h.setTarget(z);
-			
-			try {
-				h.attack();
-//				h.attack();
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			printMap();
-			
-			for (Iterator iterator = zombies.iterator(); iterator.hasNext();) {
-				Zombie zombie = (Zombie) iterator.next();
-				System.out.println(zombie);
-				
-			}
-			
-			System.out.println(map[1][1]);
-			System.out.println(((CharacterCell) map[1][1]).getCharacter());
-			System.out.println(((CharacterCell) map[1][1]).getCharacter() == null);
-
-		}
-		
-		public static void printMap() {
-			for (int i = 14; i >= 0; i--) {
-				for (int j = 0; j < map[i].length; j++) 
-					System.out.print(map[i][j]);
-				
-				System.out.println();
-			}
-			
-			System.out.println("\n\n\n----------------------------------------\n\n\n");
-		}
 
 	}

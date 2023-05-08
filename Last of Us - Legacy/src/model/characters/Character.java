@@ -95,9 +95,6 @@ public abstract class Character {
 				&& maxHp == other.maxHp && Objects.equals(name, other.name) && Objects.equals(target, other.target);
 	}
 
-	public String toString() {
-		return (name + " " + attackDmg);
-	}
 
 	public static boolean isAdjacent(Character A, Character B) {
 		Point a = A.getLocation(); 
@@ -108,14 +105,18 @@ public abstract class Character {
 
 
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
-		
+		if(target == null)
+			throw new InvalidTargetException("Must select a Character to attack");
+		if(!isAdjacent(target, this))
+			throw new InvalidTargetException("Must select an adjacent close target to attack");
+
 		target.setCurrentHp(target.getCurrentHp() - attackDmg);
 		target.defend(this);
 	}
 	
 	
-	public void defend(Character c) {
-//		if(c == null ) throw new InvalidTargetException();
+	public void defend(Character c) throws InvalidTargetException {
+		if(c == null ) throw new InvalidTargetException();
 		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
 	}
 	
