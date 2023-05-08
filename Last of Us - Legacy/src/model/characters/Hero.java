@@ -107,11 +107,16 @@ public abstract class Hero extends Character {
 
 		public void attack() throws NotEnoughActionsException, InvalidTargetException {
 
-			if(super.getTarget() instanceof Hero)
+			if(getTarget() instanceof Hero)
 				throw new InvalidTargetException();
 
-			if(actionsAvailable <= 0 && !((this instanceof Fighter) && specialAction))
+			if(actionsAvailable <= 0 /* && !((this instanceof Fighter) && specialAction)*/)
 				throw new NotEnoughActionsException();
+			if(getTarget() == null)
+				throw new InvalidTargetException("Must select a Character to attack");
+			if(!isAdjacent(getTarget(), this))
+				throw new InvalidTargetException("Must select an adjacent close target to attack");
+
 
 			super.attack();
 
@@ -134,7 +139,8 @@ public abstract class Hero extends Character {
 		public void onCharacterDeath() {
 			Point p = this.getLocation();
 			Game.map[p.x][p.y] = new CharacterCell(null);
-			Game.heroes.remove(this);			
+			Game.heroes.remove(this);
+			System.out.println("A hero died");
 		}
 
 
