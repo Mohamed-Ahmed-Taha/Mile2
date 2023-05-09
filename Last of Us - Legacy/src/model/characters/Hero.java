@@ -79,7 +79,7 @@ public abstract class Hero extends Character {
 
 
 
-	public void move(Direction d) throws MovementException, InvalidTargetException, NotEnoughActionsException {
+	public void move(Direction d) throws MovementException, NotEnoughActionsException {
 		Point loc = this.getLocation();
 		Point n = newCoord(loc.x,loc.y,d);
 		if(actionsAvailable == 0) throw new NotEnoughActionsException("Can't move: 0 Actions left");

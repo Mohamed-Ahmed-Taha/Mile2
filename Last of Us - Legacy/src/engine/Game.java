@@ -40,9 +40,6 @@ public class Game {
 	}
 
 	public static void startGame(Hero h) {
-//		map = new Cell[15][15];
-
-
 
 		for(int i= 0; i < map.length; i++) {
 			for(int j= 0; j < map[i].length; j++) {
