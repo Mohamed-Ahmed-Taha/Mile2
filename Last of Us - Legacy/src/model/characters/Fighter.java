@@ -26,8 +26,8 @@ public class Fighter extends Hero{
 
 
 
+		super.attack();
 		if(!isSpecialAction()){
-			super.attack();
 			setActionsAvailable(getActionsAvailable() - 1);}
 
 	}
