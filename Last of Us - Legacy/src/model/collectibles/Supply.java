@@ -1,9 +1,5 @@
 package model.collectibles;
 
-import engine.Game;
-import exceptions.InvalidTargetException;
-import exceptions.NoAvailableResourcesException;
-import exceptions.NotEnoughActionsException;
 import model.characters.Hero;
 
 public class Supply implements Collectible  {

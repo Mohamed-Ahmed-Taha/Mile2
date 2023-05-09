@@ -1,12 +1,9 @@
 package model.collectibles;
 
 import engine.Game;
-import exceptions.InvalidTargetException;
-import exceptions.NoAvailableResourcesException;
-import exceptions.NotEnoughActionsException;
 import model.characters.Character;
 import model.characters.Hero;
-import model.characters.Zombie;
+
 
 import java.awt.*;
 

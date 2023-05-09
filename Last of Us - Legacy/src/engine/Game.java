@@ -84,9 +84,9 @@ public class Game {
 	
 	public static int vaccineInInventory() {
 		int c = 0;
-		for(int i = 0 ; i<heroes.size() ; i++) {
-			c += (heroes.get(i).getVaccineInventory().size());
-			}
+		for (Hero hero : heroes) {
+			c += (hero.getVaccineInventory().size());
+		}
 		return c;
 	}
 
