@@ -1,6 +1,7 @@
 package engine;
 
 import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.characters.*;
 import model.characters.Character;
@@ -181,11 +182,10 @@ public class Game {
 			return null;
 		}
 
-		public static void endTurn () throws InvalidTargetException, NotEnoughActionsException {
+		public static void endTurn () throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 
-			for (Zombie zombie : zombies) {
+			for (Zombie zombie : zombies)
 				zombie.attack();
-			}
 
 
 			for (Hero hero : heroes) {

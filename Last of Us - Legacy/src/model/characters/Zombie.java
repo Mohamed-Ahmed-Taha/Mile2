@@ -16,7 +16,7 @@ public class Zombie extends Character {
 	}
 	
 	public void attack() throws InvalidTargetException, NotEnoughActionsException{
-
+		
 		Character t = Game.getAdjHero(this.getLocation());
 
 		if(t != null){this.setTarget(t); super.attack();}

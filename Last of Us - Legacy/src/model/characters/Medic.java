@@ -30,7 +30,6 @@ public class Medic extends Hero {
 		if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
 		super.useSpecial();
 
-		this.setSpecialAction(true);
 		Character healed = getTarget();
 		healed.setCurrentHp(1000);
 	}

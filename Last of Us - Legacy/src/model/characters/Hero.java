@@ -113,6 +113,7 @@ public abstract class Hero extends Character {
 			if(actionsAvailable <= 0 && !((this instanceof Fighter) && specialAction))
 				throw new NotEnoughActionsException();
 
+
 			super.attack();
 
 		}

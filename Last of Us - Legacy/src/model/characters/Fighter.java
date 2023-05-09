@@ -17,15 +17,25 @@ public class Fighter extends Hero{
 
 	@Override
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
-		super.attack();
-		if(!isSpecialAction())
-			setActionsAvailable(getActionsAvailable() - 1);
+		if(getTarget() == null) throw new InvalidTargetException();
+
+		if(isSpecialAction() && getCurrentHp()-getTarget().getAttackDmg()/2 <= 0){
+			return;
+		}
+
+
+
+
+		if(!isSpecialAction()){
+			super.attack();
+			setActionsAvailable(getActionsAvailable() - 1);}
 
 	}
 
 	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException {
 		super.useSpecial();
 		if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
+
 	}
 
 
