@@ -1,8 +1,6 @@
 package model.characters;
 
 
-import engine.Game;
-import model.collectibles.*;
 import exceptions.InvalidTargetException;
 import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;

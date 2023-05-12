@@ -1,11 +1,9 @@
 package model.characters;
 
 
-import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
-import model.collectibles.Supply;
 
 public class Medic extends Hero {
 	//Heal amount  attribute - quiz idea

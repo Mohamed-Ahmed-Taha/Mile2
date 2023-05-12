@@ -8,7 +8,6 @@ import exceptions.InvalidTargetException;
 import exceptions.MovementException;
 import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
-import model.characters.Character;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
 import model.world.*;

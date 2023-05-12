@@ -3,10 +3,8 @@ package model.characters;
 import java.awt.Point;
 import java.util.Objects;
 
-import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
-import model.world.CharacterCell;
 
 
 public abstract class Character {
