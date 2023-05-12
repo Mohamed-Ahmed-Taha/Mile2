@@ -197,15 +197,6 @@ public class Game {
 		}
 
 
-		public static boolean checkEndTurn () {
-			for (Hero hero : heroes) {
-				if (hero.getActionsAvailable() != 0)
-					return false;
-			}
-
-			return true;
-
-		}
 		public static void loadHeroes (String filePath) throws IOException {
 			FileReader fr = new FileReader(filePath);
 			BufferedReader br = new BufferedReader(fr);
@@ -252,7 +243,7 @@ public class Game {
 			h.setLocation(p);
 			heroes.add(h);
 			map[p.x][p.y] = new CharacterCell(h);
-//			if(visible) setVisibility(p, true);
+//			setVisibility(p, true);
 		}
 
 
