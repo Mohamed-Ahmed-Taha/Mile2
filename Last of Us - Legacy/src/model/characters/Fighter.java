@@ -19,12 +19,6 @@ public class Fighter extends Hero{
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		if(getTarget() == null) throw new InvalidTargetException();
 
-		if(isSpecialAction() && getCurrentHp()-getTarget().getAttackDmg()/2 <= 0){
-			return;
-		}
-
-
-
 
 		super.attack();
 		if(!isSpecialAction()){

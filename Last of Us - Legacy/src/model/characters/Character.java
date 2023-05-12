@@ -100,7 +100,8 @@ public abstract class Character {
 		Point a = A.getLocation(); 
 		Point b = B.getLocation();
 		if(a == null || b == null) return false;
-		return (a.distance(b) <= Math.sqrt(2));
+		double d = a.distance(b);
+		return (d >= 1 && d <= Math.sqrt(2));
 	}
 
 
