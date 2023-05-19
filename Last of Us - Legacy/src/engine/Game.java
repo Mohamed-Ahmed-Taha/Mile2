@@ -220,6 +220,7 @@ public class Game {
 				line = br.readLine();
 
 			}
+			br.close();
 		}
 
 
