@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
@@ -23,8 +24,9 @@ public class Main extends Application {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 Rectangle rectangle = new Rectangle(CELL_SIZE, CELL_SIZE);
-                rectangle.setFill(Color.WHITE);
+                rectangle.setFill(Color.NAVAJOWHITE);
                 rectangle.setStroke(Color.BLACK);
+                rectangle.setStrokeType(StrokeType.INSIDE);
 
                 GridPane.setRowIndex(rectangle, row);
                 GridPane.setColumnIndex(rectangle, col);
@@ -33,9 +35,10 @@ public class Main extends Application {
         }
 
         gridPane.setAlignment(Pos.CENTER);
-        double userMaxX = Screen.getPrimary().getBounds().getMaxX();
-        double userMaxY = Screen.getPrimary().getBounds().getMaxY();
-        Scene scene = new Scene(gridPane, userMaxX/1.2, userMaxY/1.2);
+//        double userMaxX = Screen.getPrimary().getBounds().getMaxX();
+//        double userMaxY = Screen.getPrimary().getBounds().getMaxY();
+
+        Scene scene = new Scene(gridPane, CELL_SIZE*GRID_SIZE +10, CELL_SIZE* GRID_SIZE +10);
         stage.setTitle("15x15 grid");
         stage.setScene(scene);
         stage.show();
