@@ -2,21 +2,13 @@ package controller;
 
 import engine.Game;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import views.BoardView;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.event.*;
-import javafx.scene.input.*;
 import model.world.Cell;
 import model.characters.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Controller extends Application {
 	
@@ -29,9 +21,9 @@ public class Controller extends Application {
        
     	BoardView.initMap(primaryStage);
     	try {
-    		Game.loadHeroes("D:\\Work\\College\\GUC\\S Semester 4\\Programming Lab - CSEN 401\\Game Project\\Milestone 2\\Repo 2\\Mile2\\Last of Us - Legacy\\src\\engine\\Heros.csv");
+    		Game.loadHeroes("Last of Us - Legacy/src/Heros.csv");
     	}
-    	catch(Exception e) {
+    	catch(FileNotFoundException e) {
     		System.out.println("Heros.csv file is not found");
     		return;
     	}
@@ -62,6 +54,7 @@ public class Controller extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+		System.out.println(new File("Heros.csv").getAbsolutePath());
+		launch(args);
     }
 }

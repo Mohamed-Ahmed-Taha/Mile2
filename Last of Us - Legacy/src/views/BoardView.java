@@ -18,11 +18,10 @@ public class BoardView {
     private static final int GRID_SIZE = 15;
     private static final double CELL_SIZE = 45;
     
-    private static GridPane gridPane = new GridPane();
-    private static ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
-	
-	public static void initMap(Stage currentStage) {
+    private static GridPane gridPane;
 
+	public static void initMap(Stage currentStage) {
+		gridPane = new GridPane();
 	    for (int row = 0; row < GRID_SIZE; row++) {
 	    	for (int col = 0; col < GRID_SIZE; col++) {
 	    		Rectangle rectangle = new Rectangle(CELL_SIZE, CELL_SIZE);
@@ -30,7 +29,6 @@ public class BoardView {
 	            rectangle.setStroke(Color.BLACK);
 	            rectangle.setStrokeType(StrokeType.INSIDE);
 	    	    
-	    	    rectangles.add(rectangle);
 	    	    GridPane.setRowIndex(rectangle, row);
 	            GridPane.setColumnIndex(rectangle, col);
 	            gridPane.getChildren().add(rectangle);
