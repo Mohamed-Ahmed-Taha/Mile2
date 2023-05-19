@@ -1,16 +1,19 @@
 package views;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 public class Main extends Application {
     private static final int GRID_SIZE = 15;
-    private static final int CELL_SIZE = 30;
+    private static final double CELL_SIZE = 66.5;
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -28,10 +31,16 @@ public class Main extends Application {
                 gridPane.getChildren().add(rectangle);
             }
         }
-        root.setCenter(gridPane);
+        
+//        Label l = new Label("zby");
+//        Label l2 = new Label("tez");
+//        VBox v = new VBox();
+//        v.getChildren().addAll(l, l2);
+//        root.setCenter(v);
+        
+        gridPane.setAlignment(Pos.CENTER);
 
-
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(gridPane);
         stage.setTitle("15x15 grid");
         stage.setScene(scene);
         stage.show();
