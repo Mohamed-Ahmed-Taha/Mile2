@@ -12,6 +12,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.event.*;
+import javafx.scene.input.*;
 
 public class Main extends Application {
     private static final int GRID_SIZE = 15;
@@ -27,6 +29,14 @@ public class Main extends Application {
                 rectangle.setFill(Color.NAVAJOWHITE);
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setStrokeType(StrokeType.INSIDE);
+                EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {  
+                	
+                	public void handle(MouseEvent event) {
+                		rectangle.setFill(Color.BLUE);
+                	}
+                };
+                rectangle.setOnMouseEntered(handler);
+            
 
                 GridPane.setRowIndex(rectangle, row);
                 GridPane.setColumnIndex(rectangle, col);
