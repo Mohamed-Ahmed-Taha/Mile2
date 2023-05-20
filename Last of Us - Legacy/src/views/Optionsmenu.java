@@ -17,6 +17,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import java.io.FileInputStream; 
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.*;
 import views.Mainmenu;
@@ -77,6 +79,17 @@ public class Optionsmenu{
         stage.setScene(scene);
         stage.setFullScreen(flagfs);
         stage.show();
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        	public void handle(KeyEvent esc) {
+        		if(esc.getCode()== KeyCode.ESCAPE )
+        			try {
+    					Mainmenu.start(stage, flagfs);
+    				} catch (Exception e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+        	}
+        });
         fs.addEventFilter(MouseEvent.MOUSE_CLICKED, fsbox);
         r.addEventFilter(MouseEvent.MOUSE_CLICKED, press);
 

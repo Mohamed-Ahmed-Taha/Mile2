@@ -57,12 +57,12 @@ public class BoardView {
     	}
     	Hero h = Game.availableHeroes.remove(0);
     	Game.startGame(h);
+    	h.setActionsAvailable(10);
     	
     	
  
-    	h.move(Direction.UP);
+//    	h.move(Direction.UP);
     	
-    	BoardView.updateMap(getVisibleCells());
     	
     	
     	Scene scene = new Scene(gridPane, 1500, 800);
@@ -70,7 +70,47 @@ public class BoardView {
     	currentStage.setScene(scene);
     	currentStage.setFullScreen(fs);
     	currentStage.show();
-
+    	
+    	scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        	public void handle(KeyEvent move) {
+        		if(move.getCode()== KeyCode.W) {
+					try {
+						h.move(Direction.UP);
+					} catch (MovementException | NotEnoughActionsException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		}
+        		
+        		if(move.getCode()== KeyCode.D) {
+					try {
+						h.move(Direction.RIGHT);
+					} catch (MovementException | NotEnoughActionsException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		}
+        		
+        		if(move.getCode()== KeyCode.A) {
+					try {
+						h.move(Direction.LEFT);
+					} catch (MovementException | NotEnoughActionsException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		}
+        		
+        		if(move.getCode()== KeyCode.S) {
+					try {
+						h.move(Direction.DOWN);
+					} catch (MovementException | NotEnoughActionsException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		}
+        		BoardView.updateMap(getVisibleCells());
+        	}
+        });
 
     }
 
@@ -96,6 +136,8 @@ public class BoardView {
 			for (int j = 0; j < visible[i].length; j++) {
 				if (visible[i][j])
 					getRectangle(14 - i, j).setFill(Color.GREY);
+				else
+					getRectangle(14 - i, j).setFill(Color.BLACK);
 			}
 		}
 		

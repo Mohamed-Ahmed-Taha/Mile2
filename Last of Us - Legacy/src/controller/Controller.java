@@ -19,10 +19,6 @@ public class Controller extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-    	
-//		Media sound = new Media(new File("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\gamemusic.mp3").toURI().toString());
-//        MediaPlayer mediaplayer = new MediaPlayer(sound);
-//        mediaplayer.play();
        
     	Mainmenu.start(primaryStage, true);
     	

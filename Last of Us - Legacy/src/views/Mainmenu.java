@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import javafx.scene.input.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +73,7 @@ public class Mainmenu {
 			public void handle(MouseEvent p ) {
 				stage.close();
 			}
-		};
+		};	
 		
 		EventHandler<MouseEvent> pressstr = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent p ) {
@@ -88,17 +90,24 @@ public class Mainmenu {
 		Scene scene = new Scene(t, 1500, 800);
         stage.setTitle("main menu");
         stage.setScene(scene);
+		Media sound = new Media(new File("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\gamemusic2.mp3").toURI().toString());
+        MediaPlayer mediaplayer = new MediaPlayer(sound);
+        mediaplayer.setAutoPlay(true);
         if(fs)
         	stage.setFullScreen(true);
         else
         	stage.setFullScreen(false);
         stage.show();
+        
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        	public void handle(KeyEvent esc) {
+        		if(esc.getCode()== KeyCode.ESCAPE )
+        			stage.close();
+        	}
+        });
         start.addEventFilter(MouseEvent.MOUSE_CLICKED, pressstr);
         options.addEventFilter(MouseEvent.MOUSE_CLICKED, pressop);
         exit.addEventFilter(MouseEvent.MOUSE_CLICKED, pressext);
-        
-        	
-        
 		
 	}
 	
