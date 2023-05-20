@@ -21,9 +21,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.*;
-import views.Mainmenu;
+import views.MainMenu;
 
-public class Optionsmenu{
+public class OptionsMenu{
 	
 	public static boolean flagfs = true ;
 
@@ -66,7 +66,7 @@ public class Optionsmenu{
 		EventHandler<MouseEvent> press = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent p ) {
 				try {
-					Mainmenu.start(stage, flagfs);
+					MainMenu.start(stage, flagfs);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -83,7 +83,7 @@ public class Optionsmenu{
         	public void handle(KeyEvent esc) {
         		if(esc.getCode()== KeyCode.ESCAPE )
         			try {
-    					Mainmenu.start(stage, flagfs);
+    					MainMenu.start(stage, flagfs);
     				} catch (Exception e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();

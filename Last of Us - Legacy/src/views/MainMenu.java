@@ -30,10 +30,10 @@ import javafx.scene.image.*;
 import javafx.scene.media.*;
 import javafx.event.*;
 import javafx.scene.input.*;
-import views.Optionsmenu;
+import views.OptionsMenu;
 
 
-public class Mainmenu {	
+public class MainMenu {	
 	
 	public static void start(Stage stage, boolean fs) throws Exception {
 		
@@ -61,7 +61,7 @@ public class Mainmenu {
 		EventHandler<MouseEvent> pressop = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent p ) {
 				try {
-					Optionsmenu.start(stage);
+					OptionsMenu.start(stage);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

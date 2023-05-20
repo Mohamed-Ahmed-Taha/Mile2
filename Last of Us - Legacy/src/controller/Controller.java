@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import views.BoardView;
 import model.world.Cell;
 import model.characters.*;
-import views.Mainmenu;
+import views.MainMenu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ public class Controller extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
        
-    	Mainmenu.start(primaryStage, true);
+    	MainMenu.start(primaryStage, true);
     	
     }
 
