@@ -21,7 +21,7 @@ import javafx.scene.input.*;
 
 public class SelectHeroV {
 	
-	public SelectHeroV(Stage stage) {
+	public SelectHeroV(SelectHeroC controller, Stage primaryStage) {
 		
 		VBox v = new VBox();
 		HBox h1 = new HBox();
@@ -49,26 +49,25 @@ public class SelectHeroV {
 		h2.getChildren().add(henryB);
 		h2.setAlignment(Pos.CENTER);
 		h2.setSpacing(10);
-		
-		v.getChildren().add(h1);
-		v.getChildren().add(h2);
+				
+		v.getChildren().addAll(h1, h2);
 		v.setAlignment(Pos.CENTER);
 		v.setSpacing(5);
 		v.setScaleX(5);
 		v.setScaleY(5);
 		
-		joelB.setOnMouseClicked(new SelectHeroC("Joel"));
-		ellieB.setOnMouseClicked(new SelectHeroC("Ellie"));
-		tessB.setOnMouseClicked(new SelectHeroC("Tess"));
-		rileyB.setOnMouseClicked(new SelectHeroC("Riley"));
-		tommyB.setOnMouseClicked(new SelectHeroC("Tommy"));
-		billB.setOnMouseClicked(new SelectHeroC("Bill"));
-		davidB.setOnMouseClicked(new SelectHeroC("David"));
-		henryB.setOnMouseClicked(new SelectHeroC("Henry"));
-		
+		joelB.setOnMouseClicked(controller);
+		ellieB.setOnMouseClicked(controller);
+		tessB.setOnMouseClicked(controller);
+		rileyB.setOnMouseClicked(controller);
+		tommyB.setOnMouseClicked(controller);
+		billB.setOnMouseClicked(controller);
+		davidB.setOnMouseClicked(controller);
+		henryB.setOnMouseClicked(controller);
+				
 		Scene scene = new Scene(v, Screen.getPrimary().getBounds().getMaxX()- 360, Screen.getPrimary().getBounds().getMaxY()-360);
-		stage.setScene(scene);
-		stage.show();
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 	
 }

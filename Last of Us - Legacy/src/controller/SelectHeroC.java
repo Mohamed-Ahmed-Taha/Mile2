@@ -3,71 +3,73 @@ package controller;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.characters.Hero;
+import model.world.Cell;
 import views.SelectHeroV;
+
+import java.util.ArrayList;
+
 import engine.Game;
 
 public class SelectHeroC implements EventHandler<MouseEvent>{
 	
-	private String label;
+	private static ArrayList<Hero> availableHeroes;
+	private static Hero heroPicked;
+	private static SelectHeroV view;
 	
-	public SelectHeroC(String label) {
-		label=this.label;
+	public SelectHeroC(Stage primaryStage) {
+		availableHeroes = Game.availableHeroes;
+		view = new SelectHeroV(this, primaryStage);
+		heroPicked = null;
 	}
 
-//	public static EventHandler<MouseEvent> select = new EventHandler<MouseEvent>() {
-//		public void handle(MouseEvent m) {
-//			Game.availableHeroes.get(0);
-//			
-//		}
-//	};
 
 	@Override
-	public void handle(MouseEvent arg0) {
+	public void handle(MouseEvent event) {
 		
-		if(label.equals("Joel")) {
-			Hero h = Game.availableHeroes.get(0);
-			Game.startGame(h);
-		}
+		String name = ((Button) (event.getSource())).getText();
+				
+		switch (name){
 		
-		if(label.equals("Ellie")) {
-			Hero h = Game.availableHeroes.get(1);
-			Game.startGame(h);
-		}
+			case "Joel":
+				heroPicked = Game.availableHeroes.get(0); break;
 		
-		if(label.equals("Tess")) {
-			Hero h = Game.availableHeroes.get(2);
-			Game.startGame(h);
-		}
+			case "Ellie":
+				heroPicked = Game.availableHeroes.get(1); break;
 		
-		if(label.equals("Riley")) {
-			Hero h = Game.availableHeroes.get(3);
-			Game.startGame(h);
-		}
+			case "Tess":
+				heroPicked = Game.availableHeroes.get(2); break;
 		
-		if(label.equals("Tommy")) {
-			Hero h = Game.availableHeroes.get(4);
-			Game.startGame(h);
-		}
+			case "Riley": 
+				heroPicked = Game.availableHeroes.get(3); break;
 		
-		if(label.equals("Bill")) {
-			Hero h = Game.availableHeroes.get(5);
-			Game.startGame(h);
-		}
+			case "Tommy":
+				heroPicked = Game.availableHeroes.get(4); break;
 		
-		if(label.equals("David")) {
-			Hero h = Game.availableHeroes.get(6);
-			Game.startGame(h);
-		}
+			case "Bill":
+				heroPicked = Game.availableHeroes.get(5); break;
 		
-		if(label.equals("Henry")) {
-			Hero h = Game.availableHeroes.get(7);
-			Game.startGame(h);
-		}
+			case "David":
+				heroPicked = Game.availableHeroes.get(6); break;
 
+			case "Henry":
+				heroPicked = Game.availableHeroes.get(7); break;
+			
+		}
 		
+		Game.startGame(heroPicked);
+		// open gridView
+		
+	}
+	
+	
+
+
+	public static Hero getHeroPicked() {
+		return heroPicked;
 	}
 	
 	
