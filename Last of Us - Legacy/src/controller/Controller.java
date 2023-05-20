@@ -2,55 +2,30 @@ package controller;
 
 import engine.Game;
 import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import views.BoardView;
 import model.world.Cell;
 import model.characters.*;
+import views.Mainmenu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Controller extends Application {
 	
-	private static Cell[][] map;
+	
 
     @Override
     public void start(Stage primaryStage) throws Exception {
     	
-    	map = Game.map;
+//		Media sound = new Media(new File("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\gamemusic.mp3").toURI().toString());
+//        MediaPlayer mediaplayer = new MediaPlayer(sound);
+//        mediaplayer.play();
        
-    	BoardView.initMap(primaryStage);
-    	try {
-    		Game.loadHeroes("Last of Us - Legacy/src/Heros.csv");
-    	}
-    	catch(FileNotFoundException e) {
-    		System.out.println("Heros.csv file is not found");
-    		return;
-    	}
-    	Hero h = Game.availableHeroes.remove(0);
-    	Game.startGame(h);
+    	Mainmenu.start(primaryStage, true);
     	
-    	
- 
-    	
-    	BoardView.updateMap(getVisibleCells());
-    	
-    	h.move(Direction.UP);
-    	
-
-
-    }
-
-    public static boolean[][] getVisibleCells() {
-    	boolean[][] visible = new boolean[15][15];
-    	
-    	for (int i = 0; i < visible.length; i++) {
-			for (int j = 0; j < visible[i].length; j++) {
-				visible[i][j] = map[i][j].isVisible();
-			}
-		}
-    	
-    	return visible;
     }
 
     public static void main(String[] args) {

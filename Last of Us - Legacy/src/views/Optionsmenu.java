@@ -23,11 +23,13 @@ import views.Mainmenu;
 
 public class Optionsmenu{
 	
+	public static boolean flagfs = true ;
 
-	public static void start() throws Exception {
-		Stage stage = new Stage();
+	public static void start(Stage stage) throws Exception {
+		
 		VBox op = new VBox();
 		CheckBox fs = new CheckBox("Fullscreen");
+		fs.setSelected(flagfs);
 		fs.setTextFill(Color.WHITE);
 		CheckBox s = new CheckBox("Sound");
 		s.setTextFill(Color.WHITE);
@@ -47,10 +49,13 @@ public class Optionsmenu{
 			public void handle(MouseEvent p ) {
 				if(fs.isSelected()) {
 					stage.setFullScreen(true);
+					flagfs = true;
+					
 				}
 				
 				else {
 					stage.setFullScreen(false);
+					flagfs = false;
 				}
 				
 			}
@@ -59,10 +64,7 @@ public class Optionsmenu{
 		EventHandler<MouseEvent> press = new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent p ) {
 				try {
-					Stage stage1 = new Stage();
-					Mainmenu mainmenu = new Mainmenu();
-					mainmenu.start(stage1);
-					stage.close();
+					Mainmenu.start(stage, flagfs);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -73,6 +75,7 @@ public class Optionsmenu{
 		Scene scene = new Scene(op, 1500, 800);
         stage.setTitle("options");
         stage.setScene(scene);
+        stage.setFullScreen(flagfs);
         stage.show();
         fs.addEventFilter(MouseEvent.MOUSE_CLICKED, fsbox);
         r.addEventFilter(MouseEvent.MOUSE_CLICKED, press);
