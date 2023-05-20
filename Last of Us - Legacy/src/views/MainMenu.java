@@ -1,36 +1,20 @@
 package views;
 
-import javafx.application.Application;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
 import javafx.scene.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 import javafx.scene.input.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
+import java.io.IOException;
 
 import exceptions.MovementException;
 import exceptions.NotEnoughActionsException;
 import javafx.scene.image.*;
-import javafx.scene.media.*;
 import javafx.event.*;
 import javafx.scene.input.*;
-import views.OptionsMenu;
 
 
 public class MainMenu {	
@@ -38,7 +22,7 @@ public class MainMenu {
 	public static void start(Stage stage, boolean fs) throws Exception {
 		
 		VBox t = new VBox();
-		Image titlepic = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\Screenshot 2023-05-19 205105.png");
+		Image titlepic = new Image("views/media/Screenshot 2023-05-19 205105.png");
 		ImageView picview = new ImageView(titlepic);
 		picview.setFitWidth(200);
 		picview.setFitHeight(100);
@@ -109,6 +93,10 @@ public class MainMenu {
         options.addEventFilter(MouseEvent.MOUSE_CLICKED, pressop);
         exit.addEventFilter(MouseEvent.MOUSE_CLICKED, pressext);
 		
+	}
+
+	public static void main(String[] args) {
+
 	}
 	
 }

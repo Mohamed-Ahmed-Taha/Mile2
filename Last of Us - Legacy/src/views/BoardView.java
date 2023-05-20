@@ -1,12 +1,8 @@
 package views;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -22,9 +18,6 @@ import model.world.Cell;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import javafx.animation.TranslateTransition;  
-import javafx.util.Duration;
 
 import engine.Game;
 import exceptions.InvalidTargetException;
@@ -177,8 +170,8 @@ public class BoardView {
 	
 	public static void updateMap(boolean [][] visible) {
 		
-		Image joel = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\1212312453.jpeg");
-		Image zomb = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\WhatsApp Image 2023-05-20 at 05.24.19.jpeg");
+		Image joel = new Image("views/media/JoelIdle.jpeg");
+		Image zomb = new Image("views/media/Zombie.jpeg");
 		
 		for (int i = 0; i < visible.length; i++) {
 			for (int j = 0; j < visible[i].length; j++) {
@@ -196,8 +189,8 @@ public class BoardView {
 	
 public static void updateMapOnEndTurn(boolean [][] visible) {
 		
-		Image joel = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\1212312453.jpeg");
-		Image zomb = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\WhatsApp Image 2023-05-20 at 05.24.19.jpeg");
+		Image joel = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\JoelIdle.jpeg");
+		Image zomb = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\Zombie.jpeg");
 		
 		for (int i = 0; i < visible.length; i++) {
 			for (int j = 0; j < visible[i].length; j++) {
