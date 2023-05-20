@@ -35,28 +35,28 @@ public class SelectHeroC implements EventHandler<MouseEvent>{
 		switch (name){
 		
 			case "Joel":
-				heroPicked = Game.availableHeroes.get(0); break;
+				heroPicked = availableHeroes.get(0); break;
 		
 			case "Ellie":
-				heroPicked = Game.availableHeroes.get(1); break;
+				heroPicked = availableHeroes.get(1); break;
 		
 			case "Tess":
-				heroPicked = Game.availableHeroes.get(2); break;
+				heroPicked = availableHeroes.get(2); break;
 		
 			case "Riley": 
-				heroPicked = Game.availableHeroes.get(3); break;
+				heroPicked = availableHeroes.get(3); break;
 		
 			case "Tommy":
-				heroPicked = Game.availableHeroes.get(4); break;
+				heroPicked = availableHeroes.get(4); break;
 		
 			case "Bill":
-				heroPicked = Game.availableHeroes.get(5); break;
+				heroPicked = availableHeroes.get(5); break;
 		
 			case "David":
-				heroPicked = Game.availableHeroes.get(6); break;
+				heroPicked = availableHeroes.get(6); break;
 
 			case "Henry":
-				heroPicked = Game.availableHeroes.get(7); break;
+				heroPicked = availableHeroes.get(7); break;
 			
 		}
 		
