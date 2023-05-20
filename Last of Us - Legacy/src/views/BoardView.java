@@ -1,8 +1,12 @@
 package views;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -23,8 +27,11 @@ import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
 import engine.Game;
+import exceptions.InvalidTargetException;
 import exceptions.MovementException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
+import java.lang.Math;
 
 
 
@@ -34,7 +41,7 @@ public class BoardView {
 	private static final double screenY = Screen.getPrimary().getBounds().getMaxY();
 	
     private static final int GRID_SIZE = 15;
-    private static final double CELL_SIZE = ((screenX/screenY)*(((((screenX*2)+(screenY*2)))*0.5))/100)+15;
+    private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100)+22;
     private static Cell[][] map;
     
     private static GridPane gridPane;
@@ -57,7 +64,7 @@ public class BoardView {
 	    }
 	    
 	    try {
-    		Game.loadHeroes("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\Heros.csv");
+    		Game.loadHeroes("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\Heros.csv");
     	}
     	catch(FileNotFoundException e) {
     		System.out.println("Heros.csv file is not found");
@@ -80,47 +87,75 @@ public class BoardView {
     	
     	BoardView.updateMap(getVisibleCells());
     	
-    	scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-        	public void handle(KeyEvent move) {
-        		if(move.getCode()== KeyCode.W) {
+    	
+    	EventHandler<KeyEvent> direct = (new EventHandler<KeyEvent>() {
+    		public void handle(KeyEvent move) {
+    			if(move.getCode()== KeyCode.UP) {
+    				try {
+    					h.move(Direction.UP);
+    				} catch (MovementException | NotEnoughActionsException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			
+    			if(move.getCode()== KeyCode.RIGHT) {
+    				try {
+    					h.move(Direction.RIGHT);
+    				} catch (MovementException | NotEnoughActionsException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			
+    			if(move.getCode()== KeyCode.LEFT) {
+    				try {
+    					h.move(Direction.LEFT);
+    				} catch (MovementException | NotEnoughActionsException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			
+    			if(move.getCode()== KeyCode.DOWN) {
+    				try {
+    					h.move(Direction.DOWN);
+    				} catch (MovementException | NotEnoughActionsException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			Game.updateVisibility();
+    			BoardView.updateMap(getVisibleCells());
+    		}
+    	});
+    	
+    	EventHandler<KeyEvent> pressesc = new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent k ) {
+				if(k.getCode() == KeyCode.ESCAPE)
+					currentStage.close();
+			}
+		};
+		
+		EventHandler<KeyEvent> pressend = new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent k ) {
+				if(k.getCode() == KeyCode.E) {
 					try {
-						h.move(Direction.UP);
-					} catch (MovementException | NotEnoughActionsException e) {
+						Game.endTurn();
+						BoardView.updateMapOnEndTurn(getVisibleCells());
+					} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-        		}
-        		
-        		if(move.getCode()== KeyCode.D) {
-					try {
-						h.move(Direction.RIGHT);
-					} catch (MovementException | NotEnoughActionsException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-        		}
-        		
-        		if(move.getCode()== KeyCode.A) {
-					try {
-						h.move(Direction.LEFT);
-					} catch (MovementException | NotEnoughActionsException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-        		}
-        		
-        		if(move.getCode()== KeyCode.S) {
-					try {
-						h.move(Direction.DOWN);
-					} catch (MovementException | NotEnoughActionsException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-        		}
-        		Game.updateVisibility();
-        		BoardView.updateMap(getVisibleCells());
-        	}
-        });
+				}
+			}
+		};	
+		
+    	
+    	scene.addEventFilter(KeyEvent.KEY_PRESSED, pressesc);
+    	scene.addEventFilter(KeyEvent.KEY_PRESSED, pressend);
+    	scene.addEventFilter(KeyEvent.KEY_PRESSED, direct);
+    	
 
     }
 
@@ -142,8 +177,8 @@ public class BoardView {
 	
 	public static void updateMap(boolean [][] visible) {
 		
-		Image joel = new Image("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\1212312453.jpeg");
-		Image zomb = new Image("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\WhatsApp Image 2023-05-20 at 05.24.19.jpeg");
+		Image joel = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\1212312453.jpeg");
+		Image zomb = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\WhatsApp Image 2023-05-20 at 05.24.19.jpeg");
 		
 		for (int i = 0; i < visible.length; i++) {
 			for (int j = 0; j < visible[i].length; j++) {
@@ -154,8 +189,27 @@ public class BoardView {
 					if(Game.checkZombie(i, j))
 						getRectangle(14 - i, j).setFill(new ImagePattern(zomb));
 				}
-				else
-					getRectangle(14 - i, j).setFill(Color.BLACK);
+			}
+		}
+		
+	}
+	
+public static void updateMapOnEndTurn(boolean [][] visible) {
+		
+		Image joel = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\1212312453.jpeg");
+		Image zomb = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\WhatsApp Image 2023-05-20 at 05.24.19.jpeg");
+		
+		for (int i = 0; i < visible.length; i++) {
+			for (int j = 0; j < visible[i].length; j++) {
+				if (visible[i][j]) {
+					getRectangle(14 - i, j).setFill(Color.GREY);
+					if(Game.checkHero(i, j))
+						getRectangle(14 - i, j).setFill(new ImagePattern(joel));
+					if(Game.checkZombie(i, j))
+						getRectangle(14 - i, j).setFill(new ImagePattern(zomb));
+					else
+						getRectangle(14 - i, j).setFill(Color.BLACK);
+				}
 			}
 		}
 		

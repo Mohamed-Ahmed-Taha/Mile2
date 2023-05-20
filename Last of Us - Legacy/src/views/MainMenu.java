@@ -38,7 +38,7 @@ public class MainMenu {
 	public static void start(Stage stage, boolean fs) throws Exception {
 		
 		VBox t = new VBox();
-		Image titlepic = new Image("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\Screenshot 2023-05-19 205105.png");
+		Image titlepic = new Image("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\Screenshot 2023-05-19 205105.png");
 		ImageView picview = new ImageView(titlepic);
 		picview.setFitWidth(200);
 		picview.setFitHeight(100);
@@ -90,9 +90,9 @@ public class MainMenu {
 		Scene scene = new Scene(t, 1500, 800);
         stage.setTitle("main menu");
         stage.setScene(scene);
-		Media sound = new Media(new File("C:\\Users\\PC\\Documents\\GitHub\\Mile2\\Last of Us - Legacy\\src\\gamemusic2.mp3").toURI().toString());
-        MediaPlayer mediaplayer = new MediaPlayer(sound);
-        mediaplayer.setAutoPlay(true);
+//		Media sound = new Media("C:\\Users\\Omar Abulsorour\\Documents\\Mile2\\Last of Us - Legacy\\src\\gamemusic2.mp3");
+//        MediaPlayer mediaplayer = new MediaPlayer(sound);
+//        mediaplayer.setAutoPlay(true);
         if(fs)
         	stage.setFullScreen(true);
         else
