@@ -15,6 +15,7 @@ public class Fighter extends Hero{
 
 	@Override
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+		if(getTarget() == null) throw new InvalidTargetException();
 
 
 		super.attack();
