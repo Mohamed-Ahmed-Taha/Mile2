@@ -4,7 +4,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import views.MainMenuV;
 import views.OptionsMenuV;
 
 public class OptionsMenuC implements EventHandler<MouseEvent>{
@@ -19,6 +21,7 @@ public class OptionsMenuC implements EventHandler<MouseEvent>{
 	@Override
 	public void handle(MouseEvent c) {
 		
+		if(c.getEventType() == MouseEvent.MOUSE_CLICKED) {
 		if((c.getSource()) instanceof CheckBox) {
 			String check = ((CheckBox) (c.getSource())).getText();
 			
@@ -27,6 +30,10 @@ public class OptionsMenuC implements EventHandler<MouseEvent>{
 					stage.setFullScreen(false);				}
 				else {
 					stage.setFullScreen(true);
+				}
+			
+			if(check.equals("Sound")) {
+
 				}
 			
 		}
@@ -43,7 +50,34 @@ public class OptionsMenuC implements EventHandler<MouseEvent>{
 				MainMenuC.setStage(stage);
 			}
 		}
+		}
 			
+		if(c.getEventType() == MouseEvent.MOUSE_ENTERED) {
+		if((c.getSource()) instanceof Button) {
+			Button hover = (Button) (c.getSource());
+			hover.setTextFill(Color.LIGHTGRAY);
+		}
+		
+		if((c.getSource()) instanceof CheckBox) {
+			CheckBox hover = (CheckBox) (c.getSource());
+			hover.setTextFill(Color.LIGHTGRAY);
+		}
+		
+		}
+		
+		if(c.getEventType() == MouseEvent.MOUSE_EXITED) {
+			if((c.getSource()) instanceof Button) {
+				Button hover = (Button) (c.getSource());
+				hover.setTextFill(Color.WHITE);
+			}
+			
+			if((c.getSource()) instanceof CheckBox) {
+				CheckBox hover = (CheckBox) (c.getSource());
+				hover.setTextFill(Color.WHITE);
+			}
+			
+		}
+
 		
 	}
 	

@@ -101,6 +101,26 @@ public class SelectHeroV {
 		davidB.setOnMouseClicked(controller);
 		henryB.setOnMouseClicked(controller);
 		r.setOnMouseClicked(controller);
+		
+		joelB.setOnMouseEntered(controller);
+		ellieB.setOnMouseEntered(controller);
+		tessB.setOnMouseEntered(controller);
+		rileyB.setOnMouseEntered(controller);
+		tommyB.setOnMouseEntered(controller);
+		billB.setOnMouseEntered(controller);
+		davidB.setOnMouseEntered(controller);
+		henryB.setOnMouseEntered(controller);
+		r.setOnMouseEntered(controller);
+		
+		joelB.setOnMouseExited(controller);
+		ellieB.setOnMouseExited(controller);
+		tessB.setOnMouseExited(controller);
+		rileyB.setOnMouseExited(controller);
+		tommyB.setOnMouseExited(controller);
+		billB.setOnMouseExited(controller);
+		davidB.setOnMouseExited(controller);
+		henryB.setOnMouseExited(controller);
+		r.setOnMouseExited(controller);
 				
 		Scene scene = new Scene(v, Screen.getPrimary().getBounds().getMaxX()- 360, Screen.getPrimary().getBounds().getMaxY()-360);
 		stage.setScene(scene);

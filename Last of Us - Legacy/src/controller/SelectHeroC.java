@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.characters.Hero;
 import model.world.Cell;
@@ -29,9 +30,11 @@ public class SelectHeroC implements EventHandler<MouseEvent>{
 	}
 
 	@Override
-	public void handle(MouseEvent event) {
+	public void handle(MouseEvent c) {
 		
-		String name = ((Button) (event.getSource())).getText();
+		if(c.getEventType() == MouseEvent.MOUSE_CLICKED) {
+		
+		String name = ((Button) (c.getSource())).getText();
 				
 		switch (name){
 		
@@ -91,7 +94,17 @@ public class SelectHeroC implements EventHandler<MouseEvent>{
 					e.printStackTrace();
 				}
 				MainMenuC.setStage(stage);
-			
+		}
+		}
+		
+		if(c.getEventType() == MouseEvent.MOUSE_ENTERED) {
+			Button hover = (Button) (c.getSource());
+			hover.setTextFill(Color.LIGHTGRAY);
+		}
+		
+		if(c.getEventType() == MouseEvent.MOUSE_EXITED) {
+			Button hover = (Button) (c.getSource());
+			hover.setTextFill(Color.WHITE);
 		}
 		
 		Game.startGame(heroPicked);

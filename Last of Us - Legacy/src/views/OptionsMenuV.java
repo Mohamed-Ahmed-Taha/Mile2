@@ -30,6 +30,10 @@ public class OptionsMenuV {
 	public OptionsMenuV(OptionsMenuC controller, Stage stage, boolean fs) {
 		
 				Font ac = new Font("Agency FB", 12);
+				StackPane stack = new StackPane();
+				
+				Image titlebg = new Image("/views/media/john-sweeney-main-menu.jpg");
+				ImageView bgview = new ImageView(titlebg);
 		
 				VBox op = new VBox();
 				CheckBox full = new CheckBox("Fullscreen");
@@ -59,16 +63,27 @@ public class OptionsMenuV {
 				op.getChildren().add(full);
 				op.getChildren().add(s);
 				op.getChildren().add(r);
-				op.setStyle("-fx-background-color: #000000;");
 				
-				Scene scene = new Scene(op, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
+				stack.getChildren().add(bgview);
+				stack.getChildren().add(op);
+				
+				Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
 		        stage.setTitle("options");
 		        stage.setScene(scene);
 		        stage.setFullScreen(fs);
 		        stage.show();
 		        
 		        full.setOnMouseClicked(controller);
+		        s.setOnMouseClicked(controller);
 		        r.setOnMouseClicked(controller);
+		        
+		        full.setOnMouseEntered(controller);
+		        s.setOnMouseEntered(controller);
+		        r.setOnMouseEntered(controller);
+		        
+				full.setOnMouseExited(controller);
+				s.setOnMouseExited(controller);
+				r.setOnMouseExited(controller);
 		
 		
 		}

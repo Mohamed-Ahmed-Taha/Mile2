@@ -10,6 +10,8 @@ import java.net.URISyntaxException;
 import engine.Game;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import views.MainMenuV;
 
@@ -32,6 +34,7 @@ public class Driver extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		primaryStage.setFullScreen(true);
 		MainMenuC mainMenu = new MainMenuC(primaryStage);
 		MainMenuC.setStage(primaryStage);
 		
