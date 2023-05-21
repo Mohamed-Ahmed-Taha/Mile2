@@ -9,6 +9,8 @@ import javafx.scene.layout.*;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 
@@ -21,7 +23,9 @@ import javafx.scene.input.*;
 
 public class SelectHeroV {
 	
-	public SelectHeroV(SelectHeroC controller, Stage primaryStage) {
+	public SelectHeroV(SelectHeroC controller, Stage stage, boolean fs) {
+		
+		Font ac = new Font("Agency FB", 12);
 		
 		VBox v = new VBox();
 		HBox h1 = new HBox();
@@ -35,6 +39,37 @@ public class SelectHeroV {
 		Button billB = new Button("Bill");
 		Button davidB = new Button("David");
 		Button henryB = new Button("Henry");
+		Button r = new Button("Back");
+		
+		joelB.setFont(ac);
+		ellieB.setFont(ac);
+		tessB.setFont(ac);
+		rileyB.setFont(ac);
+		tommyB.setFont(ac);
+		billB.setFont(ac);
+		davidB.setFont(ac);
+		henryB.setFont(ac);
+		r.setFont(ac);
+		
+		joelB.setBackground(null);
+		ellieB.setBackground(null);
+		tessB.setBackground(null);
+		rileyB.setBackground(null);
+		tommyB.setBackground(null);
+		billB.setBackground(null);
+		davidB.setBackground(null);
+		henryB.setBackground(null);
+		r.setBackground(null);
+		
+		joelB.setTextFill(Color.WHITE);
+		ellieB.setTextFill(Color.WHITE);
+		tessB.setTextFill(Color.WHITE);
+		rileyB.setTextFill(Color.WHITE);
+		tommyB.setTextFill(Color.WHITE);
+		billB.setTextFill(Color.WHITE);
+		davidB.setTextFill(Color.WHITE);
+		henryB.setTextFill(Color.WHITE);
+		r.setTextFill(Color.WHITE);
 		
 		h1.getChildren().add(joelB);
 		h1.getChildren().add(ellieB);
@@ -50,11 +85,12 @@ public class SelectHeroV {
 		h2.setAlignment(Pos.CENTER);
 		h2.setSpacing(10);
 				
-		v.getChildren().addAll(h1, h2);
+		v.getChildren().addAll(h1, h2, r);
 		v.setAlignment(Pos.CENTER);
 		v.setSpacing(5);
 		v.setScaleX(5);
 		v.setScaleY(5);
+		v.setStyle("-fx-background-color: #000000;");
 		
 		joelB.setOnMouseClicked(controller);
 		ellieB.setOnMouseClicked(controller);
@@ -64,10 +100,15 @@ public class SelectHeroV {
 		billB.setOnMouseClicked(controller);
 		davidB.setOnMouseClicked(controller);
 		henryB.setOnMouseClicked(controller);
+		r.setOnMouseClicked(controller);
 				
 		Scene scene = new Scene(v, Screen.getPrimary().getBounds().getMaxX()- 360, Screen.getPrimary().getBounds().getMaxY()-360);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		stage.setScene(scene);
+		if(fs)
+			stage.setFullScreen(true);
+		else
+			stage.setFullScreen(false);
+		stage.show();
 	}
 	
 }
