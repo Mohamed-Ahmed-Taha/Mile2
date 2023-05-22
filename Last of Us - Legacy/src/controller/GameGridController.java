@@ -1,6 +1,7 @@
 package controller;
 
 import engine.Game;
+import java.awt.*;
 import exceptions.InvalidTargetException;
 import exceptions.MovementException;
 import exceptions.NoAvailableResourcesException;
@@ -8,6 +9,8 @@ import exceptions.NotEnoughActionsException;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.characters.Direction;
 import model.characters.Explorer;
@@ -125,7 +128,12 @@ public class GameGridController implements EventHandler<Event>{
 			
 		}
 		
+		if(event instanceof MouseEvent) {
+			MouseEvent mouseEvent = (MouseEvent) event;
+			Rectangle cell = (Rectangle) mouseEvent.getSource();
+			
 		
+		}
 	}
 	
 	public static void updateMap() {
