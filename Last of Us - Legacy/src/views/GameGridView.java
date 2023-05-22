@@ -10,8 +10,6 @@ import javafx.scene.shape.StrokeType;
 import javafx.geometry.Pos;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.awt.Point;
 import java.lang.Math;
 import controller.GameGridController;
 import engine.Game;
@@ -31,7 +29,6 @@ public class GameGridView {
 	public GameGridView(GameGridController controller, Stage stage) {
 		
 		StackPane stack = new StackPane();
-		BorderPane border = new BorderPane();
 		
 		Image empcell = new Image("/views/media/Empty Cell.jpeg");
 		Image gridBg = new Image("/views/media/WhatsApp Image 2023-05-22 at 07.33.03.jpeg");
@@ -57,8 +54,7 @@ public class GameGridView {
 
 	    
 	    stack.getChildren().add(bgView);
-	    border.setCenter(gridPane);
-	    stack.getChildren().add(border);
+	    stack.getChildren().add(gridPane);
 	    
 	    
     	Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
@@ -71,12 +67,6 @@ public class GameGridView {
 //    	updateMap(GameGridController.getVisibleCells());
     	
     	scene.setOnKeyPressed(controller);
-    	gridPane.setOnMouseEntered(controller);
-		for(int i = 0; i<Game.heroes.size(); i++) {
-			Point location = Game.heroes.get(i).getLocation();
-			getRectangle(location.x, location.y).setOnMouseEntered(controller);
-		}
-		
  
 	}	
 	
@@ -140,7 +130,7 @@ public class GameGridView {
 	}
 	
 	
-	public static Rectangle getRectangle(int row, int col) {
+	private static Rectangle getRectangle(int row, int col) {
 		for (javafx.scene.Node node : gridPane.getChildren()) {
 			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col)
 				return (Rectangle) node;
