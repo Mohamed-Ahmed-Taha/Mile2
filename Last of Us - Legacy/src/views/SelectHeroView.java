@@ -122,9 +122,10 @@ public class SelectHeroView {
 		r.setOnMouseExited(controller);
 				
 		Scene scene = new Scene(v, Screen.getPrimary().getBounds().getMaxX()- 360, Screen.getPrimary().getBounds().getMaxY()-360);
+		stage.hide();
 		stage.setScene(scene);
 		stage.setFullScreen(stage.isFullScreen());
-//		stage.show();
+		stage.show();
 	}
 	
 	public void hoverIn(Button button) {

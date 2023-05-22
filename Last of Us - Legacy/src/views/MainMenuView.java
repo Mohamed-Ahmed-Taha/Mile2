@@ -81,6 +81,7 @@ public class MainMenuView {
 		
 		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
 		stage.setTitle("main menu");
+		stage.hide();
 		stage.setScene(scene);
 		// stage is initially set to full screen, can be changed in options
 		stage.setFullScreen(true);

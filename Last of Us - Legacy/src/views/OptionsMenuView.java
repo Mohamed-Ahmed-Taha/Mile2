@@ -14,9 +14,7 @@ import javafx.scene.image.*;
 public class OptionsMenuView {
 	
 	public OptionsMenuView(OptionsMenuController controller, Stage stage) {
-		
-		stage.setFullScreen(false);
-		
+				
 		Font ac = new Font("Agency FB", 12);
 		StackPane stack = new StackPane();
 				
@@ -68,9 +66,10 @@ public class OptionsMenuView {
 				
 		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
 		stage.setTitle("options");
+		stage.hide();
 		stage.setScene(scene);
-		stage.setFullScreen(stage.isFullScreen());	
-//		stage.show();
+		stage.setFullScreen(true);	
+		stage.show();
 		
 	}
 	

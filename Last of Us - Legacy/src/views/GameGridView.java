@@ -22,7 +22,7 @@ public class GameGridView {
 	private static final double screenY = Screen.getPrimary().getBounds().getMaxY();
 	
 	private static final int GRID_SIZE = 15;
-	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100)+30;
+	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100) + 25;
 	
 	private static GridPane gridPane;
 	
@@ -59,70 +59,76 @@ public class GameGridView {
 	    
     	Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
     	stage.setTitle("15x15 grid");
+		stage.hide();
     	stage.setScene(scene);
     	stage.setFullScreen(stage.isFullScreen());
-//    	stage.show();
+    	stage.show();
     	
 //    	updateMap(GameGridController.getVisibleCells());
     	
-//    	scene.setOnKeyPressed(controller);
+    	scene.setOnKeyPressed(controller);
  
 	}	
 	
 
 	
-	public static void updateMap(boolean [][] visible) {
+	public void updateMap(char[][] mapForPrint) {
 
-		Image joel = new Image("/views/media/Fighter/knight_f_idle_anim_f0.png");
-		Image zomb = new Image("/views/media/Zombie/zombie_anim_f10.png");
-		Image viscell = new Image("/views/media/0x72_DungeonTilesetII_v1.6.png");
-
-		for (int i = 0; i < visible.length; i++) {
-			for (int j = 0; j < visible[i].length; j++) {
-				if (visible[i][j]) {
-					getRectangle(14 - i, j).setFill(Color.GRAY);
-					getRectangle(14 - i, j).setOpacity(0.5);
-				if(Game.checkHero(i, j)) {
-					getRectangle(14 - i, j).setFill(new ImagePattern(joel));
-					getRectangle(14 - i, j).setOpacity(1);
-				}
-				if(Game.checkZombie(i, j)) {
-					getRectangle(14 - i, j).setFill(new ImagePattern(zomb));
-					getRectangle(14 - i, j).setOpacity(1);
-				}
-				}
-			}
-		}
+//		Image joel = new Image("/views/media/Fighter/knight_f_idle_anim_f0.png");
+//		Image zomb = new Image("/views/media/Zombie/zombie_anim_f10.png");
+//		Image viscell = new Image("/views/media/0x72_DungeonTilesetII_v1.6.png");
+		
+		
+		for (int i = 0; i < 15; i++) 
+			for (int j = 0; j < 15; j++) 
+				renderCell(14 - i, j, mapForPrint[i][j]);
 
 	}
 	
-	public static void updateMapOnEndTurn(boolean [][] visible) {
 	
-		Image joel = new Image("/views/media/Fighter/knight_f_idle_anim_f0.png");
-		Image zomb = new Image("/views/media/Zombie/zombie_anim_f10.png");
-		Image viscell = new Image("/views/media/0x72_DungeonTilesetII_v1.6.png");
-		Image empcell = new Image("/views/media/Empty Cell.jpeg");
+	private static void renderCell(int i, int j, char cell) {
 		
-			for (int i = 0; i < visible.length; i++) {
-				for (int j = 0; j < visible[i].length; j++) {
-					if (visible[i][j]) {
-						getRectangle(14 - i, j).setFill(Color.GRAY);
-						getRectangle(14 - i, j).setOpacity(0.5);
-						if(Game.checkHero(i, j)) {
-							getRectangle(14 - i, j).setFill(new ImagePattern(joel));
-							getRectangle(14 - i, j).setOpacity(1);
-						}
-						if(Game.checkZombie(i, j)) {
-							getRectangle(14 - i, j).setFill(new ImagePattern(zomb));
-							getRectangle(14 - i, j).setOpacity(1);
-						}
-					}
-					else
-						getRectangle(14 - i, j).setFill(null);
-				}
-			}
-	
+		// 'n' -> not visible
+		// 'e' -> empty
+		// 'x' -> explorer
+		// 'f' -> fighter
+		// 'm' -> medic
+		// 'z' -> zombie
+		// 's' -> supply
+		// 'v' -> vaccine
+		// 't' -> trap
+		
+		// TODO instead of color, should be loading certain image
+		Color color;
+		
+		switch (cell) {
+		
+		case 'n':
+			color = Color.BLACK; break;
+		case 'e':
+		case 't':
+			color = Color.WHITE; break;
+		case 'x':
+			color = Color.YELLOW; break;
+		case 'f':
+			color = Color.BLUE; break;
+		case 'm':
+			color = Color.GREEN; break;
+		case 'z':
+			color = Color.RED; break;
+		case 's':
+			color = Color.GOLD; break;
+		case 'v':
+			color = Color.PINK; break;
+		default:
+			color = Color.BEIGE;
+			
 		}
+		
+		getRectangle(i, j).setFill(color);
+		
+	}
+	
 	
 	private static Rectangle getRectangle(int row, int col) {
 		for (javafx.scene.Node node : gridPane.getChildren()) {

@@ -1,24 +1,32 @@
 package controller;
 
 import engine.Game;
+import exceptions.InvalidTargetException;
 import exceptions.MovementException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
+import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import model.characters.Direction;
+import model.characters.Explorer;
+import model.characters.Fighter;
 import model.characters.Hero;
+import model.characters.Medic;
+import model.characters.Zombie;
+import model.collectibles.Supply;
+import model.collectibles.Vaccine;
 import model.world.Cell;
+import model.world.CharacterCell;
+import model.world.CollectibleCell;
+import model.world.TrapCell;
 import views.GameGridView;
 
-public class GameGridController implements EventHandler<KeyEvent>{
+public class GameGridController implements EventHandler<Event>{
 	
 	private Stage stage;		
-	private GameGridView view;
+	private static GameGridView view;
 	
 	
 	private static Cell[][] map;
@@ -43,65 +51,131 @@ public class GameGridController implements EventHandler<KeyEvent>{
 //	}
 
 	@Override
-	public void handle(KeyEvent k) {
-		if(k.getCode()== KeyCode.UP) {
-			try {
-				heroSelected.move(Direction.UP);
-			} catch (MovementException | NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public void handle(Event event) {
+		
+		if (event instanceof KeyEvent) {
+			KeyEvent keyEvent = (KeyEvent) event;
+			
+			switch (keyEvent.getCode()) {
+			
+			case UP:
+				try {
+					heroSelected.move(Direction.UP);
+					updateMap();
+				} catch (MovementException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotEnoughActionsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} break;
+			case DOWN:
+				try {
+					heroSelected.move(Direction.DOWN);
+					updateMap();
+				} catch (MovementException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotEnoughActionsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} break;
+				
+			case LEFT:
+				try {
+					heroSelected.move(Direction.LEFT);
+					updateMap();
+				} catch (MovementException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotEnoughActionsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} break;
+				
+			case RIGHT:
+				try {
+					heroSelected.move(Direction.RIGHT);
+					updateMap();
+				} catch (MovementException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotEnoughActionsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} break;
+				
+			case E:
+				try {
+					Game.endTurn();
+					updateMap();
+				} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} break;
+				
+			case ESCAPE:
+				stage.close();
+				
+			default:
+				
+			
 			}
-			Game.updateVisibility();
-			GameGridView.updateMap(getVisibleCells());
-		}
-	
-		if(k.getCode()== KeyCode.RIGHT) {
-			try {
-				heroSelected.move(Direction.RIGHT);
-			} catch (MovementException | NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Game.updateVisibility();
-			GameGridView.updateMap(getVisibleCells());
-		}
-	
-		if(k.getCode()== KeyCode.LEFT) {
-			try {
-				heroSelected.move(Direction.LEFT);
-			} catch (MovementException | NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Game.updateVisibility();
-			GameGridView.updateMap(getVisibleCells());
-		}
-	
-		if(k.getCode()== KeyCode.DOWN) {
-			try {
-				heroSelected.move(Direction.DOWN);
-			} catch (MovementException | NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Game.updateVisibility();
-			GameGridView.updateMap(getVisibleCells());
+			
+			
 		}
 		
-		if(k.getCode() == KeyCode.E) {
-			GameGridView.updateMapOnEndTurn(getVisibleCells());
-		}
 		
-		if(k.getCode() == KeyCode.ESCAPE) {
-			stage.close();
-		}
-
 	}
 	
 	public static void updateMap() {
 		
+		char[][] mapForPrint = new char[15][15];
+		// 'n' -> not visible
+		// 'e' -> empty
+		// 'x' -> explorer
+		// 'f' -> fighter
+		// 'm' -> medic
+		// 'z' -> zombie
+		// 's' -> supply
+		// 'v' -> vaccine
+		// 't' -> trap
+		
+		for (int i = 0; i < 15; i++) 
+			for (int j = 0; j < 15; j++) 
+				mapForPrint[i][j] = getCellType(map[i][j]);
+		
+		
+		view.updateMap(mapForPrint);
 		
 
+	}
+	
+	private static char getCellType(Cell cell) {
+		// TODO remove this comment
+//		if (!cell.isVisible())
+//			return 'n';
+		
+		if (cell instanceof CharacterCell) {
+			if (((CharacterCell) cell).getCharacter() instanceof Explorer)
+				return 'x';
+			if (((CharacterCell) cell).getCharacter() instanceof Fighter)
+				return 'f';
+			if (((CharacterCell) cell).getCharacter() instanceof Medic)
+				return 'm';
+			if (((CharacterCell) cell).getCharacter() instanceof Zombie)
+				return 'z';
+		}
+		if (cell instanceof CollectibleCell) {
+			if (((CollectibleCell) cell).getCollectible() instanceof Supply)
+				return 's';
+			if (((CollectibleCell) cell).getCollectible() instanceof Vaccine)
+				return 'v';
+		}
+		if (cell instanceof TrapCell)
+			return 't';
+		// cell is empty
+		return 'e';
 	}
 	
 	
