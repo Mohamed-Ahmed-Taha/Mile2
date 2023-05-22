@@ -50,7 +50,7 @@ public class GameGridView {
 		heroAttributesPanel = new Label();
 		
 		Image empcell = new Image("/views/media/Empty Cell.jpeg");
-		Image gridBg = new Image("/views/media/WhatsApp Image 2023-05-22 at 07.33.03.jpeg");
+		Image gridBg = new Image("/views/media/pxArt.png");
 		ImageView bgView = new ImageView(gridBg);
 		
 		gridPane = new GridPane();
@@ -82,7 +82,11 @@ public class GameGridView {
 	    heroAttributesPanel.setScaleY(2.5);
 //	    heroAttributesPanel.setBackground();
 	    
-	    stack.getChildren().add(hBox);	    
+	    stack.getChildren().add(bgView);
+	    
+	    gridPane.setAlignment(Pos.CENTER_LEFT);
+	    
+	    stack.getChildren().add(hBox);
 	    
     	Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
     	stage.setTitle("15x15 grid");
@@ -164,6 +168,7 @@ public class GameGridView {
 	public static void setAttributesPanel(String heroAttributes) {
 		
 		heroAttributesPanel.setText(heroAttributes);
+		heroAttributesPanel.setTextFill(Color.WHITE);
 		
 	}
 	

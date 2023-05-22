@@ -3,6 +3,7 @@ package model.characters;
 import java.awt.*;
 import java.util.ArrayList;
 
+import controller.GameGridController;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.MovementException;
@@ -134,7 +135,7 @@ public abstract class Hero extends Character {
 		public void onCharacterDeath() {
 			Point p = this.getLocation();
 			Game.map[p.x][p.y] = new CharacterCell(null);
-			Game.heroes.remove(this);			
+			Game.heroes.remove(this);	
 		}
 
 

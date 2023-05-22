@@ -261,8 +261,10 @@ public class GameGridController implements EventHandler<Event>{
 			
 		}
 		else if (Game.checkZombie(x, y)) {
-			Zombie zombie = (Zombie)((CharacterCell) map[x][y]).getCharacter();
-			GameGridView.setAttributesPanel("HP: " + zombie.getCurrentHp());
+			if(map[x][y].isVisible()) {
+				Zombie zombie = (Zombie)((CharacterCell) map[x][y]).getCharacter();
+				GameGridView.setAttributesPanel("HP: " + zombie.getCurrentHp());
+			}
 		}
 	}
 	
