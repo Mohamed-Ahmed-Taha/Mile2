@@ -4,26 +4,16 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
-import javafx.scene.input.KeyEvent;
-import javafx.scene.media.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import controller.SelectHeroController;
 
-import java.io.IOException;
-
-import controller.SelectHeroC;
-import exceptions.MovementException;
-import exceptions.NotEnoughActionsException;
-import javafx.scene.image.*;
-import javafx.event.*;
-import javafx.scene.input.*;
-
-public class SelectHeroV {
+public class SelectHeroView {
 	
-	public SelectHeroV(SelectHeroC controller, Stage stage, boolean fs) {
+	public SelectHeroView(SelectHeroController controller, Stage stage) {
 		
 		Font ac = new Font("Agency FB", 12);
 		
@@ -70,6 +60,15 @@ public class SelectHeroV {
 		davidB.setTextFill(Color.WHITE);
 		henryB.setTextFill(Color.WHITE);
 		r.setTextFill(Color.WHITE);
+		
+		setHoverText(joelB);
+		setHoverText(ellieB);
+		setHoverText(tessB);
+		setHoverText(rileyB);
+		setHoverText(tommyB);
+		setHoverText(billB);
+		setHoverText(davidB);
+		setHoverText(henryB);
 		
 		h1.getChildren().add(joelB);
 		h1.getChildren().add(ellieB);
@@ -124,11 +123,32 @@ public class SelectHeroV {
 				
 		Scene scene = new Scene(v, Screen.getPrimary().getBounds().getMaxX()- 360, Screen.getPrimary().getBounds().getMaxY()-360);
 		stage.setScene(scene);
-		if(fs)
-			stage.setFullScreen(true);
-		else
-			stage.setFullScreen(false);
-		stage.show();
+		stage.setFullScreen(stage.isFullScreen());
+//		stage.show();
+	}
+	
+	public void hoverIn(Button button) {
+		button.setTextFill(Color.LIGHTGRAY);
+	}
+	
+	public void hoverOut(Button button) {
+		button.setTextFill(Color.WHITE);
+	}
+	
+	public void setHoverText(Button hoverButton) {
+		
+		String hoverText = SelectHeroController.getStartAttributes(hoverButton);
+		
+		Tooltip hoverBox = new Tooltip(hoverText);
+		
+		Font ac = new Font("Agency FB", 30);
+
+		hoverBox.setFont(ac);
+		hoverBox.setShowDelay(Duration.ZERO);
+		hoverBox.setShowDuration(Duration.INDEFINITE);
+		hoverBox.setHideDelay(Duration.ZERO);
+		hoverButton.setTooltip(hoverBox);
+
 	}
 	
 }

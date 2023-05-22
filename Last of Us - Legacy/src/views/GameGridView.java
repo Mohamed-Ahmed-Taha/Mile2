@@ -7,42 +7,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-import javafx.event.*;
-import javafx.scene.input.*;
 import javafx.geometry.Pos;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.characters.Direction;
-import model.characters.Hero;
-import model.world.Cell;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import engine.Game;
-import exceptions.InvalidTargetException;
-import exceptions.MovementException;
-import exceptions.NoAvailableResourcesException;
-import exceptions.NotEnoughActionsException;
 import java.lang.Math;
-
-import controller.GameGridC;
-import controller.MainMenuC;
+import controller.GameGridController;
+import engine.Game;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
 
-public class GameGridV {
+public class GameGridView {
 	
 	private static final double screenX = Screen.getPrimary().getBounds().getMaxX();
 	private static final double screenY = Screen.getPrimary().getBounds().getMaxY();
 	
 	private static final int GRID_SIZE = 15;
 	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100)+30;
-	private static Cell[][] map;
 	
 	private static GridPane gridPane;
 	
-	public GameGridV(GameGridC controller, Stage stage, boolean fs, Hero h) {
+	public GameGridView(GameGridController controller, Stage stage) {
 		
 		StackPane stack = new StackPane();
 		
@@ -50,7 +34,6 @@ public class GameGridV {
 		Image gridBg = new Image("/views/media/WhatsApp Image 2023-05-22 at 07.33.03.jpeg");
 		ImageView bgView = new ImageView(gridBg);
 		
-		map = Game.map;
 		gridPane = new GridPane();
 	    for (int row = 0; row < GRID_SIZE; row++) {
 	    	for (int col = 0; col < GRID_SIZE; col++) {
@@ -65,8 +48,6 @@ public class GameGridV {
 	            gridPane.setAlignment(Pos.CENTER);
 	        }
 	    }
-	    Game.startGame(h);
-	    h.setActionsAvailable(9999);
 	    
 	    bgView.setFitHeight(Screen.getPrimary().getBounds().getMaxY());
 	    bgView.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
@@ -79,25 +60,16 @@ public class GameGridV {
     	Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
     	stage.setTitle("15x15 grid");
     	stage.setScene(scene);
-    	stage.setFullScreen(fs);
-    	stage.show();
+    	stage.setFullScreen(stage.isFullScreen());
+//    	stage.show();
     	
-    	updateMap(getVisibleCells());
+//    	updateMap(GameGridController.getVisibleCells());
     	
-    	scene.setOnKeyPressed(controller);
+//    	scene.setOnKeyPressed(controller);
  
 	}	
 	
-	public static boolean[][] getVisibleCells(){
-		boolean[][] visible = new boolean[15][15];
-		for (int i = 0; i < visible.length; i++) {
-			for (int j = 0; j < visible[i].length; j++) {
-				visible[i][j] = map[i][j].isVisible();
-			}
-		}
-		return visible;
-		
-	}
+
 	
 	public static void updateMap(boolean [][] visible) {
 
@@ -153,11 +125,11 @@ public class GameGridV {
 		}
 	
 	private static Rectangle getRectangle(int row, int col) {
-	for (javafx.scene.Node node : gridPane.getChildren()) {
-		if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col)
-			return (Rectangle) node;
+		for (javafx.scene.Node node : gridPane.getChildren()) {
+			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col)
+				return (Rectangle) node;
+		}
+		return null;
 	}
-	return null;
-}
 	
 }

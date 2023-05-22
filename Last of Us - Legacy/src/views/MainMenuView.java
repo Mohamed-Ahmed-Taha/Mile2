@@ -7,35 +7,21 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
-import javafx.scene.input.KeyEvent;
-import javafx.scene.media.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.io.File;
-import controller.MainMenuC;
-import controller.SelectHeroC;
-import exceptions.MovementException;
-import exceptions.NotEnoughActionsException;
+import controller.MainMenuController;
 import javafx.scene.image.*;
 import javafx.animation.FadeTransition;
-import javafx.event.*;
-import javafx.scene.input.*;
 
 
-public class MainMenuV {
+
+public class MainMenuView {
 	
-	
-	public MainMenuV(MainMenuC controller, Stage stage, boolean fs) throws Exception{
+	public MainMenuView(MainMenuController controller, Stage stage) throws Exception{
 		
 		Font ac = new Font("Agency FB", 12);
 		
 		StackPane stack = new StackPane();
-		
-		
-		
 		
 		VBox t = new VBox();
 		Image titlepic = new Image("/views/media/WhatsApp_Image_2023-05-21_at_08.56.27-removebg-preview.png");
@@ -49,11 +35,10 @@ public class MainMenuV {
 		Button exit = new Button("Exit");
 		
 		FadeTransition fade = new FadeTransition();
-		fade.setDuration(Duration.millis(3000));
+		fade.setDuration(Duration.millis(2000));
 		fade.setFromValue(0);
 		fade.setToValue(10);
 		fade.setNode(t);
-		fade.play();
 		
 		start.setFont(ac);
 		options.setFont(ac);
@@ -82,16 +67,6 @@ public class MainMenuV {
 		stack.getChildren().add(bgview);		
 		stack.getChildren().add(t);
 		
-		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
-		stage.setTitle("main menu");
-	  	stage.setScene(scene);
-	  	if(fs)
-			stage.setFullScreen(true);
-		else
-			stage.setFullScreen(false);
-		stage.show();
-
-		
 		start.setOnMouseClicked(controller);
 		options.setOnMouseClicked(controller);
 		exit.setOnMouseClicked(controller);
@@ -103,6 +78,24 @@ public class MainMenuV {
 		start.setOnMouseExited(controller);
 		options.setOnMouseExited(controller);
 		exit.setOnMouseExited(controller);
+		
+		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
+		stage.setTitle("main menu");
+		stage.setScene(scene);
+		// stage is initially set to full screen, can be changed in options
+		stage.setFullScreen(true);
+
+		fade.play();
+		stage.show();
+	}
+	
+	
+	public void hoverIn(Button button) {
+		button.setTextFill(Color.LIGHTGRAY);
+	}
+	
+	public void hoverOut(Button button) {
+		button.setTextFill(Color.WHITE);
 	}
 
 }

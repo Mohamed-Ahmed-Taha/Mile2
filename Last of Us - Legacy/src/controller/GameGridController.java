@@ -7,74 +7,89 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import model.characters.Direction;
 import model.characters.Hero;
-import views.GameGridV;
+import model.world.Cell;
+import views.GameGridView;
 
-public class GameGridC implements EventHandler<KeyEvent>{
+public class GameGridController implements EventHandler<KeyEvent>{
 	
-	public static Stage stage;		
-	private static GameGridV view;
-	private static Hero h;
+	private Stage stage;		
+	private GameGridView view;
 	
+	
+	private static Cell[][] map;
+	private Hero heroSelected;
 
-	public GameGridC(Stage stage, Hero h) {
-		view = new GameGridV(this, stage, stage.isFullScreen(), h);
-	}
-	
-	public void handle(MouseEvent m) {
+	public GameGridController(Stage primaryStage) {
+		stage = primaryStage;
 		
+		map = Game.map;
+		heroSelected = SelectHeroController.getSelectedHero();
+	    Game.startGame(heroSelected);
+		
+		view = new GameGridView(this, primaryStage);
+		
+		updateMap();
 	}
+	
+	
+//	@Override
+//	public void handle(MouseEvent event) {
+//		
+//	}
 
 	@Override
 	public void handle(KeyEvent k) {
 		if(k.getCode()== KeyCode.UP) {
 			try {
-				h.move(Direction.UP);
+				heroSelected.move(Direction.UP);
 			} catch (MovementException | NotEnoughActionsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Game.updateVisibility();
-			GameGridV.updateMap(GameGridV.getVisibleCells());
+			GameGridView.updateMap(getVisibleCells());
 		}
 	
 		if(k.getCode()== KeyCode.RIGHT) {
 			try {
-				h.move(Direction.RIGHT);
+				heroSelected.move(Direction.RIGHT);
 			} catch (MovementException | NotEnoughActionsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Game.updateVisibility();
-			GameGridV.updateMap(GameGridV.getVisibleCells());
+			GameGridView.updateMap(getVisibleCells());
 		}
 	
 		if(k.getCode()== KeyCode.LEFT) {
 			try {
-				h.move(Direction.LEFT);
+				heroSelected.move(Direction.LEFT);
 			} catch (MovementException | NotEnoughActionsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Game.updateVisibility();
-			GameGridV.updateMap(GameGridV.getVisibleCells());
+			GameGridView.updateMap(getVisibleCells());
 		}
 	
 		if(k.getCode()== KeyCode.DOWN) {
 			try {
-				h.move(Direction.DOWN);
+				heroSelected.move(Direction.DOWN);
 			} catch (MovementException | NotEnoughActionsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Game.updateVisibility();
-			GameGridV.updateMap(GameGridV.getVisibleCells());
+			GameGridView.updateMap(getVisibleCells());
 		}
 		
 		if(k.getCode() == KeyCode.E) {
-			GameGridV.updateMapOnEndTurn(GameGridV.getVisibleCells());
+			GameGridView.updateMapOnEndTurn(getVisibleCells());
 		}
 		
 		if(k.getCode() == KeyCode.ESCAPE) {
@@ -82,21 +97,23 @@ public class GameGridC implements EventHandler<KeyEvent>{
 		}
 
 	}
+	
+	public static void updateMap() {
+		
+		
 
-	
-	public static Stage getStage() {
-		return stage;
 	}
 	
-	public static void setStage(Stage stage) {
-		GameGridC.stage = stage;
-	}
 	
-	public static Hero getH() {
-		return h;
+	public static boolean[][] getVisibleCells(){
+		boolean[][] visible = new boolean[15][15];
+		for (int i = 0; i < visible.length; i++) {
+			for (int j = 0; j < visible[i].length; j++) {
+				visible[i][j] = map[i][j].isVisible();
+			}
+		}
+		return visible;
+		
 	}
-	
-	public static void setH(Hero h) {
-		GameGridC.h = h;
-	}
+
 }

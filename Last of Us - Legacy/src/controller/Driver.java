@@ -1,19 +1,12 @@
 package controller;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-
 import engine.Game;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import views.MainMenuV;
 
 public class Driver extends Application {
 	
@@ -34,9 +27,10 @@ public class Driver extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		primaryStage.setFullScreen(true);
-		MainMenuC mainMenu = new MainMenuC(primaryStage);
-		MainMenuC.setStage(primaryStage);
+		new MainMenuController(primaryStage);
+//		primaryStage.setFullScreen(true);
+//		MainMenuC mainMenu = new MainMenuC(primaryStage);
+//		MainMenuC.setStage(primaryStage);
 		
 	}
 	
