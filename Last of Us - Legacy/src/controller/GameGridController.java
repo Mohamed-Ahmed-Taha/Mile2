@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.Point;
+
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.MovementException;
@@ -73,6 +75,13 @@ public class GameGridController implements EventHandler<Event>{
 			}
 		}
 		
+		if (Game.checkGameOver()) {
+			if (Game.checkWin()) {}
+				// new win screen
+			else {}
+				// new lose screen
+		}
+		
 		
 	}
 	
@@ -85,6 +94,9 @@ public class GameGridController implements EventHandler<Event>{
 		
 		case UP:
 			try {
+				Point loc = heroSelected.getLocation();
+				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
+					view.playTrapAnimation();
 				heroSelected.move(Direction.UP);
 				updateMap();
 			} catch (MovementException e) {
@@ -99,6 +111,9 @@ public class GameGridController implements EventHandler<Event>{
 			} break;
 		case DOWN:
 			try {
+				Point loc = heroSelected.getLocation();
+				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
+					view.playTrapAnimation();
 				heroSelected.move(Direction.DOWN);
 				updateMap();
 			} catch (MovementException e) {
@@ -115,6 +130,9 @@ public class GameGridController implements EventHandler<Event>{
 			
 		case LEFT:
 			try {
+				Point loc = heroSelected.getLocation();
+				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
+					view.playTrapAnimation();
 				heroSelected.move(Direction.LEFT);
 				updateMap();
 			} catch (MovementException e) {
@@ -131,6 +149,9 @@ public class GameGridController implements EventHandler<Event>{
 			
 		case RIGHT:
 			try {
+				Point loc = heroSelected.getLocation();
+				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
+					view.playTrapAnimation();
 				heroSelected.move(Direction.RIGHT);
 				updateMap();
 			} catch (MovementException e) {
@@ -315,6 +336,12 @@ public class GameGridController implements EventHandler<Event>{
 //	}
 	
 	
+	private boolean checkTrapCell(Point p) {
+		
+		return (map[p.x][p.y] instanceof TrapCell);
+		
+	}
+	
 	
 	public static void updateMap() {
 		
@@ -340,9 +367,9 @@ public class GameGridController implements EventHandler<Event>{
 	}
 	
 	private static char getCellType(Cell cell) {
-		// TODO remove this comment
-//		if (!cell.isVisible())
-//			return 'n';
+//		 TODO remove this comment
+		if (!cell.isVisible())
+			return 'n';
 		
 		if (cell instanceof CharacterCell) {
 			if (((CharacterCell) cell).getCharacter() instanceof Explorer)

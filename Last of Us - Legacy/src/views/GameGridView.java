@@ -206,6 +206,14 @@ public class GameGridView {
 		
 	}
 	
+	
+	public void playTrapAnimation() {
+		
+		// TODO make trap animation
+		
+	}
+	
+	
 	private static Rectangle getRectangle(int row, int col) {
 		for (javafx.scene.Node node : gridPane.getChildren()) {
 			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col)
