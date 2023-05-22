@@ -1,20 +1,27 @@
 package views;
 //import taha
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
 import javafx.geometry.Pos;
+import javafx.stage.Popup;
+import javafx.stage.PopupWindow;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.lang.Math;
 import controller.GameGridController;
-import engine.Game;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class GameGridView {
 	
@@ -25,10 +32,22 @@ public class GameGridView {
 	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100) + 25;
 	
 	private static GridPane gridPane;
+	private static Label heroAttributesPanel;
+	private static Stage stage;
+	private static StackPane stack;
+
 	
-	public GameGridView(GameGridController controller, Stage stage) {
+	public GameGridView(GameGridController controller, Stage primaryStage) {
 		
-		StackPane stack = new StackPane();
+		GameGridView.stage = primaryStage;
+		stage.setAlwaysOnTop(true);
+		
+		Font ac = new Font("Agency FB", 20);
+		
+		stack = new StackPane();
+		HBox hBox= new HBox(300);
+		
+		heroAttributesPanel = new Label();
 		
 		Image empcell = new Image("/views/media/Empty Cell.jpeg");
 		Image gridBg = new Image("/views/media/WhatsApp Image 2023-05-22 at 07.33.03.jpeg");
@@ -41,21 +60,29 @@ public class GameGridView {
 	            rectangle.setFill(null);
 	            rectangle.setStroke(Color.WHITE);
 	            rectangle.setStrokeType(StrokeType.INSIDE);
+	            rectangle.setOnMouseEntered(controller);
+	            rectangle.setOnMouseExited(controller);
+	            rectangle.setOnMouseClicked(controller);
 
+	            
 	    	    GridPane.setRowIndex(rectangle, row);
 	            GridPane.setColumnIndex(rectangle, col);
 	            gridPane.getChildren().add(rectangle);
-	            gridPane.setAlignment(Pos.CENTER);
+//	            gridPane.setAlignment(Pos.CENTER);
 	        }
 	    }
 	    
 	    bgView.setFitHeight(Screen.getPrimary().getBounds().getMaxY());
 	    bgView.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
 
+	    hBox.getChildren().addAll(gridPane, heroAttributesPanel);
+	    hBox.setAlignment(Pos.CENTER_LEFT);
+	    heroAttributesPanel.setFont(ac);
+	    heroAttributesPanel.setScaleX(2.5);
+	    heroAttributesPanel.setScaleY(2.5);
+//	    heroAttributesPanel.setBackground();
 	    
-	    stack.getChildren().add(bgView);
-	    stack.getChildren().add(gridPane);
-	    
+	    stack.getChildren().add(hBox);	    
 	    
     	Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
     	stage.setTitle("15x15 grid");
@@ -63,15 +90,19 @@ public class GameGridView {
     	stage.setScene(scene);
     	stage.setFullScreen(stage.isFullScreen());
     	stage.show();
-    	
-//    	updateMap(GameGridController.getVisibleCells());
-    	
+    	    	
     	scene.setOnKeyPressed(controller);
  
 	}	
 	
-
 	
+	
+	public static GridPane getGridPane() {
+		return gridPane;
+	}
+
+
+
 	public void updateMap(char[][] mapForPrint) {
 
 //		Image joel = new Image("/views/media/Fighter/knight_f_idle_anim_f0.png");
@@ -129,6 +160,51 @@ public class GameGridView {
 		
 	}
 	
+	
+	public static void setAttributesPanel(String heroAttributes) {
+		
+		heroAttributesPanel.setText(heroAttributes);
+		
+	}
+	
+	
+	public void printException(Exception e) {
+		
+//		Rectangle rectangle = new Rectangle();
+//		rectangle.setFill(Color.BLACK);
+//		
+//		Label l = new Label(e.getMessage());
+//		
+//		stack.getChildren().addAll(rectangle, l);
+
+		
+		
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setHeaderText(e.getMessage());
+		alert.show();
+
+		
+//		JOptionPane pane = new JOptionPane();
+//		JFrame frame = new JFrame();
+//		
+//		JOptionPane.showMessageDialog(null, e.getMessage());
+		
+//		pane.showmess
+		
+//		Popup popup = new Popup();
+//		Label text = new Label(e.getMessage());
+//		StackPane stackPane = new StackPane();
+//		stackPane.set
+//		
+//		popup.centerOnScreen();
+//		popup.getContent().add(text);
+//		popup.show(stage);
+//		popup.setAutoHide(true);
+//		popup.set
+		
+//		PopupWindow popupWindow = ;
+		
+	}
 	
 	private static Rectangle getRectangle(int row, int col) {
 		for (javafx.scene.Node node : gridPane.getChildren()) {

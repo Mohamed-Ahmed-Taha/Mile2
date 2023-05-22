@@ -73,7 +73,7 @@ public class SelectHeroController implements EventHandler<MouseEvent>{
 	}
 	
 	
-	private static String getHeroType(Hero hero) {
+	public static String getHeroType(Hero hero) {
 		if (hero instanceof Fighter)
 			return "Fighter";
 		if (hero instanceof Medic)
