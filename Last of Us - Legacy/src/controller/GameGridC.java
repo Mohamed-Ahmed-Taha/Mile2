@@ -12,7 +12,7 @@ import model.characters.Direction;
 import model.characters.Hero;
 import views.GameGridV;
 
-public class GameGridC implements EventHandler<KeyEvent> {
+public class GameGridC implements EventHandler<KeyEvent>{
 	
 	public static Stage stage;		
 	private static GameGridV view;
@@ -21,6 +21,10 @@ public class GameGridC implements EventHandler<KeyEvent> {
 
 	public GameGridC(Stage stage, Hero h) {
 		view = new GameGridV(this, stage, stage.isFullScreen(), h);
+	}
+	
+	public void handle(MouseEvent m) {
+		
 	}
 
 	@Override
@@ -71,6 +75,10 @@ public class GameGridC implements EventHandler<KeyEvent> {
 		
 		if(k.getCode() == KeyCode.E) {
 			GameGridV.updateMapOnEndTurn(GameGridV.getVisibleCells());
+		}
+		
+		if(k.getCode() == KeyCode.ESCAPE) {
+			stage.close();
 		}
 
 	}

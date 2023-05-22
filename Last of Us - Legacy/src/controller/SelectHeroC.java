@@ -1,18 +1,23 @@
 package controller;
 
 import javafx.event.Event;
+import javafx.scene.control.Tooltip;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.characters.Hero;
 import model.world.Cell;
 import views.SelectHeroV;
 import controller.GameGridC;
 
 import java.util.ArrayList;
+
+import javax.swing.ToolTipManager;
 
 import engine.Game;
 
@@ -31,6 +36,8 @@ public class SelectHeroC implements EventHandler<MouseEvent>{
 
 	@Override
 	public void handle(MouseEvent c) {
+		
+		Tooltip hinfo = new Tooltip();
 		
 		if(c.getEventType() == MouseEvent.MOUSE_CLICKED) {
 		
@@ -100,6 +107,86 @@ public class SelectHeroC implements EventHandler<MouseEvent>{
 		if(c.getEventType() == MouseEvent.MOUSE_ENTERED) {
 			Button hover = (Button) (c.getSource());
 			hover.setTextFill(Color.LIGHTGRAY);
+			Font ac = new Font("Agency FB", 30);
+
+			
+			switch (hover.getText()){
+			
+			case "Joel":
+				hinfo.setText("Max HP: 140 \n Max Actions: 5 \n Attack Damage: 30 \n Type: Fighter");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo); break;
+		
+			case "Ellie":
+				hinfo.setText("Max HP: 110 \n Max Actions: 6 \n Attack Damage: 15 \n Type: Medic");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo); break;
+		
+			case "Tess":
+				hinfo.setText("Max HP: 80 \n Max Actions: 6 \n Attack Damage: 20 \n Type: Explorer");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo); break;
+		
+			case "Riley": 
+				hinfo.setText("Max HP: 90 \n Max Actions: 5 \n Attack Damage: 25 \n Type: Explorer");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo); break;
+		
+			case "Tommy":
+				hinfo.setText("Max HP: 95 \n Max Actions: 5 \n Attack Damage: 25 \n Type: Explorer");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo); break;
+		
+			case "Bill":
+				hinfo.setText("Max HP: 100 \n Max Actions: 7 \n Attack Damage: 10 \n Type: Medic");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo); break;
+		
+			case "David":
+				hinfo.setText("Max HP: 150 \n Max Actions: 4 \n Attack Damage: 35 \n Type: Fighter");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo); break;
+
+			case "Henry":
+				hinfo.setText("Max HP: 105 \n Max Actions: 6 \n Attack Damage: 15 \n Type: Medic");
+				hinfo.setFont(ac);
+				hinfo.setPrefSize(250, 200);
+				hinfo.setShowDelay(Duration.ZERO);
+				hinfo.setShowDuration(Duration.INDEFINITE);
+				hinfo.setHideDelay(Duration.ZERO);
+				hover.setTooltip(hinfo);
+				
+			}
+
+			
 		}
 		
 		if(c.getEventType() == MouseEvent.MOUSE_EXITED) {

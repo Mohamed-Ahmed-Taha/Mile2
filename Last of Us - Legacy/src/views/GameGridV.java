@@ -28,6 +28,8 @@ import java.lang.Math;
 
 import controller.GameGridC;
 import controller.MainMenuC;
+import javafx.scene.layout.*;
+import javafx.scene.image.*;
 
 public class GameGridV {
 	
@@ -35,21 +37,25 @@ public class GameGridV {
 	private static final double screenY = Screen.getPrimary().getBounds().getMaxY();
 	
 	private static final int GRID_SIZE = 15;
-	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100)+22;
+	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100)+30;
 	private static Cell[][] map;
 	
 	private static GridPane gridPane;
 	
 	public GameGridV(GameGridC controller, Stage stage, boolean fs, Hero h) {
 		
+		StackPane stack = new StackPane();
+		
 		Image empcell = new Image("/views/media/Empty Cell.jpeg");
+		Image gridBg = new Image("/views/media/WhatsApp Image 2023-05-22 at 07.33.03.jpeg");
+		ImageView bgView = new ImageView(gridBg);
 		
 		map = Game.map;
 		gridPane = new GridPane();
 	    for (int row = 0; row < GRID_SIZE; row++) {
 	    	for (int col = 0; col < GRID_SIZE; col++) {
 	    		Rectangle rectangle = new Rectangle(CELL_SIZE, CELL_SIZE);
-	            rectangle.setFill(new ImagePattern(empcell));
+	            rectangle.setFill(null);
 	            rectangle.setStroke(Color.WHITE);
 	            rectangle.setStrokeType(StrokeType.INSIDE);
 
@@ -62,7 +68,15 @@ public class GameGridV {
 	    Game.startGame(h);
 	    h.setActionsAvailable(9999);
 	    
-    	Scene scene = new Scene(gridPane, 1500, 800);
+	    bgView.setFitHeight(Screen.getPrimary().getBounds().getMaxY());
+	    bgView.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
+
+	    
+	    stack.getChildren().add(bgView);
+	    stack.getChildren().add(gridPane);
+	    
+	    
+    	Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
     	stage.setTitle("15x15 grid");
     	stage.setScene(scene);
     	stage.setFullScreen(fs);
@@ -94,11 +108,16 @@ public class GameGridV {
 		for (int i = 0; i < visible.length; i++) {
 			for (int j = 0; j < visible[i].length; j++) {
 				if (visible[i][j]) {
-					getRectangle(14 - i, j).setFill(new ImagePattern(viscell));
-				if(Game.checkHero(i, j))
+					getRectangle(14 - i, j).setFill(Color.GRAY);
+					getRectangle(14 - i, j).setOpacity(0.5);
+				if(Game.checkHero(i, j)) {
 					getRectangle(14 - i, j).setFill(new ImagePattern(joel));
-				if(Game.checkZombie(i, j))
+					getRectangle(14 - i, j).setOpacity(1);
+				}
+				if(Game.checkZombie(i, j)) {
 					getRectangle(14 - i, j).setFill(new ImagePattern(zomb));
+					getRectangle(14 - i, j).setOpacity(1);
+				}
 				}
 			}
 		}
@@ -115,14 +134,19 @@ public class GameGridV {
 			for (int i = 0; i < visible.length; i++) {
 				for (int j = 0; j < visible[i].length; j++) {
 					if (visible[i][j]) {
-						getRectangle(14 - i, j).setFill(new ImagePattern(viscell));
-						if(Game.checkHero(i, j))
+						getRectangle(14 - i, j).setFill(Color.GRAY);
+						getRectangle(14 - i, j).setOpacity(0.5);
+						if(Game.checkHero(i, j)) {
 							getRectangle(14 - i, j).setFill(new ImagePattern(joel));
-						if(Game.checkZombie(i, j))
+							getRectangle(14 - i, j).setOpacity(1);
+						}
+						if(Game.checkZombie(i, j)) {
 							getRectangle(14 - i, j).setFill(new ImagePattern(zomb));
+							getRectangle(14 - i, j).setOpacity(1);
+						}
 					}
 					else
-						getRectangle(14 - i, j).setFill(new ImagePattern(empcell));
+						getRectangle(14 - i, j).setFill(null);
 				}
 			}
 	
