@@ -152,7 +152,7 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
             Text nameLabel = new Text(h.getName());
             nameLabel.setFill(Color.WHITE);
             nameLabel.setFont(Font.font("Agency FB", FontWeight.EXTRA_BOLD, 32));
-
+            //remember to add images based on the names 
 //            Text attackDamageLabel = new Text("Att: " + h.getAttackDmg());
 //            attackDamageLabel.setFill(Color.WHITE);
 //            Text hpLabel = new Text("HP: " + h.getCurrentHp());
