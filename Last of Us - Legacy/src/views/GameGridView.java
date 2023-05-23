@@ -360,7 +360,7 @@ public class GameGridView {
 	}
 	
 	
-	private static Rectangle getRectangle(int row, int col) {
+	public static Rectangle getRectangle(int row, int col) {
 		for (javafx.scene.Node node : gridPane.getChildren()) {
 			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col)
 				return (Rectangle) node;

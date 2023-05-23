@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.characters.Direction;
 import model.characters.Explorer;
 import model.characters.Fighter;
@@ -31,6 +32,7 @@ import model.world.TrapCell;
 import views.EndGameView;
 import views.GameGridView;
 import model.characters.Character;
+import javafx.animation.*;
 
 public class GameGridController implements EventHandler<Event>{
 	
@@ -42,12 +44,14 @@ public class GameGridController implements EventHandler<Event>{
 	private static Hero heroSelected;
 	private static Character targetSelected;
 	private KeyCode currentAction;
+	private int hpBefore;
 
 	public GameGridController(Stage primaryStage, Hero  h) {
 		stage = primaryStage;
 		
 		map = Game.map;
 		heroSelected = h;
+		hpBefore = h.getCurrentHp();
 	    Game.startGame(heroSelected);
 		
 		view = new GameGridView(this, primaryStage);
@@ -112,7 +116,20 @@ public class GameGridController implements EventHandler<Event>{
 			cure(); break;
 			
 		case S:
-			useSpecial(); break; 
+			useSpecial();
+			if(heroSelected instanceof Medic) {
+				Point loc = targetSelected.getLocation();
+				ScaleTransition rot = new ScaleTransition();
+				rot.setNode(view.getRectangle(14-loc.x, loc.y));
+				rot.setDuration(Duration.millis(100));
+				rot.setCycleCount(2);
+				rot.setInterpolator(Interpolator.LINEAR);
+				rot.setByX(0.5);
+				rot.setByY(0.5);
+				rot.setByZ(0.5);
+				rot.setAutoReverse(true);
+				rot.play();
+			} break; 
 			
 		case ESCAPE:
 			stage.close();
@@ -125,6 +142,19 @@ public class GameGridController implements EventHandler<Event>{
 		if (Game.checkGameOver())
 			new EndGameView(stage, Game.checkWin());
 		targetSelected = null;
+		
+		if(hpBefore > heroSelected.getCurrentHp()) {
+			Point loc = heroSelected.getLocation();
+			RotateTransition rot = new RotateTransition();
+			rot.setNode(view.getRectangle(14-loc.x, loc.y));
+			rot.setDuration(Duration.millis(100));
+			rot.setCycleCount(2);
+			rot.setByAngle(22.5);
+			rot.setAutoReverse(true);
+			rot.play();
+			
+			hpBefore = heroSelected.getCurrentHp();
+		}
 
 
 	}
@@ -188,6 +218,22 @@ public class GameGridController implements EventHandler<Event>{
 		heroSelected.setTarget(targetSelected);
 		try {
 			heroSelected.attack();
+			Point loc = targetSelected.getLocation();
+			RotateTransition rot = new RotateTransition();
+			rot.setNode(view.getRectangle(14-loc.x, loc.y));
+			rot.setDuration(Duration.millis(100));
+			rot.setCycleCount(2);
+			rot.setByAngle(22.5);
+			rot.setAutoReverse(true);
+			rot.play();
+//			Point loch = heroSelected.getLocation();
+//			RotateTransition roth = new RotateTransition();
+//			rot.setNode(view.getRectangle(14-loch.x, loch.y));
+//			roth.setDuration(Duration.millis(100));
+//			roth.setCycleCount(2);
+//			roth.setByAngle(-22.5);
+//			roth.setAutoReverse(true);
+//			rot.play();
 		} catch (NotEnoughActionsException | InvalidTargetException e) {
 			view.printException(e);
 		}
@@ -210,6 +256,17 @@ public class GameGridController implements EventHandler<Event>{
 		
 		try {
 			heroSelected.cure();
+			Point loc = targetSelected.getLocation();
+			ScaleTransition rot = new ScaleTransition();
+			rot.setNode(view.getRectangle(14-loc.x, loc.y));
+			rot.setDuration(Duration.millis(100));
+			rot.setCycleCount(2);
+			rot.setInterpolator(Interpolator.LINEAR);
+			rot.setByX(0.5);
+			rot.setByY(0.5);
+			rot.setByZ(0.5);
+			rot.setAutoReverse(true);
+			rot.play();
 		} catch (InvalidTargetException | NoAvailableResourcesException | NotEnoughActionsException e) {
 			view.printException(e);
 		}
