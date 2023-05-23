@@ -147,9 +147,9 @@ public class GameGridView {
 		Label nameLabel = new Label(hero.getName());
 		nameLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
 
-		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp()/100.0);
+		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp()/(double) hero.getMaxHp());
 		hpBar.setMaxWidth(Double.MAX_VALUE);
-		
+
 
 		Label attackDamageLabel = new Label("Attack Damage: " + hero.getAttackDmg());
 		attackDamageLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
