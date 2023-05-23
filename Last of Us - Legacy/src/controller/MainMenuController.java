@@ -1,5 +1,6 @@
 package controller;
 
+import engine.Game;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -27,7 +28,8 @@ public class MainMenuController implements EventHandler<MouseEvent>{
 			switch (click) {
 			
 			case "Start Game":
-				new SelectHeroController(stage); break;
+				SelectHeroController controller = new SelectHeroController(stage, Game.availableHeroes); 
+				controller.initialize(); break;
 			case "Options":
 				new OptionsMenuController(stage); break;
 			case "Exit":

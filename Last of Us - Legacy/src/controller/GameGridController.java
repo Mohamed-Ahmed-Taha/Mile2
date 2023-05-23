@@ -43,11 +43,11 @@ public class GameGridController implements EventHandler<Event>{
 	private boolean chooseTarget;
 //	private Rectangle previousTarget;
 
-	public GameGridController(Stage primaryStage) {
+	public GameGridController(Stage primaryStage, Hero  h) {
 		stage = primaryStage;
 		
 		map = Game.map;
-		heroSelected = SelectHeroController.getSelectedHero();
+		heroSelected = h;
 	    Game.startGame(heroSelected);
 		
 		view = new GameGridView(this, primaryStage);
