@@ -1,7 +1,9 @@
 package views;
-//import taha
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import model.characters.Hero;
+import javafx.scene.control.ProgressBar;
+import javafx.stage.*;
+import model.characters.*;
 import model.world.CharacterCell;
 import model.characters.Hero;
 import javafx.scene.control.Alert;
@@ -12,10 +14,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.geometry.Pos;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.lang.Math;
@@ -24,8 +22,7 @@ import engine.Game;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 
 public class GameGridView {
 	
@@ -101,8 +98,70 @@ public class GameGridView {
     	    	
     	scene.setOnKeyPressed(controller);
  
-	}	
-	
+	}
+
+	public Pane createCharacterBox2(Hero hero) {
+		ImageView heroIcon = null;
+		switch (hero.getName()) {
+			case "Joel Miller" ->
+					heroIcon = new ImageView(new Image("views/media/joel.png"));
+
+			case "Ellie Williams" ->
+					heroIcon = new ImageView(new Image("views/media/ellie.png"));
+
+			case "Tess" ->
+					heroIcon = new ImageView(new Image("views/media/tess.png"));
+
+			case "Riley Abel" ->
+					heroIcon = new ImageView(new Image("views/media/riley.png"));
+
+			case "Tommy Miller" ->
+					heroIcon = new ImageView(new Image("views/media/tommy.png"));
+
+			case "Bill" ->
+					heroIcon = new ImageView(new Image("views/media/bill.png"));
+
+			case "David" ->
+					heroIcon = new ImageView(new Image("views/media/david.png"));
+
+			case "Henry Burell" ->
+					heroIcon = new ImageView(new Image("views/media/henry.png"));
+		}
+		heroIcon.setFitWidth(50);
+		heroIcon.setFitHeight(50);
+
+
+
+		Label nameLabel = new Label(hero.getName());
+
+		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp());
+		hpBar.setMaxWidth(Double.MAX_VALUE);
+
+		// Create labels for attack damage, actions left, and type
+		Label attackDamageLabel = new Label("Attack Damage: " + hero.getAttackDmg());
+		Label actionsLeftLabel = new Label("Actions Left: " + hero.getActionsAvailable());
+		String type = "";
+		if(hero instanceof Fighter)
+			type = "Fighter" ;
+		if(hero instanceof Explorer)
+			type = "Explorer";
+		if(hero instanceof Medic)
+			type = "Medic";
+		Label typeLabel = new Label("Type: " + type);
+
+		VBox characterBox = new VBox();
+		characterBox.setSpacing(10);
+		characterBox.setPadding(new Insets(10));
+		characterBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+		HBox topRow = new HBox(heroIcon, nameLabel);
+		topRow.setSpacing(10);
+		topRow.setFillHeight(true);
+		topRow.setHgrow(nameLabel, Priority.ALWAYS);
+		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
+
+		return characterBox;
+	}
 	
 	
 	public static GridPane getGridPane() {
@@ -249,6 +308,8 @@ public class GameGridView {
 		
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setHeaderText(e.getMessage());
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.initOwner(stage);
 		alert.show();
 
 		

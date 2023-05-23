@@ -2,6 +2,7 @@ package views;
 
 import javafx.geometry.Pos;
 import javafx.scene.*;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -85,6 +86,8 @@ public class MainMenuView {
 		stage.setScene(scene);
 		// stage is initially set to full screen, can be changed in options
 		stage.setFullScreen(true);
+		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+
 
 		fade.play();
 		stage.show();

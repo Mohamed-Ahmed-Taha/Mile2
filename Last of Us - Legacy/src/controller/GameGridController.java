@@ -340,7 +340,8 @@ public class GameGridController implements EventHandler<Event>{
 	
 	
 	private boolean checkTrapCell(Point p) {
-		
+		if (Game.isEdge(p.x, p.y)) return false;
+
 		return (map[p.x][p.y] instanceof TrapCell);
 		
 	}
