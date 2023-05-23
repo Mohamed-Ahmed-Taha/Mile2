@@ -36,7 +36,7 @@ public class GameGridView {
 	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100) + 22;
 	
 	private static GridPane gridPane;
-	private static Pane heroAttributesPanel;
+	private static FlowPane heroAttributesPanel;
 	private static Stage stage;
 	private static StackPane stack;
 
@@ -51,7 +51,14 @@ public class GameGridView {
 		stack = new StackPane();
 		HBox hBox= new HBox(300);
 		
-		heroAttributesPanel = new Pane();
+		heroAttributesPanel = new FlowPane();
+		heroAttributesPanel.setHgap(20);
+		heroAttributesPanel.setVgap(50);
+		heroAttributesPanel.setTranslateX(-150);
+		heroAttributesPanel.setTranslateY(100);
+		heroAttributesPanel.setMinWidth(420);
+
+
 		heroAttributesPanel.getChildren().add(createCharacterBox2(controller.getHeroSelected()));
 
 
@@ -78,8 +85,9 @@ public class GameGridView {
 //	            gridPane.setAlignment(Pos.CENTER);
 	        }
 	    }
-	    
-	    bgView.setFitHeight(Screen.getPrimary().getBounds().getMaxY());
+		gridPane.setTranslateX(50);
+
+		bgView.setFitHeight(Screen.getPrimary().getBounds().getMaxY());
 	    bgView.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
 
 	    hBox.getChildren().addAll(gridPane, heroAttributesPanel);
@@ -162,6 +170,8 @@ public class GameGridView {
 		topRow.setFillHeight(true);
 		topRow.setHgrow(nameLabel, Priority.ALWAYS);
 		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
+		characterBox.setMinWidth(200);
+		characterBox.setMinHeight(150);
 
 		return characterBox;
 	}
