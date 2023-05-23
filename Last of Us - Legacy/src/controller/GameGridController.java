@@ -39,7 +39,9 @@ public class GameGridController implements EventHandler<Event>{
 	
 	private static Cell[][] map;
 	private static Hero heroSelected;
+	private Rectangle previousHeroRectangle;
 	private Character targetSelected;
+	private Rectangle previousTargetRectangle;
 	private KeyCode currentAction;
 
 	public GameGridController(Stage primaryStage, Hero  h) {
@@ -74,9 +76,6 @@ public class GameGridController implements EventHandler<Event>{
 				mouseClicked(event);
 			}
 		}
-		
-		if (Game.checkGameOver())
-			new EndGameView(stage, Game.checkWin())	;
 		
 	}
 	
@@ -116,6 +115,8 @@ public class GameGridController implements EventHandler<Event>{
 		
 		view.updateCharacterBoxes();
 		updateMapView();
+		if (Game.checkGameOver())
+			new EndGameView(stage, Game.checkWin());
 
 	}
 	
@@ -129,10 +130,16 @@ public class GameGridController implements EventHandler<Event>{
 		if (currentAction == null && Game.checkHero(x, y)) {
 			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
 			view.updateCharacterBoxes();
+//			rectangle.setOpacity(0.5);
+//			if (previousHeroRectangle != null) previousHeroRectangle.setOpacity(1);
+//			previousHeroRectangle = rectangle;
 		}
 		else if (currentAction != null && map[x][y] instanceof CharacterCell) {
 			targetSelected = ((CharacterCell) map[x][y]).getCharacter();
 			getAction(currentAction);
+//			rectangle.setOpacity(0.5);
+//			if (previousTargetRectangle != null) previousTargetRectangle.setOpacity(1);
+//			previousTargetRectangle = rectangle;
 		}
 		
 
