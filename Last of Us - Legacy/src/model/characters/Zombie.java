@@ -2,7 +2,6 @@ package model.characters;
 
 import java.awt.Point;
 
-import controller.GameGridController;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;

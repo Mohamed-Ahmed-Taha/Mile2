@@ -114,8 +114,7 @@ public abstract class Character {
 	}
 	
 	
-	public void defend(Character c) throws InvalidTargetException {
-		if(c == null ) throw new InvalidTargetException();
+	public void defend(Character c)  {
 		c.setCurrentHp(c.getCurrentHp() - attackDmg/2);
 	}
 	
