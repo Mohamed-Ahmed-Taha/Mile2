@@ -288,7 +288,7 @@ public class GameGridController implements EventHandler<Event>{
 		rectangle.setOpacity(0.5);
 
 		
-		if (Game.checkHero(x, y) && (heroSelected == null || (heroSelected != null && targetHero != null))) {
+		if (Game.checkHero(x, y) && (heroSelected == null || targetHero != null)) {
 			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
 			targetHero = null;
 			targetZombie = null;
@@ -340,9 +340,8 @@ public class GameGridController implements EventHandler<Event>{
 	
 	
 	private boolean checkTrapCell(Point p) {
-		
+		if (Game.isEdge(p.x, p.y)) return false;
 		return (map[p.x][p.y] instanceof TrapCell);
-		
 	}
 	
 	

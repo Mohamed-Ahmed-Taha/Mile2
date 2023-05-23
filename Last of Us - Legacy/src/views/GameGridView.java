@@ -1,6 +1,7 @@
 package views;
 //import taha
 import javafx.scene.Scene;
+import javafx.stage.*;
 import model.characters.Hero;
 import model.world.CharacterCell;
 import model.characters.Hero;
@@ -12,10 +13,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.geometry.Pos;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.lang.Math;
@@ -166,7 +163,7 @@ public class GameGridView {
 		
 		case 'n':
 			color = Color.BLACK; 
-			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setFill(color);
 			getRectangle(i, j).setOpacity(0.5); break;
 			
 		case 'e':
@@ -185,43 +182,30 @@ public class GameGridView {
 			getRectangle(i, j).setOpacity(0.5); break;
 		case 'x':
 			if(getName(14 - i, j) != null) {
-				switch(getName(14 - i, j)) {
-
-				case("Tess"):
-					getRectangle(i, j).setFill(new ImagePattern(tess)); break;
-				case("Riley Abel"):
-					getRectangle(i, j).setFill(new ImagePattern(riley)); break;
-				case("Tommy Miller"):
-					getRectangle(i, j).setFill(new ImagePattern(tommy));
+				switch (getName(14 - i, j)) {
+					case ("Tess") -> getRectangle(i, j).setFill(new ImagePattern(tess));
+					case ("Riley Abel") -> getRectangle(i, j).setFill(new ImagePattern(riley));
+					case ("Tommy Miller") -> getRectangle(i, j).setFill(new ImagePattern(tommy));
 				}
 			}
 			getRectangle(i, j).setOpacity(1);break;
 		case 'f':
 			if(getName(14- i, j) != null){
-				switch(getName(14 - i, j)) {
-			
-				case("Joel Miller"):
-					getRectangle(i, j).setFill(new ImagePattern(joel)); break;
-				case("David"):
-					getRectangle(i, j).setFill(new ImagePattern(david));
+				switch (getName(14 - i, j)) {
+					case ("Joel Miller") -> getRectangle(i, j).setFill(new ImagePattern(joel));
+					case ("David") -> getRectangle(i, j).setFill(new ImagePattern(david));
 				}
 			}
 			getRectangle(i, j).setOpacity(1); break;
 		case 'm':
 			if(getName(14- i, j) != null) {
-				switch(getName(14 - i, j)) {
-			
-				case("Bill"):
-					getRectangle(i, j).setFill(new ImagePattern(bill)); break;
-				case("Ellie Williams"):
-					getRectangle(i, j).setFill(new ImagePattern(ellie)); break;
-				case("Henry Burell"):
-					getRectangle(i, j).setFill(new ImagePattern(henry));
+				switch (getName(14 - i, j)) {
+					case ("Bill") -> getRectangle(i, j).setFill(new ImagePattern(bill));
+					case ("Ellie Williams") -> getRectangle(i, j).setFill(new ImagePattern(ellie));
+					case ("Henry Burell") -> getRectangle(i, j).setFill(new ImagePattern(henry));
 				}
 			}
 			getRectangle(i, j).setOpacity(1); break;
-		default:
-
 			
 		}
 		
@@ -247,8 +231,10 @@ public class GameGridView {
 
 		
 		
-		Alert alert = new Alert(Alert.AlertType.WARNING);
+		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setHeaderText(e.getMessage());
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.initOwner(stage);
 		alert.show();
 
 		
