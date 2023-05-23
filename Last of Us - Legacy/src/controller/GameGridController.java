@@ -40,7 +40,7 @@ public class GameGridController implements EventHandler<Event>{
 	private Hero heroSelected;
 	private Zombie targetZombie;
 	private Hero targetHero;
-	private boolean chooseTarget;
+	private Rectangle targetPrev;
 //	private Rectangle previousTarget;
 
 	public GameGridController(Stage primaryStage, Hero  h) {
@@ -285,7 +285,8 @@ public class GameGridController implements EventHandler<Event>{
 		Rectangle rectangle = (Rectangle) event.getSource();
 		int x = 14 - GridPane.getRowIndex(rectangle);
 		int y = GridPane.getColumnIndex(rectangle);
-		
+		rectangle.setOpacity(0.5);
+
 		
 		if (Game.checkHero(x, y) && (heroSelected == null || (heroSelected != null && targetHero != null))) {
 			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();

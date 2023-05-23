@@ -139,28 +139,43 @@ public class GameGridView {
 		switch (cell) {
 		
 		case 'n':
-			color = Color.BLACK; break;
+			color = Color.BLACK; 
+			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setOpacity(0.5); break;
+			
 		case 'e':
 		case 't':
-			color = Color.WHITE; break;
+			color = Color.WHITE; 
+			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setOpacity(0.5); break;
 		case 'x':
-			color = Color.YELLOW; break;
+			color = Color.YELLOW; 
+			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setOpacity(10);break;
 		case 'f':
-			color = Color.BLUE; break;
+			color = Color.BLUE; 
+			getRectangle(i, j).setFill(color);
+			getRectangle(i, j).setOpacity(10); break;
 		case 'm':
-			color = Color.GREEN; break;
+			color = Color.GREEN; 
+			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setOpacity(10); break;
 		case 'z':
-			color = Color.RED; break;
+			color = Color.RED; 
+			getRectangle(i, j).setFill(color);
+			getRectangle(i, j).setOpacity(10); break;
 		case 's':
-			color = Color.GOLD; break;
+			color = Color.GOLD; 
+			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setOpacity(0.5); break;
 		case 'v':
-			color = Color.PINK; break;
+			color = Color.PINK; 
+			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setOpacity(0.5); break;
 		default:
-			color = Color.BEIGE;
+
 			
 		}
-		
-		getRectangle(i, j).setFill(color);
 		
 	}
 	
