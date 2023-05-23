@@ -186,8 +186,12 @@ public class Game {
 
 		public static void endTurn () throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 
-			for (Zombie zombie : zombies)
+//			for (Zombie zombie : zombies)
+//				zombie.attack();
+			for (int i = 0; i < zombies.size(); i++) {
+				Zombie zombie = zombies.get(i);
 				zombie.attack();
+			}
 
 
 			for (Hero hero : heroes) {
@@ -249,7 +253,12 @@ public class Game {
 			Point p = randomLocation();
 			z.setLocation(p);
 			zombies.add(z);
-			map[p.x][p.y] = new CharacterCell(z);
+			if (map[p.x][p.y].isVisible()) {
+				map[p.x][p.y] = new CharacterCell(z);
+				map[p.x][p.y].setVisible(true);
+			}
+			else
+				map[p.x][p.y] = new CharacterCell(z);
 		}
 
 

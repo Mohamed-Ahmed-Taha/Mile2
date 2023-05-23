@@ -75,13 +75,8 @@ public class GameGridController implements EventHandler<Event>{
 			}
 		}
 		
-		if (Game.checkGameOver()) {
-			if (Game.checkWin()) 
-				new EndGameView(stage, true)	;
-			else 
-				new EndGameView(stage, false);
-		}
-		
+		if (Game.checkGameOver())
+			new EndGameView(stage, Game.checkWin())	;
 		
 	}
 	

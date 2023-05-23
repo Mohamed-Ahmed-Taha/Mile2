@@ -105,7 +105,7 @@ public class GameGridView {
     	stage.setTitle("15x15 grid");
 		stage.hide();
     	stage.setScene(scene);
-    	stage.setFullScreen(stage.isFullScreen());
+    	stage.setFullScreen(true);
     	stage.show();
     	    	
     	scene.setOnKeyPressed(controller);
