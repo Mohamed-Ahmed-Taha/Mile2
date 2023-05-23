@@ -62,8 +62,8 @@ public class EndGameView {
 
 			@Override
 			public void handle(MouseEvent arg0) {
+				fade.jumpTo(Duration.ZERO);
 				fade.stop();
-				fade.jumpTo(Duration.INDEFINITE);
 			}
 			
 		});
