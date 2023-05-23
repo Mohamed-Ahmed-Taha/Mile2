@@ -57,6 +57,12 @@ public class GameGridController implements EventHandler<Event>{
 	
 	
 
+	public Hero getHeroSelected() {
+		return heroSelected;
+	}
+
+
+
 	@Override
 	public void handle(Event event) {
 		
@@ -129,13 +135,11 @@ public class GameGridController implements EventHandler<Event>{
 		int y = GridPane.getColumnIndex(rectangle);
 		if (Game.checkHero(x, y)) {
 			Hero hero = (Hero)((CharacterCell) map[x][y]).getCharacter();
-			GameGridView.setAttributesPanel(getAttributes(hero));
 			
 		}
 		else if (Game.checkZombie(x, y)) {
 			if(map[x][y].isVisible()) {
 				Zombie zombie = (Zombie)((CharacterCell) map[x][y]).getCharacter();
-				GameGridView.setAttributesPanel("Zombie"+"\nHP: " + zombie.getCurrentHp()+"\nAttack Damage:" + zombie.getAttackDmg());
 			}
 		}
 	}
@@ -145,12 +149,7 @@ public class GameGridController implements EventHandler<Event>{
 		Rectangle rectangle = (Rectangle) event.getSource();
 		int x = 14 - GridPane.getRowIndex(rectangle);
 		int y = GridPane.getColumnIndex(rectangle);
-		if (Game.checkHero(x, y)) {
-			GameGridView.setAttributesPanel(null);			
-		}
-		else if (Game.checkZombie(x, y)) {
-			GameGridView.setAttributesPanel(null);
-		}
+		
 	}
 	
 	private void mouseClicked(Event event) {
@@ -214,10 +213,10 @@ public class GameGridController implements EventHandler<Event>{
 	private void move(Direction direction) {
 		
 		Point loc = heroSelected.getLocation();
-		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
+		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction)))
 			view.playTrapAnimation();
 		try {
-			heroSelected.move(Direction.UP);
+			heroSelected.move(direction);
 		} catch (MovementException | NotEnoughActionsException e) {
 			// TODO Auto-generated catch block
 //			e.printStackTrace();
