@@ -56,7 +56,7 @@ public class GameGridView {
 		heroAttributesPanel.setHgap(20);
 		heroAttributesPanel.setVgap(50);
 		heroAttributesPanel.setTranslateX(-150);
-		heroAttributesPanel.setTranslateY(100);
+		heroAttributesPanel.setTranslateY(50);
 		heroAttributesPanel.setMinWidth(420);
 
 
