@@ -9,7 +9,7 @@ import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -38,9 +38,10 @@ public class GameGridController implements EventHandler<Event>{
 	
 	private static Cell[][] map;
 	private Hero heroSelected;
-	private Zombie targetZombie;
-	private Hero targetHero;
-	private Rectangle targetPrev;
+	private Character targetSelected;
+//	private boolean selectTarget;
+	private KeyCode currentAction;
+
 //	private Rectangle previousTarget;
 
 	public GameGridController(Stage primaryStage, Hero  h) {
@@ -70,13 +71,13 @@ public class GameGridController implements EventHandler<Event>{
 			keyPressed(event);
 		}
 		else if (event instanceof MouseEvent) {
-			if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-				mouseEntered(event);
-			}
-			else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-				mouseExited(event);
-			}
-			else if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+//			if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+//				mouseEntered(event);
+//			}
+//			else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
+//				mouseExited(event);
+//			}
+			if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
 				mouseClicked(event);
 			}
 		}
@@ -94,9 +95,17 @@ public class GameGridController implements EventHandler<Event>{
 	
 	private void keyPressed(Event event) {
 		KeyEvent keyEvent = (KeyEvent) event;
-//		Rectangle rectangle = (Rectangle) event.getSource();
 		
-		switch (keyEvent.getCode()) {
+		getAction(keyEvent.getCode());
+			
+		
+		updateMapView();
+	}
+
+
+	public void getAction(KeyCode keyCode) {
+		
+		switch (keyCode) {
 		
 		case UP:
 			move(Direction.UP); break;
@@ -123,92 +132,27 @@ public class GameGridController implements EventHandler<Event>{
 			stage.close();
 			
 		default: break;
-			
-		}
 		
-		updateMapView();
-	}
-	
-	private void mouseEntered(Event event) {
-		Rectangle rectangle = (Rectangle) event.getSource();
-		int x = 14 - GridPane.getRowIndex(rectangle);
-		int y = GridPane.getColumnIndex(rectangle);
-		if (Game.checkHero(x, y)) {
-			Hero hero = (Hero)((CharacterCell) map[x][y]).getCharacter();
-			
-		}
-		else if (Game.checkZombie(x, y)) {
-			if(map[x][y].isVisible()) {
-				Zombie zombie = (Zombie)((CharacterCell) map[x][y]).getCharacter();
-			}
 		}
 	}
 	
-	
-	private void mouseExited(Event event) {
-		Rectangle rectangle = (Rectangle) event.getSource();
-		int x = 14 - GridPane.getRowIndex(rectangle);
-		int y = GridPane.getColumnIndex(rectangle);
-		
-	}
 	
 	private void mouseClicked(Event event) {
 		Rectangle rectangle = (Rectangle) event.getSource();
 		int x = 14 - GridPane.getRowIndex(rectangle);
 		int y = GridPane.getColumnIndex(rectangle);
-		rectangle.setOpacity(0.5);
-
 		
-		if (Game.checkHero(x, y) && (heroSelected == null || targetHero != null)) {
+		
+		if (currentAction == null && Game.checkHero(x, y)) {
 			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
-			targetHero = null;
-			targetZombie = null;
 		}
-		else if (heroSelected != null && Game.checkHero(x, y)) {
-			targetHero = (Hero) ((CharacterCell) map[x][y]).getCharacter();
-		}
-		else if (heroSelected != null && Game.checkZombie(x, y)) {
-			targetZombie = (Zombie) ((CharacterCell) map[x][y]).getCharacter();
+		else if (currentAction != null && map[x][y] instanceof CharacterCell) {
+			targetSelected = ((CharacterCell) map[x][y]).getCharacter();
+			getAction(currentAction);
 		}
 		
-		
-//		if (map[x][y] instanceof CharacterCell) {
-//			if (!chooseTarget && Game.checkHero(x, y)) {
-//				targetSelected = ((CharacterCell) map[x][y]).getCharacter();
-////				chooseTarget = false;
-//			}
-//			else {
-//				heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
-//				chooseTarget = true;
-//			}
-//		}
-		
-		
-//		if (heroSelected == null && Game.checkHero(x, y)) {
-//			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
-//			targetSelected = null;
-////			if (previousTarget != null) previousTarget.setOpacity(10);
-//			rectangle.setOpacity(0.5);
-//		}
-//		else if (heroSelected != null && map[x][y] instanceof CharacterCell) {
-//			targetSelected = ((CharacterCell) map[x][y]).getCharacter();
-////			previousTarget.setOpacity(10);
-//			rectangle.setOpacity(0.5);
-//
-//		}
-//		previousTarget = rectangle;
-		
-		
+
 	}
-	
-	
-//	public void getTarget() {
-//		
-//		chooseTarget = !chooseTarget;
-//		
-//		
-//	}
-	
 	
 	private void move(Direction direction) {
 		
@@ -218,7 +162,6 @@ public class GameGridController implements EventHandler<Event>{
 		try {
 			heroSelected.move(direction);
 		} catch (MovementException | NotEnoughActionsException e) {
-			// TODO Auto-generated catch block
 //			e.printStackTrace();
 			view.printException(e);
 		}
@@ -229,7 +172,6 @@ public class GameGridController implements EventHandler<Event>{
 		try {
 			Game.endTurn();
 		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
-			// TODO Auto-generated catch block
 //			e.printStackTrace();
 			view.printException(e);
 
@@ -238,40 +180,72 @@ public class GameGridController implements EventHandler<Event>{
 	
 	
 	private void attack() {
-		heroSelected.setTarget(targetZombie);
-//		getTarget();
+		
+		if (currentAction == null) {
+			currentAction = KeyCode.A;
+			// TODO adjust attack animation in view
+			return;
+		}
+		
+		heroSelected.setTarget(targetSelected);
 		try {
 			heroSelected.attack();
 		} catch (NotEnoughActionsException | InvalidTargetException e) {
-			// TODO Auto-generated catch block
 //			e.printStackTrace();
 			view.printException(e);
 		}
+		
+		currentAction = null;
+		
+		
+
 	}
 	
 	
 	private void cure() {
-		heroSelected.setTarget(targetZombie);
+
+		if (currentAction == null) {
+			currentAction = KeyCode.C;
+			// TODO adjust cure animation in view
+			return;
+		}
+		
+		heroSelected.setTarget(targetSelected);
+		
 		try {
 			heroSelected.cure();
 		} catch (InvalidTargetException | NoAvailableResourcesException | NotEnoughActionsException e) {
-			// TODO Auto-generated catch block
 //			e.printStackTrace();
 			view.printException(e);
 		}
+		
+		currentAction = null;
+		
 	}
 	
 	
 	private void useSpecial() {
-		if (heroSelected instanceof Medic)
-			heroSelected.setTarget(heroSelected);
+
+		if (heroSelected instanceof Medic) {
+			if (currentAction == null) {
+				currentAction = KeyCode.S;
+				// TODO adjust medic heal animation in view
+				return;
+			}
+			else {
+				heroSelected.setTarget(targetSelected);
+			}
+		}
+		
 		try {
 			heroSelected.useSpecial();
 		} catch (NoAvailableResourcesException | InvalidTargetException | NotEnoughActionsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-//			view.printException(e);
+//			e.printStackTrace();
+			view.printException(e);
 		}
+		
+		currentAction = null;
+		
 	}
 	
 	private boolean checkTrapCell(Point p) {
@@ -304,7 +278,6 @@ public class GameGridController implements EventHandler<Event>{
 	}
 	
 	private static char getCellType(Cell cell) {
-//		 TODO remove this comment
 		if (!cell.isVisible())
 			return 'n';
 		
