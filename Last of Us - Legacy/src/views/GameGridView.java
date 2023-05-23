@@ -33,7 +33,7 @@ public class GameGridView {
 	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100) + 22;
 	
 	private static GridPane gridPane;
-	private static Label heroAttributesPanel;
+	private static Pane heroAttributesPanel;
 	private static Stage stage;
 	private static StackPane stack;
 
@@ -48,7 +48,9 @@ public class GameGridView {
 		stack = new StackPane();
 		HBox hBox= new HBox(300);
 		
-		heroAttributesPanel = new Label();
+		heroAttributesPanel = new Pane();
+		heroAttributesPanel.getChildren().add(createCharacterBox2(controller.getHeroSelected()));
+
 		
 		Image empcell = new Image("/views/media/Empty Cell.jpeg");
 		Image gridBg = new Image("/views/media/pxArt.png");
@@ -78,10 +80,7 @@ public class GameGridView {
 
 	    hBox.getChildren().addAll(gridPane, heroAttributesPanel);
 	    hBox.setAlignment(Pos.CENTER_LEFT);
-	    heroAttributesPanel.setFont(ac);
-	    heroAttributesPanel.setScaleX(2.5);
-	    heroAttributesPanel.setScaleY(2.5);
-//	    heroAttributesPanel.setBackground();
+
 	    
 	    stack.getChildren().add(bgView);
 	    
@@ -285,14 +284,7 @@ public class GameGridView {
 		}
 		
 	}
-	
-	
-	public static void setAttributesPanel(String heroAttributes) {
-		
-		heroAttributesPanel.setText(heroAttributes);
-		heroAttributesPanel.setTextFill(Color.WHITE);
-		
-	}
+
 	
 	
 	public void printException(Exception e) {
