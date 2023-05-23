@@ -3,7 +3,6 @@ package model.characters;
 import java.awt.*;
 import java.util.ArrayList;
 
-import controller.GameGridController;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.MovementException;

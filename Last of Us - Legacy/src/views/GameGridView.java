@@ -5,8 +5,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.text.FontWeight;
 import javafx.stage.*;
 import model.characters.*;
+import model.characters.Character;
 import model.world.CharacterCell;
-import model.characters.Hero;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -15,11 +15,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.geometry.Pos;
-import javafx.util.Duration;
-
+import java.awt.Point;
 import java.lang.Math;
-import java.util.ArrayList;
-
 import controller.GameGridController;
 import engine.Game;
 import javafx.scene.layout.*;
@@ -47,7 +44,7 @@ public class GameGridView {
 		GameGridView.stage = primaryStage;
 		stage.setAlwaysOnTop(true);
 		
-		Font ac = new Font("Agency FB", 20);
+		new Font("Agency FB", 20);
 		
 		stack = new StackPane();
 		HBox hBox= new HBox(300);
@@ -60,11 +57,11 @@ public class GameGridView {
 		heroAttributesPanel.setMinWidth(420);
 
 
-		heroAttributesPanel.getChildren().add(createCharacterBox2(controller.getHeroSelected()));
+		heroAttributesPanel.getChildren().add(createCharacterBox2(GameGridController.getHeroSelected()));
 
 
 		
-		Image empcell = new Image("/views/media/Empty Cell.jpeg");
+		new Image("/views/media/Empty Cell.jpeg");
 		Image gridBg = new Image("/views/media/pxArt.png");
 		ImageView bgView = new ImageView(gridBg);
 		
@@ -177,7 +174,7 @@ public class GameGridView {
 		HBox topRow = new HBox(heroIcon, nameLabel);
 		topRow.setSpacing(10);
 		topRow.setFillHeight(true);
-		topRow.setHgrow(nameLabel, Priority.ALWAYS);
+		HBox.setHgrow(nameLabel, Priority.ALWAYS);
 
 		Color backgroundColor = new Color(0.5, 0.5, 0.5, 0.5);
 		BackgroundFill backgroundFill = new BackgroundFill(backgroundColor, CornerRadii.EMPTY, Insets.EMPTY);
@@ -185,15 +182,17 @@ public class GameGridView {
 
 		characterBox.setBackground(background);
 		if(hero == GameGridController.getHeroSelected()) {
-		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel, vaccineLabel, supplyLabel);
-		characterBox.setMinWidth(200);
-		characterBox.setMinHeight(150);
+			characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel, vaccineLabel, supplyLabel);
+			characterBox.setMinWidth(200);
+			characterBox.setMinHeight(150);
+			characterBox.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		}
 
 		else {
-		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
-		characterBox.setMinWidth(200);
-		characterBox.setMinHeight(150);
+			characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
+			characterBox.setMinWidth(200);
+			characterBox.setMinHeight(150);
+			characterBox.setBorder(null);
 		}
 		
 
@@ -215,16 +214,24 @@ public class GameGridView {
 
 
 	public void updateMap(char[][] mapForPrint) {
-
-//		Image joel = new Image("/views/media/Fighter/knight_f_idle_anim_f0.png");
-//		Image zomb = new Image("/views/media/Zombie/zombie_anim_f10.png");
-//		Image viscell = new Image("/views/media/0x72_DungeonTilesetII_v1.6.png");
-		
-		
+			
 		for (int i = 0; i < 15; i++) 
 			for (int j = 0; j < 15; j++) 
 				renderCell(14 - i, j, mapForPrint[i][j]);
-
+		
+		
+		Hero heroSelected = GameGridController.getHeroSelected();
+		Point loc = heroSelected.getLocation();
+		getRectangle(14 - loc.x, loc.y).setStroke(Color.GREEN);
+		getRectangle(14 - loc.x, loc.y).setStrokeWidth(2.5);
+		
+		Character targetSelected = GameGridController.getTargetSelected();
+		if (targetSelected != null) {
+			loc = targetSelected.getLocation();
+			getRectangle(14 - loc.x, loc.y).setStroke(Color.RED);
+			getRectangle(14 - loc.x, loc.y).setStrokeWidth(2.5);
+		}
+		
 	}
 	
 	static Image joel = new Image("/views/media/joel.png");
@@ -262,7 +269,6 @@ public class GameGridView {
 		// 'v' -> vaccine
 		// 't' -> trap
 		
-		// TODO instead of color, should be loading certain image
 		Color color;
 		
 		switch (cell) {
@@ -328,19 +334,14 @@ public class GameGridView {
 			
 		}
 		
+		getRectangle(i, j).setStroke(Color.WHITE);
+		getRectangle(i, j).setStrokeWidth(1);
+		
 	}
 
 	
 	
 	public void printException(Exception e) {
-		
-//		Rectangle rectangle = new Rectangle();
-//		rectangle.setFill(Color.BLACK);
-//		
-//		Label l = new Label(e.getMessage());
-//		
-//		stack.getChildren().addAll(rectangle, l);
-
 		
 		
 		Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -348,28 +349,7 @@ public class GameGridView {
 		alert.initModality(Modality.APPLICATION_MODAL);
 		alert.initOwner(stage);
 		alert.show();
-
-		
-//		JOptionPane pane = new JOptionPane();
-//		JFrame frame = new JFrame();
-//		
-//		JOptionPane.showMessageDialog(null, e.getMessage());
-		
-//		pane.showmess
-		
-//		Popup popup = new Popup();
-//		Label text = new Label(e.getMessage());
-//		StackPane stackPane = new StackPane();
-//		stackPane.set
-//		
-//		popup.centerOnScreen();
-//		popup.getContent().add(text);
-//		popup.show(stage);
-//		popup.setAutoHide(true);
-//		popup.set
-		
-//		PopupWindow popupWindow = ;
-		
+	
 	}
 	
 	

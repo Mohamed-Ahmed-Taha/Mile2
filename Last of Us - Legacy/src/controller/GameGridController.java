@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.characters.Direction;
@@ -39,9 +40,7 @@ public class GameGridController implements EventHandler<Event>{
 	
 	private static Cell[][] map;
 	private static Hero heroSelected;
-	private Rectangle previousHeroRectangle;
-	private Character targetSelected;
-	private Rectangle previousTargetRectangle;
+	private static Character targetSelected;
 	private KeyCode currentAction;
 
 	public GameGridController(Stage primaryStage, Hero  h) {
@@ -62,6 +61,13 @@ public class GameGridController implements EventHandler<Event>{
 		return heroSelected;
 	}
 
+	
+
+
+	public static Character getTargetSelected() {
+		return targetSelected;
+	}
+
 
 
 	@Override
@@ -76,6 +82,8 @@ public class GameGridController implements EventHandler<Event>{
 				mouseClicked(event);
 			}
 		}
+		
+		updateMapView();
 		
 	}
 	
@@ -114,9 +122,10 @@ public class GameGridController implements EventHandler<Event>{
 		}
 		
 		view.updateCharacterBoxes();
-		updateMapView();
 		if (Game.checkGameOver())
 			new EndGameView(stage, Game.checkWin());
+		targetSelected = null;
+
 
 	}
 	
@@ -129,8 +138,9 @@ public class GameGridController implements EventHandler<Event>{
 		
 		if (currentAction == null && Game.checkHero(x, y)) {
 			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
+			targetSelected = null;
 			view.updateCharacterBoxes();
-//			rectangle.setOpacity(0.5);
+			rectangle.setStroke(Color.RED);
 //			if (previousHeroRectangle != null) previousHeroRectangle.setOpacity(1);
 //			previousHeroRectangle = rectangle;
 		}
@@ -153,7 +163,6 @@ public class GameGridController implements EventHandler<Event>{
 		try {
 			heroSelected.move(direction);
 		} catch (MovementException | NotEnoughActionsException e) {
-//			e.printStackTrace();
 			view.printException(e);
 		}
 	}
@@ -163,7 +172,6 @@ public class GameGridController implements EventHandler<Event>{
 		try {
 			Game.endTurn();
 		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
-//			e.printStackTrace();
 			view.printException(e);
 		}
 	}
@@ -181,12 +189,10 @@ public class GameGridController implements EventHandler<Event>{
 		try {
 			heroSelected.attack();
 		} catch (NotEnoughActionsException | InvalidTargetException e) {
-//			e.printStackTrace();
 			view.printException(e);
 		}
 		
 		currentAction = null;
-		
 		
 
 	}
@@ -205,12 +211,11 @@ public class GameGridController implements EventHandler<Event>{
 		try {
 			heroSelected.cure();
 		} catch (InvalidTargetException | NoAvailableResourcesException | NotEnoughActionsException e) {
-//			e.printStackTrace();
 			view.printException(e);
 		}
 		
 		currentAction = null;
-		
+
 	}
 	
 	
@@ -230,12 +235,11 @@ public class GameGridController implements EventHandler<Event>{
 		try {
 			heroSelected.useSpecial();
 		} catch (NoAvailableResourcesException | InvalidTargetException | NotEnoughActionsException e) {
-//			e.printStackTrace();
 			view.printException(e);
 		}
 		
 		currentAction = null;
-		
+
 	}
 	
 	private boolean checkTrapCell(Point p) {
