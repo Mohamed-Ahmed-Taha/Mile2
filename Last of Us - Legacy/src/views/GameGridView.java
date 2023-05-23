@@ -173,13 +173,6 @@ public class GameGridView {
 			heroAttributesPanel.getChildren().add(characterBox);
 		}
 	}
-
-	public Pane updateCharacterBoxes(ArrayList<Hero> heroes){
-		for(Hero hero : heroes){
-			heroAttributesPanel.getChildren().add(createCharacterBox2(hero));
-		}
-		return heroAttributesPanel;
-	}
 	
 	
 	public static GridPane getGridPane() {
