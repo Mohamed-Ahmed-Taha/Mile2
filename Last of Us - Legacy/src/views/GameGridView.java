@@ -137,7 +137,7 @@ public class GameGridView {
 
 		Label nameLabel = new Label(hero.getName());
 
-		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp());
+		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp()/100.0);
 		hpBar.setMaxWidth(Double.MAX_VALUE);
 
 		// Create labels for attack damage, actions left, and type
@@ -155,7 +155,7 @@ public class GameGridView {
 		VBox characterBox = new VBox();
 		characterBox.setSpacing(10);
 		characterBox.setPadding(new Insets(10));
-		characterBox.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		characterBox.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 
 		HBox topRow = new HBox(heroIcon, nameLabel);
 		topRow.setSpacing(10);

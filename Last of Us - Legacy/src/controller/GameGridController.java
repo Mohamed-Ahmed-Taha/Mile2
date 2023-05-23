@@ -161,6 +161,7 @@ public class GameGridController implements EventHandler<Event>{
 			view.playTrapAnimation();
 		try {
 			heroSelected.move(direction);
+			view.updateCharacterBoxes();
 		} catch (MovementException | NotEnoughActionsException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -171,6 +172,7 @@ public class GameGridController implements EventHandler<Event>{
 	private void endTurn() {
 		try {
 			Game.endTurn();
+			view.updateCharacterBoxes();
 		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -190,6 +192,7 @@ public class GameGridController implements EventHandler<Event>{
 		heroSelected.setTarget(targetSelected);
 		try {
 			heroSelected.attack();
+			view.updateCharacterBoxes();
 		} catch (NotEnoughActionsException | InvalidTargetException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -214,6 +217,7 @@ public class GameGridController implements EventHandler<Event>{
 		
 		try {
 			heroSelected.cure();
+			view.updateCharacterBoxes();
 		} catch (InvalidTargetException | NoAvailableResourcesException | NotEnoughActionsException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -239,6 +243,7 @@ public class GameGridController implements EventHandler<Event>{
 		
 		try {
 			heroSelected.useSpecial();
+			view.updateCharacterBoxes();
 		} catch (NoAvailableResourcesException | InvalidTargetException | NotEnoughActionsException e) {
 //			e.printStackTrace();
 			view.printException(e);
