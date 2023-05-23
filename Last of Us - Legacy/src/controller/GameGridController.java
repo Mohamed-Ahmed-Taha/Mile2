@@ -162,7 +162,6 @@ public class GameGridController implements EventHandler<Event>{
 		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
 //			e.printStackTrace();
 			view.printException(e);
-
 		}
 	}
 	
