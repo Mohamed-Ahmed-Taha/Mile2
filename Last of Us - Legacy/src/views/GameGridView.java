@@ -2,6 +2,7 @@ package views;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.text.FontWeight;
 import javafx.stage.*;
 import model.characters.*;
 import model.world.CharacterCell;
@@ -144,13 +145,16 @@ public class GameGridView {
 
 
 		Label nameLabel = new Label(hero.getName());
+		nameLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
 
-		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp()/100.0);
-		hpBar.setMaxWidth(Double.MAX_VALUE);
+		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp() /100.0);
+		hpBar.setMaxWidth(hero.getMaxHp());
 
-		// Create labels for attack damage, actions left, and type
 		Label attackDamageLabel = new Label("Attack Damage: " + hero.getAttackDmg());
+		attackDamageLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
 		Label actionsLeftLabel = new Label("Actions Left: " + hero.getActionsAvailable());
+		actionsLeftLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
+
 		String type = "";
 		if(hero instanceof Fighter)
 			type = "Fighter" ;
@@ -159,16 +163,23 @@ public class GameGridView {
 		if(hero instanceof Medic)
 			type = "Medic";
 		Label typeLabel = new Label("Type: " + type);
+		typeLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
 
 		VBox characterBox = new VBox();
 		characterBox.setSpacing(10);
 		characterBox.setPadding(new Insets(10));
-		characterBox.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 
 		HBox topRow = new HBox(heroIcon, nameLabel);
 		topRow.setSpacing(10);
 		topRow.setFillHeight(true);
 		topRow.setHgrow(nameLabel, Priority.ALWAYS);
+
+		Color backgroundColor = new Color(0.5, 0.5, 0.5, 0.6);
+		BackgroundFill backgroundFill = new BackgroundFill(backgroundColor, CornerRadii.EMPTY, Insets.EMPTY);
+		Background background = new Background(backgroundFill);
+
+		characterBox.setBackground(background);
+
 		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
 		characterBox.setMinWidth(200);
 		characterBox.setMinHeight(150);
