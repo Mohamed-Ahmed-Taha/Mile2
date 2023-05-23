@@ -97,9 +97,7 @@ public class GameGridController implements EventHandler<Event>{
 		KeyEvent keyEvent = (KeyEvent) event;
 		
 		getAction(keyEvent.getCode());
-			
-		
-		updateMapView();
+				
 	}
 
 
@@ -134,6 +132,9 @@ public class GameGridController implements EventHandler<Event>{
 		default: break;
 		
 		}
+		
+		updateMapView();
+
 	}
 	
 	
