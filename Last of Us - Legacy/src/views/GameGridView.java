@@ -1,6 +1,9 @@
 package views;
 //import taha
 import javafx.scene.Scene;
+import model.characters.Hero;
+import model.world.CharacterCell;
+import model.characters.Hero;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -17,6 +20,7 @@ import javafx.util.Duration;
 
 import java.lang.Math;
 import controller.GameGridController;
+import engine.Game;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
 
@@ -29,7 +33,7 @@ public class GameGridView {
 	private static final double screenY = Screen.getPrimary().getBounds().getMaxY();
 	
 	private static final int GRID_SIZE = 15;
-	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100) + 25;
+	private static final double CELL_SIZE = ((screenX/screenY)*(Math.sqrt((((screenX*screenX)+(screenY*screenY)))))/100) + 22;
 	
 	private static GridPane gridPane;
 	private static Label heroAttributesPanel;
@@ -120,6 +124,28 @@ public class GameGridView {
 
 	}
 	
+	static Image joel = new Image("/views/media/joel.png");
+	static Image ellie = new Image("/views/media/ellie.png");
+	static Image tess = new Image("/views/media/tess.png");
+	static Image riley = new Image("/views/media/riley.png");
+	static Image tommy = new Image("/views/media/tommy.png");
+	static Image bill = new Image("/views/media/bill.png");
+	static Image david = new Image("/views/media/david.png");
+	static Image henry = new Image("/views/media/henry.png");
+	static Image clicker = new Image("/views/media/clicker.png");
+	static Image supplies = new Image("/views/media/supplies.png");
+	static Image vaccine = new Image("/views/media/vaccine.png");
+	
+	public static String getName(int i, int j) {
+		if(Game.checkHero(i, j)) {
+			Hero hero = (Hero)((CharacterCell) Game.map[i][j]).getCharacter();
+			return hero.getName();
+		}
+		
+		else
+			return null;
+		
+	}
 	
 	private static void renderCell(int i, int j, char cell) {
 		
@@ -148,30 +174,52 @@ public class GameGridView {
 			color = Color.WHITE; 
 			getRectangle(i, j).setFill(color); 
 			getRectangle(i, j).setOpacity(0.5); break;
-		case 'x':
-			color = Color.YELLOW; 
-			getRectangle(i, j).setFill(color); 
-			getRectangle(i, j).setOpacity(10);break;
-		case 'f':
-			color = Color.BLUE; 
-			getRectangle(i, j).setFill(color);
-			getRectangle(i, j).setOpacity(10); break;
-		case 'm':
-			color = Color.GREEN; 
-			getRectangle(i, j).setFill(color); 
-			getRectangle(i, j).setOpacity(10); break;
 		case 'z':
-			color = Color.RED; 
-			getRectangle(i, j).setFill(color);
-			getRectangle(i, j).setOpacity(10); break;
+			getRectangle(i, j).setFill(new ImagePattern(clicker));
+			getRectangle(i, j).setOpacity(1); break;
 		case 's':
-			color = Color.GOLD; 
-			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setFill(new ImagePattern(supplies));
 			getRectangle(i, j).setOpacity(0.5); break;
 		case 'v':
-			color = Color.PINK; 
-			getRectangle(i, j).setFill(color); 
+			getRectangle(i, j).setFill(new ImagePattern(vaccine));
 			getRectangle(i, j).setOpacity(0.5); break;
+		case 'x':
+			if(getName(14 - i, j) != null) {
+				switch(getName(14 - i, j)) {
+
+				case("Tess"):
+					getRectangle(i, j).setFill(new ImagePattern(tess)); break;
+				case("Riley Abel"):
+					getRectangle(i, j).setFill(new ImagePattern(riley)); break;
+				case("Tommy Miller"):
+					getRectangle(i, j).setFill(new ImagePattern(tommy));
+				}
+			}
+			getRectangle(i, j).setOpacity(1);break;
+		case 'f':
+			if(getName(14- i, j) != null){
+				switch(getName(14 - i, j)) {
+			
+				case("Joel Miller"):
+					getRectangle(i, j).setFill(new ImagePattern(joel)); break;
+				case("David"):
+					getRectangle(i, j).setFill(new ImagePattern(david));
+				}
+			}
+			getRectangle(i, j).setOpacity(1); break;
+		case 'm':
+			if(getName(14- i, j) != null) {
+				switch(getName(14 - i, j)) {
+			
+				case("Bill"):
+					getRectangle(i, j).setFill(new ImagePattern(bill)); break;
+				case("Ellie Williams"):
+					getRectangle(i, j).setFill(new ImagePattern(ellie)); break;
+				case("Henry Burell"):
+					getRectangle(i, j).setFill(new ImagePattern(henry));
+				}
+			}
+			getRectangle(i, j).setOpacity(1); break;
 		default:
 
 			
