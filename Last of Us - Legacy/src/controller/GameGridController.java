@@ -27,6 +27,7 @@ import model.world.Cell;
 import model.world.CharacterCell;
 import model.world.CollectibleCell;
 import model.world.TrapCell;
+import views.EndGameView;
 import views.GameGridView;
 import model.characters.Character;
 
@@ -39,10 +40,7 @@ public class GameGridController implements EventHandler<Event>{
 	private static Cell[][] map;
 	private Hero heroSelected;
 	private Character targetSelected;
-//	private boolean selectTarget;
 	private KeyCode currentAction;
-
-//	private Rectangle previousTarget;
 
 	public GameGridController(Stage primaryStage, Hero  h) {
 		stage = primaryStage;
@@ -68,37 +66,25 @@ public class GameGridController implements EventHandler<Event>{
 	public void handle(Event event) {
 		
 		if (event instanceof KeyEvent) {
-			keyPressed(event);
+			getAction(((KeyEvent)event).getCode());
 		}
 		else if (event instanceof MouseEvent) {
-//			if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-//				mouseEntered(event);
-//			}
-//			else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-//				mouseExited(event);
-//			}
+
 			if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
 				mouseClicked(event);
 			}
 		}
 		
 		if (Game.checkGameOver()) {
-			if (Game.checkWin()) {}
-				// new win screen
-			else {}
-				// new lose screen
+			if (Game.checkWin()) 
+				new EndGameView(stage, true)	;
+			else 
+				new EndGameView(stage, false);
 		}
 		
 		
 	}
 	
-	
-	private void keyPressed(Event event) {
-		KeyEvent keyEvent = (KeyEvent) event;
-		
-		getAction(keyEvent.getCode());
-				
-	}
 
 
 	public void getAction(KeyCode keyCode) {
@@ -133,6 +119,7 @@ public class GameGridController implements EventHandler<Event>{
 		
 		}
 		
+		view.updateCharacterBoxes();
 		updateMapView();
 
 	}
@@ -162,7 +149,6 @@ public class GameGridController implements EventHandler<Event>{
 			view.playTrapAnimation();
 		try {
 			heroSelected.move(direction);
-			view.updateCharacterBoxes();
 		} catch (MovementException | NotEnoughActionsException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -173,7 +159,6 @@ public class GameGridController implements EventHandler<Event>{
 	private void endTurn() {
 		try {
 			Game.endTurn();
-			view.updateCharacterBoxes();
 		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -193,7 +178,6 @@ public class GameGridController implements EventHandler<Event>{
 		heroSelected.setTarget(targetSelected);
 		try {
 			heroSelected.attack();
-			view.updateCharacterBoxes();
 		} catch (NotEnoughActionsException | InvalidTargetException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -218,7 +202,6 @@ public class GameGridController implements EventHandler<Event>{
 		
 		try {
 			heroSelected.cure();
-			view.updateCharacterBoxes();
 		} catch (InvalidTargetException | NoAvailableResourcesException | NotEnoughActionsException e) {
 //			e.printStackTrace();
 			view.printException(e);
@@ -244,7 +227,6 @@ public class GameGridController implements EventHandler<Event>{
 		
 		try {
 			heroSelected.useSpecial();
-			view.updateCharacterBoxes();
 		} catch (NoAvailableResourcesException | InvalidTargetException | NotEnoughActionsException e) {
 //			e.printStackTrace();
 			view.printException(e);
