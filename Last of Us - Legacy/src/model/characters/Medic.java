@@ -29,7 +29,6 @@ public class Medic extends Hero {
 		if(!(this.getTarget() instanceof Hero)) throw new InvalidTargetException("You must select a Hero to heal");
 		
 		if(!(isAdjacent(getTarget(), this)) && !(healed.getLocation().equals(this.getLocation()))) throw new InvalidTargetException("You should select a close Hero to heal");
-		if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
 		super.useSpecial();
 
 		healed.setCurrentHp(healed.getMaxHp());

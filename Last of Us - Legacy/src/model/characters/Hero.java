@@ -135,12 +135,14 @@ public abstract class Hero extends Character {
 		public void onCharacterDeath() {
 			Point p = this.getLocation();
 			Game.map[p.x][p.y] = new CharacterCell(null);
+			Game.map[p.x][p.y].setVisible(true);
 			Game.heroes.remove(this);	
 		}
 
 
 	 public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException, NotEnoughActionsException{
 		if(getSupplyInventory().isEmpty()) throw new NoAvailableResourcesException("You don't have a supply to use special action");
+		if(getActionsAvailable() == 0) throw new NotEnoughActionsException("No more actions available");
 		(this.getSupplyInventory().get(0)).use(this);
 		 setSpecialAction(true);
 		 actionsAvailable--;

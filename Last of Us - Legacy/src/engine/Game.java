@@ -258,6 +258,7 @@ public class Game {
 			h.setLocation(p);
 			heroes.add(h);
 			map[p.x][p.y] = new CharacterCell(h);
+			map[p.x][p.y].setVisible(true);
 //			if(visible) setVisibility(p, true);
 		}
 

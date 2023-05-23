@@ -31,6 +31,7 @@ public class Zombie extends Character {
 		Game.zombies.remove(this);
 		Point p = getLocation();
 		Game.map[p.x][p.y] = new CharacterCell(null);
+		Game.map[p.x][p.y].setVisible(true);
 		Game.addZombie();
 	}
 	

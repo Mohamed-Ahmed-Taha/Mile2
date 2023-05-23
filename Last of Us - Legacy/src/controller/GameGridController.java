@@ -52,7 +52,7 @@ public class GameGridController implements EventHandler<Event>{
 		
 		view = new GameGridView(this, primaryStage);
 		
-		updateMap();
+		updateMapView();
 	}
 	
 	
@@ -93,162 +93,34 @@ public class GameGridController implements EventHandler<Event>{
 		switch (keyEvent.getCode()) {
 		
 		case UP:
-			try {
-				Point loc = heroSelected.getLocation();
-				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
-					view.playTrapAnimation();
-				heroSelected.move(Direction.UP);
-				updateMap();
-			} catch (MovementException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break;
+			move(Direction.UP); break;
 		case DOWN:
-			try {
-				Point loc = heroSelected.getLocation();
-				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
-					view.playTrapAnimation();
-				heroSelected.move(Direction.DOWN);
-				updateMap();
-			} catch (MovementException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break;
-			
+			move(Direction.DOWN); break;
 		case LEFT:
-			try {
-				Point loc = heroSelected.getLocation();
-				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
-					view.playTrapAnimation();
-				heroSelected.move(Direction.LEFT);
-				updateMap();
-			} catch (MovementException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break;
-			
+			move(Direction.LEFT); break;			
 		case RIGHT:
-			try {
-				Point loc = heroSelected.getLocation();
-				if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
-					view.playTrapAnimation();
-				heroSelected.move(Direction.RIGHT);
-				updateMap();
-			} catch (MovementException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break;
+			move(Direction.RIGHT); break;
 			
 		case E:
-			try {
-				Game.endTurn();
-				updateMap();
-			} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break;
+			endTurn(); break;
 			
 		case A:
-			try {
-				heroSelected.setTarget(targetZombie);
-//				getTarget();
-				heroSelected.attack();
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (InvalidTargetException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break;
+			attack(); break;
 			
 		case C:
-			try {
-				heroSelected.setTarget(targetZombie);
-				heroSelected.cure();
-			} catch (InvalidTargetException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (NoAvailableResourcesException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break;
+			cure(); break;
 			
 		case S:
-			try {
-				if (heroSelected instanceof Medic)
-					heroSelected.setTarget(heroSelected);
-				heroSelected.useSpecial();
-			} catch (NoAvailableResourcesException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (InvalidTargetException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} catch (NotEnoughActionsException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-				view.printException(e);
-
-			} break; 
+			useSpecial(); break; 
 			
-	
 		case ESCAPE:
 			stage.close();
 			
-		default:
+		default: break;
 			
-		
 		}
 		
-		
-		
-		updateMap();
+		updateMapView();
 	}
 	
 	private void mouseEntered(Event event) {
@@ -288,7 +160,7 @@ public class GameGridController implements EventHandler<Event>{
 		rectangle.setOpacity(0.5);
 
 		
-		if (Game.checkHero(x, y) && (heroSelected == null || (heroSelected != null && targetHero != null))) {
+		if (Game.checkHero(x, y) && (heroSelected == null || targetHero != null)) {
 			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
 			targetHero = null;
 			targetZombie = null;
@@ -339,15 +211,77 @@ public class GameGridController implements EventHandler<Event>{
 //	}
 	
 	
-	private boolean checkTrapCell(Point p) {
-		if (Game.isEdge(p.x, p.y)) return false;
-
-		return (map[p.x][p.y] instanceof TrapCell);
+	private void move(Direction direction) {
 		
+		Point loc = heroSelected.getLocation();
+		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, Direction.UP)))
+			view.playTrapAnimation();
+		try {
+			heroSelected.move(Direction.UP);
+		} catch (MovementException | NotEnoughActionsException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			view.printException(e);
+		}
 	}
 	
 	
-	public static void updateMap() {
+	private void endTurn() {
+		try {
+			Game.endTurn();
+		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			view.printException(e);
+
+		}
+	}
+	
+	
+	private void attack() {
+		heroSelected.setTarget(targetZombie);
+//		getTarget();
+		try {
+			heroSelected.attack();
+		} catch (NotEnoughActionsException | InvalidTargetException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			view.printException(e);
+		}
+	}
+	
+	
+	private void cure() {
+		heroSelected.setTarget(targetZombie);
+		try {
+			heroSelected.cure();
+		} catch (InvalidTargetException | NoAvailableResourcesException | NotEnoughActionsException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			view.printException(e);
+		}
+	}
+	
+	
+	private void useSpecial() {
+		if (heroSelected instanceof Medic)
+			heroSelected.setTarget(heroSelected);
+		try {
+			heroSelected.useSpecial();
+		} catch (NoAvailableResourcesException | InvalidTargetException | NotEnoughActionsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+//			view.printException(e);
+		}
+	}
+	
+	private boolean checkTrapCell(Point p) {
+		if (Game.isEdge(p.x, p.y)) return false;
+		return (map[p.x][p.y] instanceof TrapCell);
+	}
+	
+	
+	public static void updateMapView() {
 		
 		char[][] mapForPrint = new char[15][15];
 		// 'n' -> not visible
