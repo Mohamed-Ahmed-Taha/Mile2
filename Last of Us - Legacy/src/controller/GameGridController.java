@@ -38,7 +38,7 @@ public class GameGridController implements EventHandler<Event>{
 	
 	
 	private static Cell[][] map;
-	private Hero heroSelected;
+	private static Hero heroSelected;
 	private Character targetSelected;
 	private KeyCode currentAction;
 
@@ -56,7 +56,7 @@ public class GameGridController implements EventHandler<Event>{
 	
 	
 
-	public Hero getHeroSelected() {
+	public static Hero getHeroSelected() {
 		return heroSelected;
 	}
 
@@ -133,6 +133,7 @@ public class GameGridController implements EventHandler<Event>{
 		
 		if (currentAction == null && Game.checkHero(x, y)) {
 			heroSelected = (Hero) ((CharacterCell) map[x][y]).getCharacter();
+			view.updateCharacterBoxes();
 		}
 		else if (currentAction != null && map[x][y] instanceof CharacterCell) {
 			targetSelected = ((CharacterCell) map[x][y]).getCharacter();
@@ -314,5 +315,4 @@ public class GameGridController implements EventHandler<Event>{
 		return visible;
 		
 	}
-
 }

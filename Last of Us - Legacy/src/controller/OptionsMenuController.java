@@ -27,8 +27,6 @@ public class OptionsMenuController implements EventHandler<MouseEvent>{
 	
 			case "Fullscreen":
 				stage.setFullScreen(!stage.isFullScreen()); break;
-			case "Sound":
-				break;
 			case "Back":
 				try {
 					new MainMenuController(stage);

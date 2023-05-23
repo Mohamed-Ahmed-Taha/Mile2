@@ -25,20 +25,15 @@ public class OptionsMenuView {
 		CheckBox full = new CheckBox("Fullscreen");
 		full.setSelected(stage.isFullScreen());
 		full.setTextFill(Color.WHITE);
-		CheckBox s = new CheckBox("Sound");
-		s.setTextFill(Color.WHITE);
 		Button r = new Button("Back");
 				
 		full.setFont(ac);
-		s.setFont(ac);
 		r.setFont(ac);
 				
 		full.setBackground(null);
-		s.setBackground(null);
 		r.setBackground(null);
 			
 		full.setTextFill(Color.WHITE);
-		s.setTextFill(Color.WHITE);
 		r.setTextFill(Color.WHITE);
 		
 		op.setScaleX(5);
@@ -46,22 +41,18 @@ public class OptionsMenuView {
 		op.setSpacing(20);
 		op.setAlignment(Pos.CENTER);
 		op.getChildren().add(full);
-		op.getChildren().add(s);
 		op.getChildren().add(r);
 				
 		stack.getChildren().add(bgview);
 		stack.getChildren().add(op);
 				
 		full.setOnMouseClicked(controller);
-		s.setOnMouseClicked(controller);
 		r.setOnMouseClicked(controller);
 				
 		full.setOnMouseEntered(controller);
-		s.setOnMouseEntered(controller);
 		r.setOnMouseEntered(controller);
 				
 		full.setOnMouseExited(controller);
-		s.setOnMouseExited(controller);
 		r.setOnMouseExited(controller);
 				
 		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);

@@ -155,6 +155,10 @@ public class GameGridView {
 		attackDamageLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
 		Label actionsLeftLabel = new Label("Actions Left: " + hero.getActionsAvailable());
 		actionsLeftLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
+		Label vaccineLabel = new Label("Vaccines: " + hero.getVaccineInventory().size());
+		vaccineLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
+		Label supplyLabel = new Label("Supplies: " + hero.getSupplyInventory().size());
+		supplyLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
 
 		String type = "";
 		if(hero instanceof Fighter)
@@ -180,10 +184,18 @@ public class GameGridView {
 		Background background = new Background(backgroundFill);
 
 		characterBox.setBackground(background);
+		if(hero == GameGridController.getHeroSelected()) {
+		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel, vaccineLabel, supplyLabel);
+		characterBox.setMinWidth(200);
+		characterBox.setMinHeight(150);
+		}
 
+		else {
 		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
 		characterBox.setMinWidth(200);
 		characterBox.setMinHeight(150);
+		}
+		
 
 		return characterBox;
 	}
@@ -195,7 +207,6 @@ public class GameGridView {
 			heroAttributesPanel.getChildren().add(characterBox);
 		}
 	}
-	
 	
 	public static GridPane getGridPane() {
 		return gridPane;
