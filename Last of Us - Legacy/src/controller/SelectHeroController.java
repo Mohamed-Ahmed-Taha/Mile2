@@ -28,13 +28,8 @@ public class SelectHeroController {
 
     }
 
-    public void onCharacterSelected(String characterName) {
-
-    	for(int i = 0; i<availableHeroes.size(); i++) {
-    		if(characterName.equals(availableHeroes.get(i).getName())) {
-    			new GameGridController(stage, availableHeroes.get(i));
-    		}
-    	}
+    public void onCharacterSelected(Hero h) {
+        new GameGridController(stage, h);
     }
     
     public static String getHeroType(Hero h) {

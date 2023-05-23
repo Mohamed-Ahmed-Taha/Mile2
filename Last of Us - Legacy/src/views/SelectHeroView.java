@@ -53,7 +53,7 @@ public void createUI() {
     for (Hero h : availableHeroes) {
             VBox characterBox = createCharacterBox(h);
             characterBox.setOnMouseEntered(e -> {
-                    characterBox.setPrefSize(CELL_SIZE , CELL_SIZE);
+                    characterBox.setPrefSize(CELL_SIZE , CELL_SIZE );
                     characterBox.setStyle("-fx-background-color: rgba(139, 64, 0, 0.2);");
                     animateCharacterInfoAppearance(characterBox, h);
             });
@@ -62,8 +62,7 @@ public void createUI() {
                     characterBox.setStyle("-fx-background-color: transparent;");
             });
             characterBox.setOnMouseClicked(e -> {
-                    controller.onCharacterSelected(h.getName());
-                    // Redirect to another screen (use controller.showNextScreen())
+                    controller.onCharacterSelected(h);
             });
 
             gridPane.add(characterBox, col, row);
@@ -121,22 +120,21 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
     fadeTransition.play();
 
     SequentialTransition sequentialTransition = new SequentialTransition();
-    for (int i = 0; i < infoTexts.size(); i++) {
-    Text infoText = infoTexts.get(i);
-    infoText.setOpacity(0);
-    infoText.setTranslateY(-20);
-    characterBox.getChildren().add(infoText);
+        for (Text infoText : infoTexts) {
+            infoText.setOpacity(0);
+            infoText.setTranslateY(-20);
+            characterBox.getChildren().add(infoText);
 
-    PauseTransition delay = new PauseTransition(Duration.millis(200));
-    FadeTransition fadeIn = new FadeTransition(Duration.millis(200), infoText);
-    TranslateTransition translateIn = new TranslateTransition(Duration.millis(200), infoText);
-    fadeIn.setToValue(1);
-    translateIn.setToY(0);
+            PauseTransition delay = new PauseTransition(Duration.millis(200));
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), infoText);
+            TranslateTransition translateIn = new TranslateTransition(Duration.millis(200), infoText);
+            fadeIn.setToValue(1);
+            translateIn.setToY(0);
 
-    sequentialTransition.getChildren().addAll(delay, new ParallelTransition(fadeIn, translateIn));
-    }
+            sequentialTransition.getChildren().addAll(delay, new ParallelTransition(fadeIn, translateIn));
+        }
     sequentialTransition.play();
-    }}
+    } }
     public VBox createCharacterBox(Hero h) {
 
             VBox characterBox = new VBox();
@@ -152,7 +150,7 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
             Text nameLabel = new Text(h.getName());
             nameLabel.setFill(Color.WHITE);
             nameLabel.setFont(Font.font("Agency FB", FontWeight.EXTRA_BOLD, 32));
-            //remember to add images based on the names 
+            //remember to add images based on the names
 //            Text attackDamageLabel = new Text("Att: " + h.getAttackDmg());
 //            attackDamageLabel.setFill(Color.WHITE);
 //            Text hpLabel = new Text("HP: " + h.getCurrentHp());
