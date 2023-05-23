@@ -179,7 +179,7 @@ public class GameGridView {
 		topRow.setFillHeight(true);
 		topRow.setHgrow(nameLabel, Priority.ALWAYS);
 
-		Color backgroundColor = new Color(0.5, 0.5, 0.5, 0.6);
+		Color backgroundColor = new Color(0.5, 0.5, 0.5, 0.5);
 		BackgroundFill backgroundFill = new BackgroundFill(backgroundColor, CornerRadii.EMPTY, Insets.EMPTY);
 		Background background = new Background(backgroundFill);
 

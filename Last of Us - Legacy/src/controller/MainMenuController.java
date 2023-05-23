@@ -30,8 +30,8 @@ public class MainMenuController implements EventHandler<MouseEvent>{
 			case "Start Game":
 				SelectHeroController controller = new SelectHeroController(stage, Game.availableHeroes); 
 				controller.initialize(); break;
-			case "Options":
-				new OptionsMenuController(stage); break;
+			case "Guide":
+				new GuideMenuController(stage); break;
 			case "Exit":
 				stage.close();
 				

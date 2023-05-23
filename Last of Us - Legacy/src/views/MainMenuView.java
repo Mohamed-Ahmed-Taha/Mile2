@@ -32,7 +32,7 @@ public class MainMenuView {
 		picview.setFitWidth(200);
 		picview.setFitHeight(100);
 		Button start = new Button("Start Game");
-		Button options = new Button("Options");
+		Button guide = new Button("Guide");
 		Button exit = new Button("Exit");
 		
 		FadeTransition fade = new FadeTransition();
@@ -42,15 +42,15 @@ public class MainMenuView {
 		fade.setNode(t);
 		
 		start.setFont(ac);
-		options.setFont(ac);
+		guide.setFont(ac);
 		exit.setFont(ac);
 		
 		start.setBackground(null);
-		options.setBackground(null);
+		guide.setBackground(null);
 		exit.setBackground(null);
 		
 		start.setTextFill(Color.WHITE);
-		options.setTextFill(Color.WHITE);
+		guide.setTextFill(Color.WHITE);
 		exit.setTextFill(Color.WHITE);
 	
 		picview.setScaleX(0.5);
@@ -60,7 +60,7 @@ public class MainMenuView {
 		t.setSpacing(4);
 		t.getChildren().add(picview);
 		t.getChildren().add(start);
-		t.getChildren().add(options);
+		t.getChildren().add(guide);
 		t.getChildren().add(exit);
 		t.setAlignment(Pos.CENTER);
 		t.setBackground(null);
@@ -69,15 +69,15 @@ public class MainMenuView {
 		stack.getChildren().add(t);
 		
 		start.setOnMouseClicked(controller);
-		options.setOnMouseClicked(controller);
+		guide.setOnMouseClicked(controller);
 		exit.setOnMouseClicked(controller);
 		
 		start.setOnMouseEntered(controller);
-		options.setOnMouseEntered(controller);
+		guide.setOnMouseEntered(controller);
 		exit.setOnMouseEntered(controller);
 		
 		start.setOnMouseExited(controller);
-		options.setOnMouseExited(controller);
+		guide.setOnMouseExited(controller);
 		exit.setOnMouseExited(controller);
 		
 		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
