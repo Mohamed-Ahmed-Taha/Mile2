@@ -17,11 +17,14 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 
 import java.lang.Math;
+import java.util.ArrayList;
+
 import controller.GameGridController;
 import engine.Game;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
 
+import static engine.Game.heroes;
 
 
 public class GameGridView {
@@ -50,6 +53,7 @@ public class GameGridView {
 		
 		heroAttributesPanel = new Pane();
 		heroAttributesPanel.getChildren().add(createCharacterBox2(controller.getHeroSelected()));
+
 
 		
 		Image empcell = new Image("/views/media/Empty Cell.jpeg");
@@ -160,6 +164,21 @@ public class GameGridView {
 		characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
 
 		return characterBox;
+	}
+	public void updateCharacterBoxes() {
+		heroAttributesPanel.getChildren().clear();
+
+		for (Hero hero : heroes) {
+			Pane characterBox = createCharacterBox2(hero);
+			heroAttributesPanel.getChildren().add(characterBox);
+		}
+	}
+
+	public Pane updateCharacterBoxes(ArrayList<Hero> heroes){
+		for(Hero hero : heroes){
+			heroAttributesPanel.getChildren().add(createCharacterBox2(hero));
+		}
+		return heroAttributesPanel;
 	}
 	
 	
