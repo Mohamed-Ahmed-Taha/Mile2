@@ -7,10 +7,13 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -74,9 +77,17 @@ public void createUI() {
             }
     }
 
-    gridPane.setStyle("-fx-background-color: #000000;");
+    BorderPane rootPane = new BorderPane(gridPane);
 
-    Scene scene = new Scene(gridPane);
+    Label selectLabel = new Label("Select your Hero");
+    selectLabel.setFont(Font.font("Agency FB", FontWeight.EXTRA_BOLD, 64));
+    selectLabel.setTextFill(Color.WHITE);
+    BorderPane.setAlignment(selectLabel, Pos.CENTER);
+    rootPane.setTop(selectLabel);
+
+    rootPane.setStyle("-fx-background-color: #000000;");
+
+    Scene scene = new Scene(rootPane);
     stage.setScene(scene);
     stage.setFullScreen(true);
     stage.setTitle("Select Hero Screen");
