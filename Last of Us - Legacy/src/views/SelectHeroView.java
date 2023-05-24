@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -91,6 +92,13 @@ public void createUI() {
     stage.setScene(scene);
     stage.setFullScreen(true);
     stage.setTitle("Select Hero Screen");
+
+    scene.setOnKeyPressed(e ->{
+                if(e.getCode() == KeyCode.ESCAPE)
+                    stage.close();
+            }
+    );
+
     stage.show();
     }
 
