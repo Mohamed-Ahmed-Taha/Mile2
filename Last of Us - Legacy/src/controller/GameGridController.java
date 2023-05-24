@@ -189,7 +189,7 @@ public class GameGridController implements EventHandler<Event>{
 		
 		Point loc = heroSelected.getLocation();
 		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction)))
-			view.playTrapAnimation();
+			view.trapAnimation(loc.x,loc.y); // fix this
 		try {
 			heroSelected.move(direction);
 		} catch (MovementException | NotEnoughActionsException e) {
@@ -198,7 +198,7 @@ public class GameGridController implements EventHandler<Event>{
 	}
 	
 	
-	private void endTurn() {
+	public static void endTurn() {
 		try {
 			Game.endTurn();
 		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
@@ -322,7 +322,7 @@ public class GameGridController implements EventHandler<Event>{
 			for (int j = 0; j < 15; j++) 
 				mapForPrint[i][j] = getCellType(map[i][j]);
 		
-		
+
 		view.updateMap(mapForPrint);
 		
 

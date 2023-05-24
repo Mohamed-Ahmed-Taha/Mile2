@@ -223,7 +223,12 @@ public class GameGridView {
 		for (int i = 0; i < 15; i++) 
 			for (int j = 0; j < 15; j++) 
 				renderCell(14 - i, j, mapForPrint[i][j]);
-		
+
+		int actionsLeft = 0;
+		for (int i = 0; i < heroes.size(); i++) {
+			actionsLeft += heroes.get(i).getActionsAvailable();
+		}
+		if(actionsLeft == 0)  GameGridController.endTurn();
 		
 		Hero heroSelected = GameGridController.getHeroSelected();
 		Point loc = heroSelected.getLocation();
@@ -357,12 +362,7 @@ public class GameGridView {
 	
 	}
 	
-	
-	public void playTrapAnimation() {
-		
-		// TODO make trap animation
-		
-	}
+
 	
 	
 	public static Rectangle getRectangle(int row, int col) {
@@ -491,7 +491,7 @@ public class GameGridView {
 		return animationGroup;
 	}
 
-	public Group trapAnimation(){
+	public Group trapAnimation(int x, int y){
 		Image frame1 = new Image("views/media/floor_spikes_anim_f0.png");
 		Image frame2 = new Image("views/media/floor_spikes_anim_f1.png");
 		Image frame3 = new Image("views/media/floor_spikes_anim_f2.png");
@@ -519,14 +519,14 @@ public class GameGridView {
 		fourthFrame.setFitHeight(desiredHeight);
 
 
+
 		animationGroup = new Group(firstFrame);
 
-
-		animationGroup.setTranslateX(200);
-		animationGroup.setTranslateY(220);
+		animationGroup.setLayoutX(x);
+		animationGroup.setLayoutY(y);
 
 		Timeline t = new Timeline();
-		t.setCycleCount(Timeline.INDEFINITE);
+		t.setCycleCount(1);
 
 		t.getKeyFrames().add(new KeyFrame(
 				Duration.millis(200),
@@ -536,14 +536,14 @@ public class GameGridView {
 		));
 
 		t.getKeyFrames().add(new KeyFrame(
-				Duration.millis(300),
+				Duration.millis(400),
 				(ActionEvent event) -> {
 					animationGroup.getChildren().setAll(thirdFrame);
 				}
 		));
 
 		t.getKeyFrames().add(new KeyFrame(
-				Duration.millis(400),
+				Duration.millis(600),
 				(ActionEvent event) -> {
 					animationGroup.getChildren().setAll(fourthFrame);
 				}
