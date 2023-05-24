@@ -171,5 +171,6 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
             characterBox.getChildren().addAll(nameLabel);
             characterBox.setPrefSize(CELL_SIZE, CELL_SIZE);
             return characterBox;
-    }	
+    }
+
 }

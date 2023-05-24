@@ -1,9 +1,14 @@
 package views;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.FontWeight;
 import javafx.stage.*;
+import javafx.util.Duration;
 import model.characters.*;
 import model.characters.Character;
 import model.world.CharacterCell;
@@ -366,6 +371,187 @@ public class GameGridView {
 				return (Rectangle) node;
 		}
 		return null;
+	}
+
+	//Samalouty animation don't mess with this
+
+	public Group playelffIdleAnimation(){
+		final  Image idleFrame1 = new Image("elf_f_idle_anim_f0.png");
+		final  Image idleFrame2 = new Image("elf_f_idle_anim_f1.png");
+		final  Image idleFrame3 = new Image("elf_f_idle_anim_f2.png");
+		final  Image idleFrame4 = new Image("elf_f_idle_anim_f3.png");
+		Group elfIdle;
+
+		final ImageView elfIdle1 = new ImageView(idleFrame1);
+		final ImageView elfIdle2 = new ImageView(idleFrame2);
+		final ImageView elfIdle3 = new ImageView(idleFrame3);
+		final ImageView elfIdle4 = new ImageView(idleFrame4);
+
+		double desiredWidth = 50;
+		double desiredHeight = 100;
+
+		elfIdle1.setFitWidth(desiredWidth);
+		elfIdle1.setFitHeight(desiredHeight);
+		elfIdle2.setFitWidth(desiredWidth);
+		elfIdle2.setFitHeight(desiredHeight);
+		elfIdle3.setFitWidth(desiredWidth);
+		elfIdle3.setFitHeight(desiredHeight);
+		elfIdle4.setFitWidth(desiredWidth);
+		elfIdle4.setFitHeight(desiredHeight);
+
+		elfIdle = new Group(elfIdle1);
+
+
+		elfIdle.setTranslateX(200);
+		elfIdle.setTranslateY(220);
+
+		Timeline t = new Timeline();
+		t.setCycleCount(Timeline.INDEFINITE);
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(200),
+				(ActionEvent event) -> {
+					elfIdle.getChildren().setAll(elfIdle2);
+				}
+		));
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(300),
+				(ActionEvent event) -> {
+					elfIdle.getChildren().setAll(elfIdle3);
+				}
+		));
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(400),
+				(ActionEvent event) -> {
+					elfIdle.getChildren().setAll(elfIdle4);
+				}
+		));
+
+		t.play();
+		return elfIdle;
+	}
+
+	public Group playelffRunAnimation(){
+		final  Image frame1 = new Image("elf_f_run_anim_f0.png");
+		final  Image frame2 = new Image("elf_f_run_anim_f1.png");
+		final  Image frame3 = new Image("elf_f_run_anim_f2.png");
+		final  Image frame4 = new Image("elf_f_run_anim_f3.png");
+		Group animationGroup;
+
+		final ImageView firstFrame = new ImageView(frame1);
+		final ImageView secondFrame = new ImageView(frame2);
+		final ImageView thirdFrame = new ImageView(frame3);
+		final ImageView fourthFrame = new ImageView(frame4);
+
+		double desiredWidth = 50;
+		double desiredHeight = 100;
+
+		firstFrame.setFitWidth(desiredWidth);
+		firstFrame.setFitHeight(desiredHeight);
+		secondFrame.setFitWidth(desiredWidth);
+		secondFrame.setFitHeight(desiredHeight);
+		thirdFrame.setFitWidth(desiredWidth);
+		thirdFrame.setFitHeight(desiredHeight);
+		fourthFrame.setFitWidth(desiredWidth);
+		fourthFrame.setFitHeight(desiredHeight);
+
+		animationGroup = new Group(firstFrame);
+
+
+		animationGroup.setTranslateX(200);
+		animationGroup.setTranslateY(220);
+
+		Timeline t = new Timeline();
+		t.setCycleCount(Timeline.INDEFINITE);
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(200),
+				(ActionEvent event) -> {
+					animationGroup.getChildren().setAll(secondFrame);
+				}
+		));
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(300),
+				(ActionEvent event) -> {
+					animationGroup.getChildren().setAll(thirdFrame);
+				}
+		));
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(400),
+				(ActionEvent event) -> {
+					animationGroup.getChildren().setAll(fourthFrame);
+				}
+		));
+
+		t.play();
+		return animationGroup;
+	}
+
+	public Group trapAnimation(){
+		Image frame1 = new Image("views/media/floor_spikes_anim_f0.png");
+		Image frame2 = new Image("views/media/floor_spikes_anim_f1.png");
+		Image frame3 = new Image("views/media/floor_spikes_anim_f2.png");
+		Image frame4 = new Image("views/media/floor_spikes_anim_f3.png");
+
+
+		Group animationGroup;
+
+		ImageView firstFrame = new ImageView(frame1);
+		ImageView secondFrame = new ImageView(frame2);
+		ImageView thirdFrame = new ImageView(frame3);
+		ImageView fourthFrame = new ImageView(frame4);
+
+
+		double desiredWidth = 50;
+		double desiredHeight = 50;
+
+		firstFrame.setFitWidth(desiredWidth);
+		firstFrame.setFitHeight(desiredHeight);
+		secondFrame.setFitWidth(desiredWidth);
+		secondFrame.setFitHeight(desiredHeight);
+		thirdFrame.setFitWidth(desiredWidth);
+		thirdFrame.setFitHeight(desiredHeight);
+		fourthFrame.setFitWidth(desiredWidth);
+		fourthFrame.setFitHeight(desiredHeight);
+
+
+		animationGroup = new Group(firstFrame);
+
+
+		animationGroup.setTranslateX(200);
+		animationGroup.setTranslateY(220);
+
+		Timeline t = new Timeline();
+		t.setCycleCount(Timeline.INDEFINITE);
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(200),
+				(ActionEvent event) -> {
+					animationGroup.getChildren().setAll(secondFrame);
+				}
+		));
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(300),
+				(ActionEvent event) -> {
+					animationGroup.getChildren().setAll(thirdFrame);
+				}
+		));
+
+		t.getKeyFrames().add(new KeyFrame(
+				Duration.millis(400),
+				(ActionEvent event) -> {
+					animationGroup.getChildren().setAll(fourthFrame);
+				}
+		));
+
+
+		t.play();
+		return animationGroup;
 	}
 	
 }

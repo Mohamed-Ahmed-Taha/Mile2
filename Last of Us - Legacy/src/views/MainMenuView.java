@@ -3,6 +3,9 @@ package views;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.input.KeyCombination;
+
+import javax.sound.sampled.*;
+
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -14,6 +17,8 @@ import controller.MainMenuController;
 import javafx.scene.image.*;
 import javafx.animation.FadeTransition;
 
+import java.io.File;
+import java.io.InputStream;
 
 
 public class MainMenuView {
@@ -79,7 +84,14 @@ public class MainMenuView {
 		start.setOnMouseExited(controller);
 		guide.setOnMouseExited(controller);
 		exit.setOnMouseExited(controller);
-		
+//		File file = new File(getClass().getResource("views/media/titlesound.mp3").toURI());
+//		playAudio(file.toString());
+//
+//		Media media = new Media(new File("views/media/titlesound.mp3").toURI().toString());
+//		MediaPlayer mediaPlayer = new MediaPlayer(media);
+//		mediaPlayer.play();
+//		stage.setTitle("Playing Audio");
+
 		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
 		stage.setTitle("main menu");
 		stage.hide();
@@ -92,8 +104,27 @@ public class MainMenuView {
 		fade.play();
 		stage.show();
 	}
-	
-	
+
+	public static void playAudio(String filePath) {
+		try {
+			InputStream audioInputStream = MainMenuView.class.getResourceAsStream(filePath);
+			if (audioInputStream == null) {
+				System.err.println("Audio file not found: " + filePath);
+				return;
+			}
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioInputStream);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+			clip.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+
 	public void hoverIn(Button button) {
 		button.setTextFill(Color.LIGHTGRAY);
 	}
