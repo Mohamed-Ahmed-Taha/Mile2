@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import engine.Game;
 
 public class SelectHeroController {
-    private MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
     private Stage stage;
     private ArrayList<Hero> availableHeroes;
 
@@ -36,7 +36,7 @@ public class SelectHeroController {
 
     }
 
-    public void onCharacterSelected(Hero h) {
+    public void onCharacterSelected(Hero h)  {
         new GameGridController(stage, h);
     }
     

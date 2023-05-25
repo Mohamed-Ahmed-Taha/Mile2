@@ -38,7 +38,7 @@ public class SelectHeroView {
     private Stage stage;
     private SelectHeroController controller;
     GridPane gridPane = new GridPane();
-    private MediaPlayer hoverEffectPlayer;
+    private MediaPlayer soundEffectPlayer;
 
 
     public SelectHeroView(Stage stage, ArrayList<Hero> availableHeroes, SelectHeroController controller) {
@@ -64,9 +64,9 @@ public void createUI() {
                     characterBox.setStyle("-fx-background-color: rgba(139, 64, 0, 0.2);");
                 String soundEffectFile = "/views/media/Menu Tick-Hover.mp3";
                 Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
-                hoverEffectPlayer = new MediaPlayer(soundEffectMedia);
-                hoverEffectPlayer.setCycleCount(1);
-                hoverEffectPlayer.play();
+                soundEffectPlayer = new MediaPlayer(soundEffectMedia);
+                soundEffectPlayer.setCycleCount(1);
+                soundEffectPlayer.play();
                 animateCharacterInfoAppearance(characterBox, h);
             });
             characterBox.setOnMouseExited(e -> {

@@ -32,6 +32,7 @@ public class Driver extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Media media = new Media(getClass().getResource(AUDIO_FILE).toExternalForm());
 		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setVolume(0.5);
 		mediaPlayer.play();
 
 		new MainMenuController(primaryStage);

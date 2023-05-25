@@ -6,6 +6,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.FontWeight;
 import javafx.stage.*;
 import javafx.util.Duration;
@@ -104,12 +106,12 @@ public class GameGridView {
 	    stack.getChildren().add(hBox);
 	    
     	Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
-    	stage.setTitle("15x15 grid");
 		stage.hide();
     	stage.setScene(scene);
     	stage.setFullScreen(true);
     	stage.show();
-    	    	
+
+
     	scene.setOnKeyPressed(controller);
  
 	}

@@ -37,7 +37,7 @@ public class MainMenuController implements EventHandler<MouseEvent>{
 				if (Driver.mediaPlayer != null) {
 					Driver.mediaPlayer.stop();
 				}
-				String soundEffectFile = "/views/media/Sonic Heroes- Select Sound.mp3";
+				String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
 				Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
 				soundEffectPlayer = new MediaPlayer(soundEffectMedia);
 				soundEffectPlayer.play();

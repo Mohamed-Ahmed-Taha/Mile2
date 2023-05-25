@@ -13,6 +13,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -39,16 +41,34 @@ public class GameGridController implements EventHandler<Event>{
 	private Stage stage;		
 	private static GameGridView view;
 	
-	
+	private MediaPlayer soundEffectPlayer;
+	private MediaPlayer mediaPlayer;
 	private static Cell[][] map;
 	private static Hero heroSelected;
 	private static Character targetSelected;
 	private KeyCode currentAction;
 	private int hpBefore;
 
-	public GameGridController(Stage primaryStage, Hero  h) {
+	public GameGridController(Stage primaryStage, Hero  h)  {
 		stage = primaryStage;
+
+		if(SelectHeroController.mediaPlayer != null)
+			SelectHeroController.mediaPlayer.stop();
+//		String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
+//		Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+//		soundEffectPlayer = new MediaPlayer(soundEffectMedia);
+//		soundEffectPlayer.play();
+
 		
+		String audioFile = "/views/media/Friday the 13th (NES)mp3";
+		Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+
+
+
+
+
 		map = Game.map;
 		heroSelected = h;
 		hpBefore = h.getCurrentHp();
