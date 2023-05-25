@@ -3,6 +3,8 @@ package controller;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import model.characters.Explorer;
 import model.characters.Fighter;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import engine.Game;
 
 public class SelectHeroController {
-	
+    private MediaPlayer mediaPlayer;
     private Stage stage;
     private ArrayList<Hero> availableHeroes;
 
@@ -25,6 +27,12 @@ public class SelectHeroController {
     public void initialize() {
         SelectHeroView view = new SelectHeroView(stage, availableHeroes, this);
         view.createUI();
+
+        String audioFile = "/views/media/jim-walter-choose-your-character-(1).mp3";
+        Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.3);
+        mediaPlayer.play();
 
     }
 

@@ -17,6 +17,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -36,6 +38,7 @@ public class SelectHeroView {
     private Stage stage;
     private SelectHeroController controller;
     GridPane gridPane = new GridPane();
+    private MediaPlayer hoverEffectPlayer;
 
 
     public SelectHeroView(Stage stage, ArrayList<Hero> availableHeroes, SelectHeroController controller) {
@@ -59,7 +62,12 @@ public void createUI() {
             characterBox.setOnMouseEntered(e -> {
                     characterBox.setPrefSize(CELL_SIZE , CELL_SIZE );
                     characterBox.setStyle("-fx-background-color: rgba(139, 64, 0, 0.2);");
-                    animateCharacterInfoAppearance(characterBox, h);
+                String soundEffectFile = "/views/media/Menu Tick-Hover.mp3";
+                Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+                hoverEffectPlayer = new MediaPlayer(soundEffectMedia);
+                hoverEffectPlayer.setCycleCount(1);
+                hoverEffectPlayer.play();
+                animateCharacterInfoAppearance(characterBox, h);
             });
             characterBox.setOnMouseExited(e -> {
                     characterBox.setPrefSize(CELL_SIZE, CELL_SIZE);

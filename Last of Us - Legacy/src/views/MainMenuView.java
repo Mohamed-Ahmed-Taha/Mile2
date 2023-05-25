@@ -84,13 +84,14 @@ public class MainMenuView {
 		start.setOnMouseExited(controller);
 		guide.setOnMouseExited(controller);
 		exit.setOnMouseExited(controller);
+
+
 //		File file = new File(getClass().getResource("views/media/titlesound.mp3").toURI());
 //		playAudio(file.toString());
 //
-//		Media media = new Media(new File("views/media/titlesound.mp3").toURI().toString());
+//		Media media = new Media(new File("views/media/The Last Of us - Theme song.mp3").toURI().toString());
 //		MediaPlayer mediaPlayer = new MediaPlayer(media);
 //		mediaPlayer.play();
-//		stage.setTitle("Playing Audio");
 
 		Scene scene = new Scene(stack, Screen.getPrimary().getBounds().getMaxX()-360, Screen.getPrimary().getBounds().getMaxY()-360);
 		stage.setTitle("main menu");
