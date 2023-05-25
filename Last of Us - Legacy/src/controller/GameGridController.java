@@ -215,7 +215,7 @@ public class GameGridController implements EventHandler<Event>{
 		
 		Point loc = heroSelected.getLocation();
 		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction))){
-			String audioFile = "/views/media/minecraft-hit-sound.mp3";
+			String audioFile = "/views/media/Trapper's trap sound effect.mp3";
 			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 			mediaPlayer.play();}
