@@ -42,7 +42,7 @@ public class GameGridController implements EventHandler<Event>{
 	private static GameGridView view;
 	
 	private MediaPlayer soundEffectPlayer;
-	private MediaPlayer mediaPlayer;
+	public MediaPlayer mediaPlayer;
 	private static Cell[][] map;
 	private static Hero heroSelected;
 	private static Character targetSelected;
@@ -59,10 +59,11 @@ public class GameGridController implements EventHandler<Event>{
 //		soundEffectPlayer = new MediaPlayer(soundEffectMedia);
 //		soundEffectPlayer.play();
 
-		
+
 		String audioFile = "/views/media/Friday the 13th (NES)mp3";
 		Media media = new Media(getClass().getResource(audioFile).toExternalForm());
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setVolume(0.5);
 		mediaPlayer.play();
 
 
@@ -208,8 +209,12 @@ public class GameGridController implements EventHandler<Event>{
 	private void move(Direction direction) {
 		
 		Point loc = heroSelected.getLocation();
-		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction)))
-			view.trapAnimation(loc.x,loc.y); // fix this
+		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction))){
+			String audioFile = "/views/media/minecraft-hit-sound.mp3";
+			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();}
+			//view.trapAnimation(loc.x,loc.y); // fix this
 		try {
 			heroSelected.move(direction);
 		} catch (MovementException | NotEnoughActionsException e) {
@@ -238,6 +243,10 @@ public class GameGridController implements EventHandler<Event>{
 		heroSelected.setTarget(targetSelected);
 		try {
 			heroSelected.attack();
+			String audioFile = "/views/media/minecraft-hit-sound.mp3";
+			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+			MediaPlayer soundEffectPlayer = new MediaPlayer(media);
+			soundEffectPlayer.play();
 			Point loc = targetSelected.getLocation();
 			RotateTransition rot = new RotateTransition();
 			rot.setNode(view.getRectangle(14-loc.x, loc.y));

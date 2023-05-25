@@ -116,15 +116,22 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
     int fontSize = 20;
     String font = "Agency FB";
     Text actionLabel = new Text("Actions: " + h.getMaxActions());
-    actionLabel.setFill(Color.WHITE);
+        if(h.getMaxActions()>=6)
+            actionLabel.setFill(Color.LIGHTGREEN);
+        else actionLabel.setFill(Color.RED);
     actionLabel.setFont(Font.font(font, fontSize));
     infoTexts.add(actionLabel);
     Text hpLabel = new Text("HP: " + h.getCurrentHp());
-    hpLabel.setFill(Color.WHITE);
+        if(h.getCurrentHp()>=100)
+            hpLabel.setFill(Color.LIGHTGREEN);
+        else hpLabel.setFill(Color.RED);
+
     hpLabel.setFont(Font.font(font, fontSize));
     infoTexts.add(hpLabel);
     Text attackLabel = new Text("Attack: " + h.getAttackDmg());
-    attackLabel.setFill(Color.WHITE);
+    if(h.getAttackDmg()>=25)
+        attackLabel.setFill(Color.LIGHTGREEN);
+    else attackLabel.setFill(Color.RED);
     attackLabel.setFont(Font.font(font, fontSize));
     infoTexts.add(attackLabel);
 
@@ -137,7 +144,7 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
             type = "Medic";
 
     Text typeLabel = new Text("Type: " + type);
-    typeLabel.setFill(Color.WHITE);
+    typeLabel.setFill(Color.LIGHTGOLDENRODYELLOW);
     typeLabel.setFont(Font.font(font, fontSize));
     infoTexts.add(typeLabel);
 
