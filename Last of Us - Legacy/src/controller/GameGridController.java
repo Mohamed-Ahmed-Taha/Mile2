@@ -54,16 +54,17 @@ public class GameGridController implements EventHandler<Event>{
 
 		if(SelectHeroController.mediaPlayer != null)
 			SelectHeroController.mediaPlayer.stop();
-//		String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
-//		Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
-//		soundEffectPlayer = new MediaPlayer(soundEffectMedia);
-//		soundEffectPlayer.play();
+
+		String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
+		Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+		soundEffectPlayer = new MediaPlayer(soundEffectMedia);
+		soundEffectPlayer.play();
 
 
-		String audioFile = "/views/media/Friday the 13th (NES)mp3";
+		String audioFile = "/views/media/Friday the 13th trimmed.mp3";
 		Media media = new Media(getClass().getResource(audioFile).toExternalForm());
 		mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.setVolume(0.5);
+		mediaPlayer.setVolume(0.3);
 		mediaPlayer.play();
 
 
@@ -166,6 +167,10 @@ public class GameGridController implements EventHandler<Event>{
 		
 		if(hpBefore > heroSelected.getCurrentHp()) {
 			Point loc = heroSelected.getLocation();
+			String audioFile = "/views/media/minecraft-hit-sound.mp3";
+			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+			MediaPlayer soundEffectPlayer = new MediaPlayer(media);
+			soundEffectPlayer.play();
 			RotateTransition rot = new RotateTransition();
 			rot.setNode(view.getRectangle(14-loc.x, loc.y));
 			rot.setDuration(Duration.millis(100));
@@ -225,11 +230,13 @@ public class GameGridController implements EventHandler<Event>{
 	
 	public static void endTurn() {
 		try {
+
 			Game.endTurn();
 		} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
 			view.printException(e);
 		}
 	}
+
 	
 	
 	private void attack() {
@@ -285,6 +292,11 @@ public class GameGridController implements EventHandler<Event>{
 		
 		try {
 			heroSelected.cure();
+			String audioFile = "/views/media/Undertale Sound Effect - Heal.mp3";
+			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+			MediaPlayer soundEffectPlayer = new MediaPlayer(media);
+			soundEffectPlayer.play();
+
 			Point loc = targetSelected.getLocation();
 			ScaleTransition rot = new ScaleTransition();
 			rot.setNode(view.getRectangle(14-loc.x, loc.y));
