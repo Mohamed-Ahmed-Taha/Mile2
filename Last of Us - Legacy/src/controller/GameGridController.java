@@ -58,10 +58,11 @@ public class GameGridController implements EventHandler<Event>{
 
 
 
-		String audioFile = "/views/media/Friday the 13th fade.mp3";
+		String audioFile = "/views/media/cautious-path-01.mp3";
 		Media media = new Media(getClass().getResource(audioFile).toExternalForm());
 		mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.setVolume(0.3);
+		mediaPlayer.setVolume(0.6);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
 
 
@@ -113,7 +114,13 @@ public class GameGridController implements EventHandler<Event>{
 
 
 	public void getAction(KeyCode keyCode) {
-		
+		if(keyCode.isArrowKey() && heroSelected.getActionsAvailable()>0){
+			String soundEffectFile = "/views/media/move.mp3";
+			Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+			soundEffectPlayer = new MediaPlayer(soundEffectMedia);
+			soundEffectPlayer.setVolume(0.8);
+			soundEffectPlayer.play();}
+
 		switch (keyCode) {
 		
 		case UP:

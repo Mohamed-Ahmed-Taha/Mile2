@@ -111,7 +111,7 @@ public void createUI() {
     }
 
 public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
-    if(characterBox.getChildren().size() == 1){
+    if(characterBox.getChildren().size() == 2){
     ArrayList<Text> infoTexts = new ArrayList<>();
     int fontSize = 20;
     String font = "Agency FB";
@@ -173,13 +173,38 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
 
             VBox characterBox = new VBox();
             characterBox.setAlignment(Pos.CENTER);
+        ImageView heroIcon = null;
 
+        switch (h.getName()) {
 
-//            Image characterImage = new Image("C:\\Users\\Samalouty\\Downloads\\Milestone 2 green\\Last of Us - Legacy\\src\\views\\media\\knight_f_hit_anim_f0.png");
-//            //set image based on name later
-//            ImageView imageView = new ImageView(characterImage);
-//            imageView.setFitWidth(100);
-//            imageView.setFitHeight(100);
+            case "Joel Miller" ->
+                    heroIcon = new ImageView(new Image("views/media/joel.png"));
+
+            case "Ellie Williams" ->
+                    heroIcon = new ImageView(new Image("views/media/ellie.png"));
+
+            case "Tess" ->
+                    heroIcon = new ImageView(new Image("views/media/tess.png"));
+
+            case "Riley Abel" ->
+                    heroIcon = new ImageView(new Image("views/media/riley.png"));
+
+            case "Tommy Miller" ->
+                    heroIcon = new ImageView(new Image("views/media/tommy.png"));
+
+            case "Bill" ->
+                    heroIcon = new ImageView(new Image("views/media/bill.png"));
+
+            case "David" ->
+                    heroIcon = new ImageView(new Image("views/media/david.png"));
+
+            case "Henry Burell" ->
+                    heroIcon = new ImageView(new Image("views/media/henry.png"));
+        }
+
+            ImageView imageView = heroIcon;
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
 
             Text nameLabel = new Text(h.getName());
             nameLabel.setFill(Color.WHITE);
@@ -202,7 +227,7 @@ public void animateCharacterInfoAppearance(VBox characterBox, Hero h) {
 //            actionsPerTurnLabel.setFill(Color.WHITE);
 
             // characterBox.getChildren().addAll(imageView, nameLabel, attackDamageLabel, hpLabel, typeLabel, actionsPerTurnLabel);
-            characterBox.getChildren().addAll(nameLabel);
+            characterBox.getChildren().addAll(imageView, nameLabel);
             characterBox.setPrefSize(CELL_SIZE, CELL_SIZE);
             return characterBox;
     }

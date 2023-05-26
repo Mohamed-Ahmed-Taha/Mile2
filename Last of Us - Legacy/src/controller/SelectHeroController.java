@@ -37,7 +37,7 @@ public class SelectHeroController {
     }
 
     public void onCharacterSelected(Hero h)  {
-        String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
+        String soundEffectFile = "/views/media/button-09a.mp3";
         Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
         MediaPlayer soundEffectPlayer = new MediaPlayer(soundEffectMedia);
         soundEffectPlayer.play();

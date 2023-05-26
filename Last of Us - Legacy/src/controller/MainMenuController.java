@@ -26,9 +26,13 @@ public class MainMenuController implements EventHandler<MouseEvent>{
 	public void handle(MouseEvent event) {
 		
 		if(event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-		
+
+
+
 			String click = ((Button) (event.getSource())).getText();
-		
+			String soundEffectFile = "/views/media/button-09a.mp3";
+			Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+			soundEffectPlayer = new MediaPlayer(soundEffectMedia);
 			
 			switch (click) {
 			
@@ -37,13 +41,11 @@ public class MainMenuController implements EventHandler<MouseEvent>{
 				if (Driver.mediaPlayer != null) {
 					Driver.mediaPlayer.stop();
 				}
-				String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
-				Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
-				soundEffectPlayer = new MediaPlayer(soundEffectMedia);
 				soundEffectPlayer.play();
 				controller.initialize();
 				break;
 			case "Guide":
+				soundEffectPlayer.play();
 				new GuideMenuController(stage); break;
 			case "Exit":
 				stage.close();
