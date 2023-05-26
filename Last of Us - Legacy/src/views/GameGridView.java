@@ -119,41 +119,24 @@ public class GameGridView {
 	public Pane createCharacterBox2(Hero hero) {
 		ImageView heroIcon = null;
 		switch (hero.getName()) {
-			case "Joel Miller" ->
-					heroIcon = new ImageView(new Image("views/media/joel.png"));
-
-			case "Ellie Williams" ->
-					heroIcon = new ImageView(new Image("views/media/ellie.png"));
-
-			case "Tess" ->
-					heroIcon = new ImageView(new Image("views/media/tess.png"));
-
-			case "Riley Abel" ->
-					heroIcon = new ImageView(new Image("views/media/riley.png"));
-
-			case "Tommy Miller" ->
-					heroIcon = new ImageView(new Image("views/media/tommy.png"));
-
-			case "Bill" ->
-					heroIcon = new ImageView(new Image("views/media/bill.png"));
-
-			case "David" ->
-					heroIcon = new ImageView(new Image("views/media/david.png"));
-
-			case "Henry Burell" ->
-					heroIcon = new ImageView(new Image("views/media/henry.png"));
+			case "Joel Miller" -> heroIcon = new ImageView(new Image("views/media/joel.png"));
+			case "Ellie Williams" -> heroIcon = new ImageView(new Image("views/media/ellie.png"));
+			case "Tess" -> heroIcon = new ImageView(new Image("views/media/tess.png"));
+			case "Riley Abel" -> heroIcon = new ImageView(new Image("views/media/riley.png"));
+			case "Tommy Miller" -> heroIcon = new ImageView(new Image("views/media/tommy.png"));
+			case "Bill" -> heroIcon = new ImageView(new Image("views/media/bill.png"));
+			case "David" -> heroIcon = new ImageView(new Image("views/media/david.png"));
+			case "Henry Burell" -> heroIcon = new ImageView(new Image("views/media/henry.png"));
 		}
 		heroIcon.setFitWidth(50);
 		heroIcon.setFitHeight(50);
 
-
-
 		Label nameLabel = new Label(hero.getName());
-		nameLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
+		nameLabel.setFont(Font.font("Agency FB", FontWeight.BOLD, 20));
 
-		ProgressBar hpBar = new ProgressBar(hero.getCurrentHp()/(double) hero.getMaxHp());
-		hpBar.setMaxWidth(Double.MAX_VALUE);
-
+		CustomProgressBar hpBar = new CustomProgressBar(hero.getCurrentHp(), hero.getMaxHp());
+		hpBar.setAlignment(Pos.CENTER_LEFT);
+		hpBar.setPrefHeight(25);
 
 		Label attackDamageLabel = new Label("Attack Damage: " + hero.getAttackDmg());
 		attackDamageLabel.setFont(Font.font("Agency FB", FontWeight.BOLD,  20));
@@ -188,20 +171,17 @@ public class GameGridView {
 		Background background = new Background(backgroundFill);
 
 		characterBox.setBackground(background);
-		if(hero == GameGridController.getHeroSelected()) {
+		if (hero == GameGridController.getHeroSelected()) {
 			characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel, vaccineLabel, supplyLabel);
 			characterBox.setMinWidth(200);
 			characterBox.setMinHeight(150);
 			characterBox.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		}
-
-		else {
+		} else {
 			characterBox.getChildren().addAll(topRow, hpBar, attackDamageLabel, actionsLeftLabel, typeLabel);
 			characterBox.setMinWidth(200);
 			characterBox.setMinHeight(150);
 			characterBox.setBorder(null);
 		}
-		
 
 		return characterBox;
 	}
