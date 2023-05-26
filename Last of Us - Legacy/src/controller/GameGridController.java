@@ -42,7 +42,7 @@ public class GameGridController implements EventHandler<Event>{
 	private static GameGridView view;
 	
 	private MediaPlayer soundEffectPlayer;
-	public MediaPlayer mediaPlayer;
+	public static MediaPlayer mediaPlayer;
 	private static Cell[][] map;
 	private static Hero heroSelected;
 	private static Character targetSelected;
@@ -58,7 +58,7 @@ public class GameGridController implements EventHandler<Event>{
 
 
 
-		String audioFile = "/views/media/Friday the 13th trimmed.mp3";
+		String audioFile = "/views/media/Friday the 13th fade.mp3";
 		Media media = new Media(getClass().getResource(audioFile).toExternalForm());
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setVolume(0.3);
@@ -136,8 +136,7 @@ public class GameGridController implements EventHandler<Event>{
 			
 		case S:
 			useSpecial();
-			if(heroSelected instanceof Medic) {
-				if(targetSelected != null){
+			if(heroSelected instanceof Medic  && targetSelected != null) {
 				Point loc = targetSelected.getLocation();
 				ScaleTransition rot = new ScaleTransition();
 				rot.setNode(view.getRectangle(14-loc.x, loc.y));
@@ -149,7 +148,7 @@ public class GameGridController implements EventHandler<Event>{
 				rot.setByZ(0.5);
 				rot.setAutoReverse(true);
 				rot.play();
-			} break;}
+			} break;
 			
 		case ESCAPE:
 			stage.close();
@@ -212,13 +211,13 @@ public class GameGridController implements EventHandler<Event>{
 	private void move(Direction direction) {
 		
 		Point loc = heroSelected.getLocation();
-		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction))){
+		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction)) && heroSelected.getActionsAvailable() >0){
 			String audioFile = "/views/media/Trapper's trap sound effect.mp3";
 			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 			mediaPlayer.play();}
 			//view.trapAnimation(loc.x,loc.y); // fix this
-		if(checkCollectibleCell(heroSelected.newCoord(loc.x, loc.y, direction))){
+		if(checkCollectibleCell(heroSelected.newCoord(loc.x, loc.y, direction)) && heroSelected.getActionsAvailable() >0){
 			String audioFile = "/views/media/Pick up Sound effect.mp3";
 			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
 			MediaPlayer mediaPlayer = new MediaPlayer(media);

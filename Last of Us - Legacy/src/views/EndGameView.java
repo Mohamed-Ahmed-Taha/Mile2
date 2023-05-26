@@ -1,5 +1,6 @@
 package views;
 
+import controller.GameGridController;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -9,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
@@ -26,6 +29,20 @@ public class EndGameView {
 		Image youWin = new Image("views\\media\\2bw1030-removebg-preview.png");
 		
 		ImageView gameOverView = new ImageView((win ? youWin:gameOver));
+		if(GameGridController.mediaPlayer != null){
+			GameGridController.mediaPlayer.stop();
+		}
+		if(win){
+			String soundEffectFile = "/views/media/Trumpet Sound Victory.mp3";
+			Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+			MediaPlayer soundEffectPlayer = new MediaPlayer(soundEffectMedia);
+			soundEffectPlayer.play();}
+		else{
+			String soundEffectFile = "/views/media/Game Over.mp3";
+			Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+			MediaPlayer soundEffectPlayer = new MediaPlayer(soundEffectMedia);
+			soundEffectPlayer.play();
+		}
 		Button exit = new Button("Exit");
 		
 		FadeTransition fade = new FadeTransition();
