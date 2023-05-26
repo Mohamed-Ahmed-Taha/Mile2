@@ -55,10 +55,7 @@ public class GameGridController implements EventHandler<Event>{
 		if(SelectHeroController.mediaPlayer != null)
 			SelectHeroController.mediaPlayer.stop();
 
-		String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
-		Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
-		soundEffectPlayer = new MediaPlayer(soundEffectMedia);
-		soundEffectPlayer.play();
+
 
 
 		String audioFile = "/views/media/Friday the 13th trimmed.mp3";
@@ -140,6 +137,7 @@ public class GameGridController implements EventHandler<Event>{
 		case S:
 			useSpecial();
 			if(heroSelected instanceof Medic) {
+				if(targetSelected != null){
 				Point loc = targetSelected.getLocation();
 				ScaleTransition rot = new ScaleTransition();
 				rot.setNode(view.getRectangle(14-loc.x, loc.y));
@@ -151,7 +149,7 @@ public class GameGridController implements EventHandler<Event>{
 				rot.setByZ(0.5);
 				rot.setAutoReverse(true);
 				rot.play();
-			} break; 
+			} break;}
 			
 		case ESCAPE:
 			stage.close();
@@ -220,6 +218,13 @@ public class GameGridController implements EventHandler<Event>{
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 			mediaPlayer.play();}
 			//view.trapAnimation(loc.x,loc.y); // fix this
+		if(checkCollectibleCell(heroSelected.newCoord(loc.x, loc.y, direction))){
+			String audioFile = "/views/media/Pick up Sound effect.mp3";
+			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
+		}
+
 		try {
 			heroSelected.move(direction);
 		} catch (MovementException | NotEnoughActionsException e) {
@@ -343,6 +348,11 @@ public class GameGridController implements EventHandler<Event>{
 	private boolean checkTrapCell(Point p) {
 		if (Game.isEdge(p.x, p.y)) return false;
 		return (map[p.x][p.y] instanceof TrapCell);
+	}
+
+	private boolean checkCollectibleCell(Point p){
+		if (Game.isEdge(p.x, p.y)) return false;
+		return (map[p.x][p.y] instanceof CollectibleCell);
 	}
 	
 	

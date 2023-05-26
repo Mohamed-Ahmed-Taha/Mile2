@@ -282,7 +282,7 @@ public class GameGridView {
 		// 't' -> trap
 		
 		Color color;
-		
+
 		switch (cell) {
 		
 		case 'n':
@@ -300,6 +300,7 @@ public class GameGridView {
 			getRectangle(i, j).setOpacity(1); break;
 		case 's':
 			getRectangle(i, j).setFill(new ImagePattern(supplies));
+
 			getRectangle(i, j).setOpacity(0.5); break;
 		case 'v':
 			getRectangle(i, j).setFill(new ImagePattern(vaccine));

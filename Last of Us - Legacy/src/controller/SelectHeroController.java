@@ -37,6 +37,10 @@ public class SelectHeroController {
     }
 
     public void onCharacterSelected(Hero h)  {
+        String soundEffectFile = "/views/media/Nice Menu Select-Confirm.mp3";
+        Media soundEffectMedia = new Media(getClass().getResource(soundEffectFile).toExternalForm());
+        MediaPlayer soundEffectPlayer = new MediaPlayer(soundEffectMedia);
+        soundEffectPlayer.play();
         new GameGridController(stage, h);
     }
     
