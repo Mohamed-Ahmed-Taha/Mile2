@@ -13,11 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import controller.MainMenuController;
+import views.controller.MainMenuController;
 import javafx.scene.image.*;
 import javafx.animation.FadeTransition;
 
-import java.io.File;
 import java.io.InputStream;
 
 

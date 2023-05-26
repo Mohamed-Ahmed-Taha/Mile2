@@ -1,6 +1,6 @@
 package views;
 
-import controller.GuideMenuController;
+import views.controller.GuideMenuController;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

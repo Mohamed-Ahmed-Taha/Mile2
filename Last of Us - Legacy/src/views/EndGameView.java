@@ -1,6 +1,6 @@
 package views;
 
-import controller.GameGridController;
+import views.controller.GameGridController;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
