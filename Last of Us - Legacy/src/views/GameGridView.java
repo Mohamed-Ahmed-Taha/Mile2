@@ -113,7 +113,7 @@ public class GameGridView {
  
 	}
 
-	public Pane createCharacterBox2(Hero hero) {
+	public static Pane createCharacterBox2(Hero hero) {
 		ImageView heroIcon = null;
 		switch (hero.getName()) {
 			case "Joel Miller" -> heroIcon = new ImageView(new Image("views/media/joel.png"));
@@ -182,7 +182,7 @@ public class GameGridView {
 
 		return characterBox;
 	}
-	public void updateCharacterBoxes() {
+	public static void updateCharacterBoxes() {
 		heroAttributesPanel.getChildren().clear();
 
 		for (Hero hero : heroes) {
@@ -197,7 +197,7 @@ public class GameGridView {
 
 
 
-	public void updateMap(char[][] mapForPrint) {
+	public static void updateMap(char[][] mapForPrint) {
 			
 		for (int i = 0; i < 15; i++) 
 			for (int j = 0; j < 15; j++) 

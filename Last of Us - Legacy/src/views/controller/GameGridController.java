@@ -7,6 +7,7 @@ import exceptions.InvalidTargetException;
 import exceptions.MovementException;
 import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
@@ -36,9 +37,16 @@ import views.GameGridView;
 import model.characters.Character;
 import javafx.animation.*;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+
 public class GameGridController implements EventHandler<Event>{
-	
-	private Stage stage;		
+
+	private static final long AI_TURN_DELAY = 1000;
+	private Stage stage;
 	private static GameGridView view;
 	
 	private MediaPlayer soundEffectPlayer;
@@ -48,6 +56,9 @@ public class GameGridController implements EventHandler<Event>{
 	private static Character targetSelected;
 	private KeyCode currentAction;
 	private int hpBefore;
+	private static int aiTurnDelay = 1000;
+	public ArrayList<Hero> heroes = Game.heroes;
+
 
 	public GameGridController(Stage primaryStage, Hero  h)  {
 		stage = primaryStage;
@@ -100,6 +111,7 @@ public class GameGridController implements EventHandler<Event>{
 		if (event instanceof KeyEvent) {
 			getAction(((KeyEvent)event).getCode());
 		}
+
 		else if (event instanceof MouseEvent) {
 
 			if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
@@ -109,6 +121,43 @@ public class GameGridController implements EventHandler<Event>{
 		
 		updateMapView();
 		
+	}
+	private void enablePlayerInput(boolean enable) {
+		if (enable) {
+			GameGridView.getGridPane().setDisable(false);
+		} else {
+			GameGridView.getGridPane().setDisable(true);
+		}
+	}
+
+	private void startAITurns() throws MovementException, NotEnoughActionsException {
+		enablePlayerInput(false);
+
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				for (Hero hero : heroes) {
+					if (hero.getActionsAvailable() > 0) {
+						Platform.runLater(() -> {
+							try {
+								performAIAction(hero);
+							} catch (MovementException e) {
+								throw new RuntimeException(e);
+							} catch (NotEnoughActionsException e) {
+								throw new RuntimeException(e);
+							}
+						});
+					}
+				}
+				Platform.runLater(() -> {
+					GameGridView.updateCharacterBoxes();
+					enablePlayerInput(true);
+				});
+			}
+		};
+
+		Timer timer = new Timer();
+		timer.schedule(task, AI_TURN_DELAY);
 	}
 	
 
@@ -156,9 +205,38 @@ public class GameGridController implements EventHandler<Event>{
 				rot.setAutoReverse(true);
 				rot.play();
 			} break;
+
+		case F:
+			System.out.println("F pressed");
+			boolean allHeroesActionsUsedUp = true;
+			for (Hero hero : heroes) {
+				if (hero.getActionsAvailable() > 0) {
+					allHeroesActionsUsedUp = false;
+					break;
+				}
+			}
+
+			if (!allHeroesActionsUsedUp) {
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						try {
+							startAITurns();
+						} catch (MovementException e) {
+							throw new RuntimeException(e);
+						} catch (NotEnoughActionsException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				}, aiTurnDelay);
+			} break;
+
 			
 		case ESCAPE:
 			stage.close();
+
+
 			
 		default: break;
 		
@@ -435,4 +513,15 @@ public class GameGridController implements EventHandler<Event>{
 		return visible;
 		
 	}
+
+	private void performAIAction(Hero hero) throws MovementException, NotEnoughActionsException {
+		int actionsLeft = hero.getActionsAvailable();
+		while (actionsLeft > 0) {
+			hero.move(Direction.UP);
+			actionsLeft--;
+
+		}
+		updateMapView();
+	}
+
 }
