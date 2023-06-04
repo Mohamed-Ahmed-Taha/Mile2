@@ -41,7 +41,7 @@ public abstract class Hero extends Character {
 
 
 
-	public boolean clear(Cell c) throws MovementException{
+	public boolean clear(Cell c) {
 		if (c instanceof CharacterCell && ((CharacterCell) c).getCharacter() != null){
 			return false; }
 
@@ -100,6 +100,24 @@ public abstract class Hero extends Character {
 		actionsAvailable--;
 	}
 
+	public void AImove(Direction d) {
+		Point loc = this.getLocation();
+		Point n = newCoord(loc.x,loc.y,d);
+
+		if(clear(Game.map[n.x][n.y])) {
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
+			if(getCurrentHp() <= 0 ) return;
+			this.setLocation(n);
+			Game.map[n.x][n.y] = new CharacterCell(this);
+		}
+
+		Game.setVisibility(this.getLocation(), true);
+
+
+
+		actionsAvailable--;
+	}
+
 
 
 
@@ -130,6 +148,12 @@ public abstract class Hero extends Character {
 
 			actionsAvailable--;
 		}
+
+	public void AIcure()  {
+		Character z = getTarget();
+		(getVaccineInventory().get(vaccineInventory.size() - 1)).use(this);
+		actionsAvailable--;
+	}
 		
 		public void onCharacterDeath() {
 			Point p = this.getLocation();
@@ -146,6 +170,11 @@ public abstract class Hero extends Character {
 		 setSpecialAction(true);
 		 actionsAvailable--;
 	 }
+	public void AIuseSpecial() {
+		(this.getSupplyInventory().get(0)).use(this);
+		setSpecialAction(true);
+		actionsAvailable--;
+	}
 
 
 

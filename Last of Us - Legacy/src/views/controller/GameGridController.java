@@ -122,48 +122,7 @@ public class GameGridController implements EventHandler<Event>{
 		updateMapView();
 		
 	}
-	private void enablePlayerInput(boolean enable) {
-		if (enable) {
-			GameGridView.getGridPane().setDisable(false);
-		} else {
-			GameGridView.getGridPane().setDisable(true);
-		}
-	}
 
-	private void startAITurns() throws MovementException, NotEnoughActionsException {
-		enablePlayerInput(false);
-
-		TimerTask task = new TimerTask() {
-			@Override
-			public void run() {
-				for (Hero hero : heroes) {
-					if (hero.getActionsAvailable() > 0) {
-						Platform.runLater(() -> {
-							try {
-								performAIAction(hero);
-							} catch (MovementException e) {
-								throw new RuntimeException(e);
-							} catch (NotEnoughActionsException e) {
-								throw new RuntimeException(e);
-							} catch (InvalidTargetException e) {
-								throw new RuntimeException(e);
-							} catch (NoAvailableResourcesException e) {
-								throw new RuntimeException(e);
-							}
-						});
-					}
-				}
-				Platform.runLater(() -> {
-					GameGridView.updateCharacterBoxes();
-					enablePlayerInput(true);
-				});
-			}
-		};
-
-		Timer timer = new Timer();
-		timer.schedule(task, AI_TURN_DELAY);
-	}
-	
 
 
 	public void getAction(KeyCode keyCode) {
@@ -223,20 +182,17 @@ public class GameGridController implements EventHandler<Event>{
 			}
 
 			if (!allHeroesActionsUsedUp) {
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						try {
-							startAITurns();
-						} catch (MovementException e) {
-							throw new RuntimeException(e);
-						} catch (NotEnoughActionsException e) {
-							throw new RuntimeException(e);
-						}
-					}
-				}, aiTurnDelay);
-			} break;
+				try {
+					Game.endTurn();
+					updateMapView();
+					startAITurns();
+				} catch (InvalidTargetException | NotEnoughActionsException | NoAvailableResourcesException e) {
+					view.printException(e);
+				} catch (MovementException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			break;
 
 
 			
@@ -316,6 +272,27 @@ public class GameGridController implements EventHandler<Event>{
 		} catch (MovementException | NotEnoughActionsException e) {
 			view.printException(e);
 		}
+	}
+
+	private void AImove(Direction direction) {
+
+		Point loc = heroSelected.getLocation();
+		if (checkTrapCell(heroSelected.newCoord(loc.x, loc.y, direction)) && heroSelected.getActionsAvailable() >0){
+			String audioFile = "/views/media/Trapper's trap sound effect.mp3";
+			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();}
+		//view.trapAnimation(loc.x,loc.y); // fix this
+		if(checkCollectibleCell(heroSelected.newCoord(loc.x, loc.y, direction)) && heroSelected.getActionsAvailable() >0){
+			String audioFile = "/views/media/Pick up Sound effect.mp3";
+			Media media = new Media(getClass().getResource(audioFile).toExternalForm());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
+		}
+
+
+			heroSelected.AImove(direction);
+
 	}
 	
 	
@@ -520,9 +497,108 @@ public class GameGridController implements EventHandler<Event>{
 		return visible;
 		
 	}
+	private void enablePlayerInput(boolean enable) {
+		if (enable) {
+			GameGridView.getGridPane().setDisable(false);
+		} else {
+			GameGridView.getGridPane().setDisable(true);
+		}
+	}
+
+
+	private void startAITurns() throws MovementException, NotEnoughActionsException {
+		enablePlayerInput(false); // Disable player input during AI turns
+
+		// Get a list of heroes that still have actions available
+		ArrayList<Hero> heroesWithActions = new ArrayList<>();
+		for (Hero hero : heroes) {
+			if (hero.getActionsAvailable() > 0) {
+				heroesWithActions.add(hero);
+			}
+		}
+
+		if (!heroesWithActions.isEmpty()) {
+			// Get the first hero from the list
+			Hero aiHero = heroesWithActions.get(0);
+
+			// Perform AI move
+			performAIMove(aiHero);
+
+			// Update the map view after AI move
+			updateMapView();
+
+			// If the AI hero still has actions available, schedule the next AI turn
+			if (aiHero.getActionsAvailable() > 0) {
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						try {
+							startAITurns();
+						} catch (MovementException e) {
+							throw new RuntimeException(e);
+						} catch (NotEnoughActionsException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				}, aiTurnDelay);
+			} else {
+				// If the AI hero has no more actions available, remove it from the list and start the next AI turn
+				heroesWithActions.remove(aiHero);
+				startAITurns();
+			}
+		} else {
+			// All AI heroes have used up their actions, enable player input
+			enablePlayerInput(true);
+		}
+	}
+
+	private void performAIMove(Hero hero) {
+		int actionsLeft = hero.getActionsAvailable();
+		if (actionsLeft == 0) return;
+		while (actionsLeft > 0) {
+			Point loc = hero.getLocation();
+
+			for (int i = 0; i < 4; i++) {
+				Point p = hero.newCoord(loc.x, loc.y, indexToDirection(i));
+				if (!Game.isEdge(p.x, p.y)){
+					if(Game.getAdjZombie(loc) != null && !hero.getVaccineInventory().isEmpty() && hero.getActionsAvailable() > 0){
+						Zombie z = (Zombie) Game.getAdjZombie(loc);
+						hero.setTarget(z);
+						hero.AIcure();
+					}
+					else
+					if (checkCollectibleCell(p) ){
+						move(indexToDirection(i));
+					} else if (checkHeroCell(p) && hero instanceof Medic && !hero.getSupplyInventory().isEmpty() && hero.getActionsAvailable() > 0) {
+						hero.setTarget(((CharacterCell) map[p.x][p.y]).getCharacter());
+						hero.AIuseSpecial();
+					}
+					else {
+						Point q;
+						for (int j = 0; j < 4; j++) {
+							q = hero.newCoord(loc.x, loc.y, indexToDirection((j)));
+							if (!Game.isEdge(q.x, q.y) && Game.map[q.x][q.y] instanceof CharacterCell && ((CharacterCell) Game.map[q.x][q.y]).getCharacter() == null && hero.getActionsAvailable() > 0){
+								hero.AImove(indexToDirection(j));
+							}
+						}
+
+					}
+				}
+
+			}
+
+			if(hero.getActionsAvailable() == 0) break;
+
+			actionsLeft--;
+
+		}
+	}
+
 
 	private void performAIAction(Hero hero) throws MovementException, NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		int actionsLeft = hero.getActionsAvailable();
+		if (actionsLeft == 0) return;
 		while (actionsLeft > 0) {
 			Point loc = hero.getLocation();
 

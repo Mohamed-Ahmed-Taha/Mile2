@@ -34,5 +34,14 @@ public class Medic extends Hero {
 		healed.setCurrentHp(healed.getMaxHp());
 	}
 
+	public void AIuseSpecial()  {
+
+		Character healed = getTarget();
+		super.AIuseSpecial();
+
+		healed.setCurrentHp(healed.getMaxHp());
+	}
+
+
 
 }
