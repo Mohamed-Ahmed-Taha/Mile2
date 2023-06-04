@@ -526,6 +526,7 @@ public class GameGridController implements EventHandler<Event>{
 
 			// Update the map view after AI move
 			updateMapView();
+			GameGridView.updateCharacterBoxes();
 
 			// If the AI hero still has actions available, schedule the next AI turn
 			if (aiHero.getActionsAvailable() > 0) {

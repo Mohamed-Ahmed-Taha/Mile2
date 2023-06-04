@@ -1,6 +1,7 @@
 package views;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -183,12 +184,14 @@ public class GameGridView {
 		return characterBox;
 	}
 	public static void updateCharacterBoxes() {
+		Platform.runLater(() -> {
 		heroAttributesPanel.getChildren().clear();
 
 		for (Hero hero : heroes) {
 			Pane characterBox = createCharacterBox2(hero);
 			heroAttributesPanel.getChildren().add(characterBox);
 		}
+		});
 	}
 	
 	public static GridPane getGridPane() {
