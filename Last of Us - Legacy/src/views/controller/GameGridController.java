@@ -171,6 +171,8 @@ public class GameGridController implements EventHandler<Event>{
 			soundEffectPlayer.play();}
 
 		switch (keyCode) {
+		case ESCAPE:
+			stage.close();
 		
 		case UP:
 			move(Direction.UP); break;
@@ -231,10 +233,6 @@ public class GameGridController implements EventHandler<Event>{
 					}
 				}, aiTurnDelay);
 			} break;
-
-			
-		case ESCAPE:
-			stage.close();
 
 
 			
@@ -517,11 +515,32 @@ public class GameGridController implements EventHandler<Event>{
 	private void performAIAction(Hero hero) throws MovementException, NotEnoughActionsException {
 		int actionsLeft = hero.getActionsAvailable();
 		while (actionsLeft > 0) {
-			hero.move(Direction.UP);
+			Point loc = hero.getLocation();
+
+			for (int i = 0; i < 4; i++) {
+				Point p = hero.newCoord(loc.x, loc.y, indexToDirection(i));
+				if (checkCollectibleCell(p) && !Game.isEdge(p.x, p.y)){
+					move(indexToDirection(i));
+					}
+			}
+
 			actionsLeft--;
 
 		}
 		updateMapView();
+	}
+
+	public static Direction indexToDirection(int i){
+		switch (i){
+			case 0 : return Direction.UP;
+			case 1 : return Direction.LEFT;
+			case 2 : return Direction.RIGHT;
+			case 3 : return Direction.DOWN;
+
+
+
+		}
+		return null;
 	}
 
 }
