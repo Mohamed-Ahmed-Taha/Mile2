@@ -145,6 +145,10 @@ public class GameGridController implements EventHandler<Event>{
 								throw new RuntimeException(e);
 							} catch (NotEnoughActionsException e) {
 								throw new RuntimeException(e);
+							} catch (InvalidTargetException e) {
+								throw new RuntimeException(e);
+							} catch (NoAvailableResourcesException e) {
+								throw new RuntimeException(e);
 							}
 						});
 					}
@@ -436,6 +440,11 @@ public class GameGridController implements EventHandler<Event>{
 		if (Game.isEdge(p.x, p.y)) return false;
 		return (map[p.x][p.y] instanceof CollectibleCell);
 	}
+	private boolean checkHeroCell(Point p){
+		if (Game.isEdge(p.x, p.y)) return false;
+		return (map[p.x][p.y] instanceof CharacterCell && ((CharacterCell) map[p.x][p.y]).getCharacter() instanceof Hero);
+	}
+
 	
 	
 	public static void updateMapView() {
@@ -512,17 +521,41 @@ public class GameGridController implements EventHandler<Event>{
 		
 	}
 
-	private void performAIAction(Hero hero) throws MovementException, NotEnoughActionsException {
+	private void performAIAction(Hero hero) throws MovementException, NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		int actionsLeft = hero.getActionsAvailable();
 		while (actionsLeft > 0) {
 			Point loc = hero.getLocation();
 
 			for (int i = 0; i < 4; i++) {
 				Point p = hero.newCoord(loc.x, loc.y, indexToDirection(i));
-				if (checkCollectibleCell(p) && !Game.isEdge(p.x, p.y)){
+				if (!Game.isEdge(p.x, p.y)){
+				if(Game.getAdjZombie(loc) != null && !hero.getVaccineInventory().isEmpty() && hero.getActionsAvailable() > 0){
+					Zombie z = (Zombie) Game.getAdjZombie(loc);
+					hero.setTarget(z);
+					hero.cure();
+				}
+				else
+				if (checkCollectibleCell(p) ){
 					move(indexToDirection(i));
+					} else if (checkHeroCell(p) && hero instanceof Medic && !hero.getSupplyInventory().isEmpty() && hero.getActionsAvailable() > 0) {
+							hero.setTarget(((CharacterCell) map[p.x][p.y]).getCharacter());
+					hero.useSpecial();
+				}
+				else {
+					Point q;
+					for (int j = 0; j < 4; j++) {
+						q = hero.newCoord(loc.x, loc.y, indexToDirection((j)));
+						if (!Game.isEdge(q.x, q.y) && Game.map[q.x][q.y] instanceof CharacterCell && ((CharacterCell) Game.map[q.x][q.y]).getCharacter() == null && hero.getActionsAvailable() > 0){
+							move(indexToDirection(j));
+							 }
 					}
+
+				}
 			}
+
+			}
+
+			if(hero.getActionsAvailable() == 0) break;
 
 			actionsLeft--;
 

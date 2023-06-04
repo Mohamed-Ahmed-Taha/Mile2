@@ -183,6 +183,34 @@ public class Game {
 			
 			return null;
 		}
+	public static Character getAdjZombie (Point p){
+
+		if (!isEdge(p.x - 1, p.y) && checkZombie(p.x - 1, p.y)) // north
+			return ((CharacterCell) map[p.x - 1][p.y]).getCharacter();
+
+		if (!isEdge(p.x + 1, p.y) && checkZombie(p.x + 1, p.y)) // south
+			return ((CharacterCell) map[p.x + 1][p.y]).getCharacter();
+
+		if (!isEdge(p.x, p.y + 1) && checkZombie(p.x, p.y + 1)) // east
+			return ((CharacterCell) map[p.x][p.y + 1]).getCharacter();
+
+		if (!isEdge(p.x, p.y - 1) && checkZombie(p.x, p.y - 1)) // west
+			return ((CharacterCell) map[p.x][p.y - 1]).getCharacter();
+
+		if (!isEdge(p.x + 1, p.y + 1) && checkZombie(p.x + 1, p.y + 1)) // north east
+			return ((CharacterCell) map[p.x + 1][p.y + 1]).getCharacter();
+
+		if (!isEdge(p.x + 1, p.y - 1) && checkZombie(p.x + 1, p.y - 1)) // north west
+			return ((CharacterCell) map[p.x + 1][p.y - 1]).getCharacter();
+
+		if (!isEdge(p.x - 1, p.y + 1) && checkZombie(p.x - 1, p.y + 1)) // south east
+			return ((CharacterCell) map[p.x - 1][p.y + 1]).getCharacter();
+
+		if (!isEdge(p.x - 1, p.y - 1) && checkZombie(p.x - 1, p.y - 1)) // south west
+			return ((CharacterCell) map[p.x - 1][p.y - 1]).getCharacter();
+
+		return null;
+	}
 
 		public static void endTurn () throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 
