@@ -7,7 +7,8 @@ public class CharacterCell extends Cell {
 	private Character character;
 	
 	private boolean isSafe;
-	
+	private boolean isDiscovered;
+
 	public CharacterCell(Character character, boolean isSafe) {
 		
 		this.character = character;
@@ -15,6 +16,8 @@ public class CharacterCell extends Cell {
 		this.isSafe = isSafe;
 	
 	}
+
+
 	
 	public CharacterCell(Character character) {
 	
@@ -22,6 +25,13 @@ public class CharacterCell extends Cell {
 		
 		this.isSafe = false;
 	
+	}
+
+	public CharacterCell(Character character, Boolean isDiscovered) {
+
+		this.character = character;
+		this.isSafe = false;
+
 	}
 	
 	
@@ -55,4 +65,15 @@ public class CharacterCell extends Cell {
 	
 	}
 
+	public void setDiscovered(boolean isDiscovered) {
+
+		this.isDiscovered = isDiscovered;
+
+	}
+
+	public boolean isDiscovered() {
+
+		return isDiscovered;
+
+	}
 }

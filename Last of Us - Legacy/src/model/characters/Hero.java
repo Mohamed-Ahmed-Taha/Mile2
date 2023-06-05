@@ -103,12 +103,16 @@ public abstract class Hero extends Character {
 	public void AImove(Direction d) {
 		Point loc = this.getLocation();
 		Point n = newCoord(loc.x,loc.y,d);
+		if(actionsAvailable == 0) return;
+
+		if(Game.isEdge(n.x, n.y)) return;
 
 		if(clear(Game.map[n.x][n.y])) {
 			Game.map[loc.x][loc.y] = new CharacterCell(null);
 			if(getCurrentHp() <= 0 ) return;
 			this.setLocation(n);
 			Game.map[n.x][n.y] = new CharacterCell(this);
+			((CharacterCell) Game.map[n.x][n.y]).setDiscovered(true);
 		}
 
 		Game.setVisibility(this.getLocation(), true);
